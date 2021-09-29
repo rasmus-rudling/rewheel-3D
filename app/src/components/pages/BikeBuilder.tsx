@@ -1,4 +1,4 @@
-function App() {
+function BikeBuilder() {
   return (
     <div className="App">
       <nav className="w-screen h-14 bg-purple-400"></nav>
@@ -10,4 +10,4 @@ function App() {
   );
 }
 
-export default App;
+export default BikeBuilder;
