@@ -8,7 +8,7 @@
     "dev": "npm run watch:css && webpack serve",
     "start": "webpack serve",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch:css": "postcss src/style/tailwind.css -o src/style/main.css"
+    "watch:css": "postcss src/style/tailwind.css -o build/build.css"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "@types/react-dom": "^17.0.9",
     "autoprefixer": "^10.3.6",
     "babel-loader": "^8.2.2",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.3.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
