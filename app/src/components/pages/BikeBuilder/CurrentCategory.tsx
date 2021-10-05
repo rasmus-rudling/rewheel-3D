@@ -1,6 +1,6 @@
 const CurrentCategory = (props: { categories: string[] }) => {
     return (
-      <div className="self-center">
+      <div className="">
         {props.categories.map((category, idx) => {
           if (idx !== props.categories.length - 1) {
             return (
@@ -18,7 +18,7 @@ const CurrentCategory = (props: { categories: string[] }) => {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
+                    strokeWidth={1}
                     d="M13 7l5 5m0 0l-5 5m5-5H6"
                   />
                 </svg>

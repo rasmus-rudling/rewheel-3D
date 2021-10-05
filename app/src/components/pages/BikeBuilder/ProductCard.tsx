@@ -2,7 +2,7 @@ import QualityIndication from "./QualityIndicator";
 
 const ProductCard = () => {
   return (
-    <div className="w-auto h-36 bg-gray-300 mx-3 mt-3">
+    <div className="w-auto h-36 bg-white mx-3 mt-3">
       <div className="inline-block m-2">
         <h3 className="text-lg font-medium">Super fancy frame</h3>
         <h4 className="text-sm mb-2">Specialized</h4>
