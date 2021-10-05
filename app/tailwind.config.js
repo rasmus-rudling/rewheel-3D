@@ -7,6 +7,7 @@ module.exports = {
 			fontFamily: {
 				sans: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'],
 				serif: ['Merriweather', 'serif'],
+				logo: ['Raleway'],
 			},
 			stroke: (theme) => ({
 				'gray-300': theme('colors.gray.300'),
@@ -19,7 +20,7 @@ module.exports = {
 		},
 	},
 	variants: {
-		extend: { fontWeight: ['hover', 'focus'] },
+		extend: { fontWeight: ['hover', 'focus'], margin: ['last'] },
 	},
 	plugins: [],
 };
