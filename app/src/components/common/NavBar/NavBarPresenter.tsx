@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import DesktopNavBarView from './DesktopNavBarView';
-import MobileNavBarView from './MobileNavBarView';
+import DesktopNavBarView from './NavBarView';
 
 export interface NavButton {
 	route: string;
@@ -9,8 +8,8 @@ export interface NavButton {
 }
 
 const navButtons: NavButton[] = [
-	{ route: 'profile', text: 'profil' },
 	{ route: 'bike-builder', text: 'cykelbyggaren' },
+	{ route: 'profile', text: 'profil' },
 ];
 
 const NavBarPresenter = () => {
@@ -32,22 +31,3 @@ const NavBarPresenter = () => {
 };
 
 export default NavBarPresenter;
-
-// const Navigation = () => {
-// 	return (
-// 		<div className={classes.Navigation}>
-// 			<div className={classes.desktopContainer}>
-// 				<DesktopNavigation
-// 					navigationButtons={navigationButtons}
-// 					navigationButtonClickHandler={navigationButtonClickHandler}
-// 				/>
-// 			</div>
-
-// 			<div className={classes.mobileContainer}>
-// 				<MobileNavigation
-// 					navigationButtons={navigationButtons}
-// 					navigationButtonClickHandler={navigationButtonClickHandler}
-// 				/>
-// 			</div>
-// 		</div>
-// 	);
