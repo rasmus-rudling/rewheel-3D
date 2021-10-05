@@ -1,17 +1,23 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ProfilePage from './components/pages/Profile/ProfilePage';
 import BikeBuilderPage from './components/pages/BikeBuilder/BikeBuilderPage';
+import NavBarPresenter from './components/common/NavBar/NavBarPresenter';
+import PageWrapper from './components/common/PageWrapper';
 
 const App = () => {
 	return (
 		<Router>
 			<Switch>
 				<Route exact path="/">
-					<BikeBuilderPage />
+					<PageWrapper>
+						<BikeBuilderPage />
+					</PageWrapper>
 				</Route>
 
 				<Route exact path="/profile">
-					<ProfilePage />
+					<PageWrapper>
+						<ProfilePage />
+					</PageWrapper>
 				</Route>
 			</Switch>
 		</Router>
