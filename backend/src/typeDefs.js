@@ -2,7 +2,7 @@ import { gql } from "apollo-server-express";
 
 export const typeDefs = gql`
   type Query {
-    bikes: [Bike!]!
+    getAllBikes: [Bike!]!
   }
   type Bike {
     id: ID!
