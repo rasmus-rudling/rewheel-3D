@@ -1,11 +1,27 @@
-import BikeBuilder from "./components/pages/BikeBuilder/BikeBuilder";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import ProfilePage from './components/pages/Profile/ProfilePage';
+import BikeBuilderPage from './components/pages/BikeBuilder/BikeBuilderPage';
+import NavBarPresenter from './components/common/NavBar/NavBarPresenter';
+import PageWrapper from './components/common/PageWrapper';
 
 const App = () => {
-  return (
-    <>
-      <BikeBuilder />
-    </>
-  );
+	return (
+		<Router>
+			<Switch>
+				<Route exact path={['/', '/bike-builder']}>
+					<PageWrapper>
+						<BikeBuilderPage />
+					</PageWrapper>
+				</Route>
+
+				<Route exact path="/profile">
+					<PageWrapper>
+						<ProfilePage />
+					</PageWrapper>
+				</Route>
+			</Switch>
+		</Router>
+	);
 };
 
 export default App;

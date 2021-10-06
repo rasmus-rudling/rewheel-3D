@@ -9,7 +9,7 @@ import { useGLTF } from '@react-three/drei'
 import { Canvas, useFrame } from "@react-three/fiber";
 import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 
-import BikeFrame from './bikeframe.gltf'
+import BikeFrame from './bikeFrame.gltf'
 
 type GLTFResult = GLTF & {
   nodes: {
