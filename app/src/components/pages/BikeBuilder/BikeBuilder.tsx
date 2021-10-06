@@ -8,6 +8,7 @@ const BikeBuilder = () => {
       <div className="flex items-stretch pt-14 h-full">
         <div className="flex-grow">
           <BikeView />
+          <SidePanel />
         </div>
         <SidePanel />
       </div>
