@@ -39,12 +39,12 @@ const DesktopNavBarView = ({ navButtons, navButtonClickHandler }: Props) => {
 			>
 				<ReWheelLogo />
 
-				{/* {desktopView} */}
+				{desktopView}
 
-				<HamburgerButton
+				{/* <HamburgerButton
 					showingModal={true}
 					onClickHandler={() => console.log('Clicked')}
-				/>
+				/> */}
 			</div>
 		</div>
 	);
