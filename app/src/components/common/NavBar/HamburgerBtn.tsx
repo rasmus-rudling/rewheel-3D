@@ -15,6 +15,7 @@ const HamburgerButton = ({ showingModal, onClickHandler }: Props) => {
         rounded-sm
         transition
         opacity-100
+        transform
     `;
 
 	const commonLine1Line3Styling = `
@@ -28,18 +29,27 @@ const HamburgerButton = ({ showingModal, onClickHandler }: Props) => {
 	let currentLine1Styling, currentLine2Styling, currentLine3Styling;
 
 	if (showingModal) {
-		currentLine1Styling = ``;
+		currentLine1Styling = `-translate-y-2`;
 		currentLine2Styling = ``;
-		currentLine3Styling = ``;
+		currentLine3Styling = `translate-y-2`;
 	} else {
-		currentLine1Styling = ``;
-		currentLine2Styling = ``;
-		currentLine3Styling = ``;
+		currentLine1Styling = `rotate-135`;
+		currentLine2Styling = `opacity-50 -translate-x-20`;
+		currentLine3Styling = `rotate-45`;
 	}
 
 	return (
 		<div
-			className="flex flex-col justify-center items-center w-10 h-9 cursor-pointer transition relative overflow-hidden select-none"
+			className={`
+                flex flex-col justify-center items-center
+                w-10 h-9 cursor-pointer 
+                transition 
+                relative 
+                overflow-hidden 
+                select-none
+                rounded-md
+                hover:bg-green-100
+            `}
 			onClick={onClickHandler}
 		>
 			<div
@@ -54,7 +64,7 @@ const HamburgerButton = ({ showingModal, onClickHandler }: Props) => {
 
 			<div
 				className={
-					commonStyling + commonLine1Line3Styling + currentLine1Styling
+					commonStyling + commonLine1Line3Styling + currentLine3Styling
 				}
 			/>
 		</div>
