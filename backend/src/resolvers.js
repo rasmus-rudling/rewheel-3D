@@ -7,9 +7,7 @@ import User from "./models/User";
 const jwt_secret = process.env.JWT_SECRET;
 
 
-
 // add  Edit Bike and Delete Bike 
-
 
 export const resolvers = {
   Query: {
@@ -70,5 +68,42 @@ export const resolvers = {
 
       return newBike;
     },
+    editBike: async (root, { _id,color }, context) => {   // Can add more inputs to update here color ... etc
+      // Check if user is logged in.
+      const currentUser = context.currentUser;
+      if (!currentUser) {
+        throw new AuthenticationError("Not authenticated.");
+      }
+        
+
+      // Implement some error handling here ? 
+      const filter = { _id: _id };
+      const update = { color: color}; // Can add more updates here color... etc
+
+      const editedBike = await Bike.findOneAndUpdate(filter, update, {
+        new: true
+      });
+
+      return editedBike;
+    },
+
+    deleteBike: async (root, { _id }, context) => {
+      // Check if user is logged in.
+      const currentUser = context.currentUser;
+      if (!currentUser) {
+        throw new AuthenticationError("Not authenticated.");
+      }
+
+      // Implement some error handling here?
+      const deletedBike = await Bike.findByIdAndDelete(_id, {
+        new: true
+      });
+      
+      currentUser.bikeBuilds = await currentUser.bikeBuilds.pull(_id)
+      currentUser.save()
+
+      return deletedBike
+    },
+    
   },
 };

@@ -23,5 +23,7 @@ export const typeDefs = gql`
     createUser(username: String!, password: String!): User
     login(username: String!, password: String!): Token
     addBike(color: String!): Bike!
+    editBike(_id:ID!, color:String!): Bike!
+    deleteBike(_id:ID!):Bike!
   }
 `;
