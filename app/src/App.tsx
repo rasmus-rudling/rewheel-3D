@@ -3,6 +3,7 @@ import ProfilePage from './components/pages/Profile/ProfilePage';
 import BikeBuilderPage from './components/pages/BikeBuilder/BikeBuilderPage';
 import NavBarPresenter from './components/common/NavBar/NavBarPresenter';
 import PageWrapper from './components/common/PageWrapper';
+import LoginPage from './components/pages/Login/LoginPage';
 
 const App = () => {
 	return (
@@ -17,6 +18,12 @@ const App = () => {
 				<Route exact path="/profile">
 					<PageWrapper>
 						<ProfilePage />
+					</PageWrapper>
+				</Route>
+
+				<Route exact path="/login">
+					<PageWrapper>
+						<LoginPage />
 					</PageWrapper>
 				</Route>
 			</Switch>
