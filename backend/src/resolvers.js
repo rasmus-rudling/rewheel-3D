@@ -6,6 +6,11 @@ import User from "./models/User";
 
 const jwt_secret = process.env.JWT_SECRET;
 
+
+
+// add  Edit Bike and Delete Bike 
+
+
 export const resolvers = {
   Query: {
     getCurrentUser: (root, args, context) => {
