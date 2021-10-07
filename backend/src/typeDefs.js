@@ -5,6 +5,7 @@ export const typeDefs = gql`
     id: ID!
     username: String!
     password: String!
+    bikeBuilds: [Bike]!
   }
   type Token {
     value: String!
@@ -15,6 +16,7 @@ export const typeDefs = gql`
   }
   type Query {
     getCurrentUser: User
+    getMyBikes: [Bike]!
     getAllBikes: [Bike!]!
   }
   type Mutation {

@@ -17,6 +17,11 @@ module.exports = {
 			animation: {
 				'spin-slow': 'spin 4s linear infinite',
 			},
+			outline: {
+				green: '1px solid #10B981',
+				red: '1px solid #EF4444',
+				blue: '1px solid #3B82F6',
+			},
 		},
 		rotate: {
 			'-180': '-180deg',

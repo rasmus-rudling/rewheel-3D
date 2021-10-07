@@ -4,9 +4,10 @@ interface Props {
 	text: string;
 	onClickHandler: () => void;
 	color: 'blue' | 'green' | 'red' | 'gray';
+	type?: 'submit' | 'button';
 }
 
-const Button1 = ({ text, onClickHandler, color }: Props) => {
+const Button1 = ({ text, onClickHandler, color, type = 'button' }: Props) => {
 	let colorStyling;
 
 	if (color === 'blue') {
@@ -33,6 +34,7 @@ const Button1 = ({ text, onClickHandler, color }: Props) => {
                 duration-200
                 ` + colorStyling
 			}
+			type={type}
 		>
 			{text}
 		</button>
