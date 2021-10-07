@@ -10,6 +10,7 @@ export interface NavButton {
 const navButtons: NavButton[] = [
 	{ route: 'bike-builder', text: 'cykelbyggaren' },
 	{ route: 'profile', text: 'profil' },
+	{ route: 'login', text: 'logga in' },
 ];
 
 const NavBarPresenter = () => {

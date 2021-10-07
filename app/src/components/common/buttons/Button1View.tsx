@@ -4,6 +4,7 @@ interface Props {
 	text: string;
 	onClickHandler: () => void;
 	color: 'blue' | 'green' | 'red' | 'gray';
+	type: 'submit' | '';
 }
 
 const Button1 = ({ text, onClickHandler, color }: Props) => {
