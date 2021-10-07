@@ -22,7 +22,7 @@
             "name" : "Cylinder"
         },
         {
-            "name" : "Empty.002",
+            "name" : "FRONTWHEEL",
             "translation" : [
                 -1.638202428817749,
                 0.16668516397476196,
@@ -30,7 +30,7 @@
             ]
         },
         {
-            "name" : "Empty.003",
+            "name" : "BACKWHEEL",
             "translation" : [
                 1.0964758396148682,
                 0.0677158460021019,
@@ -38,7 +38,7 @@
             ]
         },
         {
-            "name" : "Empty.004",
+            "name" : "SEATPOST",
             "rotation" : [
                 0,
                 0,
@@ -52,7 +52,7 @@
             ]
         },
         {
-            "name" : "Empty.005",
+            "name" : "HANDLEBAR",
             "rotation" : [
                 0,
                 0,
