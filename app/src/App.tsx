@@ -3,7 +3,7 @@ import ProfilePage from './components/pages/Profile/ProfilePage';
 import BikeBuilderPage from './components/pages/BikeBuilder/BikeBuilderPage';
 import NavBarPresenter from './components/common/NavBar/NavBarPresenter';
 import PageWrapper from './components/common/PageWrapper';
-import LoginPage from './components/pages/Login/LogInPage';
+import LoginPage from './components/pages/Login/LoginPage';
 
 const App = () => {
 	return (
