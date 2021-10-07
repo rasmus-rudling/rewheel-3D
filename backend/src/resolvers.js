@@ -11,6 +11,14 @@ export const resolvers = {
     getCurrentUser: (root, args, context) => {
       return context.currentUser;
     },
+    getMyBikes: async (root, args, context) => {
+      // Check if user is logged in.
+      const currentUser = context.currentUser;
+      if (!currentUser) {
+        throw new AuthenticationError("Not authenticated.");
+      }
+      return currentUser.bikeBuilds;
+    },
     getAllBikes: async () => await Bike.find(),
   },
   Mutation: {
@@ -46,8 +54,15 @@ export const resolvers = {
       if (!currentUser) {
         throw new AuthenticationError("Not authenticated.");
       }
+
+      // Create new bike.
       const newBike = new Bike({ color });
       await newBike.save();
+
+      // Save new bike to user's list of bikeBuilds.
+      currentUser.bikeBuilds.push(newBike);
+      await currentUser.save();
+
       return newBike;
     },
   },
