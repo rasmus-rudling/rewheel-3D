@@ -39,4 +39,7 @@ module.exports = {
 		extend: { fontWeight: ['hover', 'focus'], margin: ['last'] },
 	},
 	plugins: [],
+	corePlugins: {
+		boxSizing: true,
+	},
 };
