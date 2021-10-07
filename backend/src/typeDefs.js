@@ -16,6 +16,7 @@ export const typeDefs = gql`
   }
   type Query {
     getCurrentUser: User
+    getBike(_id:ID!):Bike!
     getMyBikes: [Bike]!
     getAllBikes: [Bike!]!
   }

@@ -7,12 +7,26 @@ import User from "./models/User";
 const jwt_secret = process.env.JWT_SECRET;
 
 
-// add  Edit Bike and Delete Bike 
+// add  Edit Bike and Delete Bike , Get Bike 
 
 export const resolvers = {
   Query: {
     getCurrentUser: (root, args, context) => {
       return context.currentUser;
+    },
+    // Should any user be able to query any existing bike with id ? 
+    getBike: async (root,_id) =>{
+      const bike = await Bike.findById(_id, function (err, docs) {
+        if (err){
+            console.log(err);
+        }
+        else{
+            console.log("Result : ", docs);
+        }
+      });
+
+      return bike
+
     },
     getMyBikes: async (root, args, context) => {
       // Check if user is logged in.
@@ -104,6 +118,8 @@ export const resolvers = {
 
       return deletedBike
     },
+
+
     
   },
 };
