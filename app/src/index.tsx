@@ -4,10 +4,35 @@ import "../build/build.css";
 import App from "./App";
 import "./style/tailwind.css";
 import auth from "./Auth";
-import { ApolloClient } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 // import reportWebVitals from "./reportWebVitals";
 
-// const client = new ApolloClient({
+const httpLink = createHttpLink({
+  uri: "/graphql",
+});
+
+const authLink = setContext((_, { headers }) => {
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: auth.getIdToken(),
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
+
+// const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 //   uri: "http://localhost:4000/graphql",
 //   request: (operation) => {
 //     operation.setContext((context) => ({
@@ -21,7 +46,9 @@ import { ApolloClient } from "@apollo/client";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
