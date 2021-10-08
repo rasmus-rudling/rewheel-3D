@@ -23,6 +23,7 @@ const LoginPage = () => {
 					currentTextValue={formik.values.firstName}
 					onTextChange={(e) => formik.handleChange(e)}
 					type="First Name"
+					showHeader={true}
 				/>
 
 				<button type="submit">Submit</button>

@@ -22,6 +22,10 @@ module.exports = {
 				red: '1px solid #EF4444',
 				blue: '1px solid #3B82F6',
 			},
+			spacing: {
+				13: '3.25rem',
+				360: '60rem',
+			},
 		},
 		rotate: {
 			'-180': '-180deg',
@@ -36,7 +40,11 @@ module.exports = {
 		},
 	},
 	variants: {
-		extend: { fontWeight: ['hover', 'focus'], margin: ['last'] },
+		extend: {
+			fontWeight: ['hover', 'focus'],
+			margin: ['last', 'first', 'even'],
+			width: ['even'],
+		},
 	},
 	plugins: [],
 	corePlugins: {

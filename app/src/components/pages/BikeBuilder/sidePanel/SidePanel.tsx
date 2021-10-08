@@ -1,5 +1,6 @@
 import ProductCard from './ProductCard';
 import Navigation from './Navigation';
+import Button1 from '../../../common/buttons/Button1View';
 
 const currentProductCards = [
 	{
@@ -50,9 +51,9 @@ const currentProductCards = [
 
 const SidePanel = () => {
 	return (
-		<div className="h-full bg-gray-600 flex flex-col">
-			{/* <Navigation /> */}
-			{/* <div className="flex flex-col flex-grow overflow-y-scroll items-stretch no-scrollbar">
+		<div className="h-full bg-gray-200 flex flex-col">
+			<Navigation />
+			<div className="flex flex-col flex-grow overflow-y-scroll items-stretch no-scrollbar">
 				{currentProductCards.map((product) => (
 					<ProductCard
 						name={product.name}
@@ -63,9 +64,40 @@ const SidePanel = () => {
 						imgLink={product.imgLink}
 					/>
 				))}
-			</div> */}
-			<div className="bg-green-600 w-full h-20" />
-			<div className="bg-blue-600 w-full h-10" />
+			</div>
+			{/* <div className="bg-blue-600 w-full h-20" /> */}
+
+			<div className="bg-gray-200 px-3 py-3">
+				<div className="flex flex-col">
+					<span className="font-light">Totalt pris: 5 232 kr</span>
+					<span className="font-light">Klimatkostnad: 123 Co2e</span>
+					<span className="font-light">Klimatbesparing: 1 223 Co2e</span>
+				</div>
+				<div className="flex mt-3">
+					<Button1
+						color="green"
+						onClickHandler={() => {
+							console.log('Spara');
+						}}
+						text="Spara"
+						addBorder={true}
+						blackTextColor={false}
+						filled={true}
+						extraClass="flex-grow"
+					/>
+					<Button1
+						color="blue"
+						onClickHandler={() => {
+							console.log('Nästa');
+						}}
+						text="Nästa"
+						addBorder={true}
+						blackTextColor={false}
+						filled={true}
+						extraClass="flex-grow"
+					/>
+				</div>
+			</div>
 		</div>
 	);
 };

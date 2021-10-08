@@ -18,7 +18,7 @@ const ProductCard = ({
 	imgLink,
 }: Props) => {
 	return (
-		<div className="flex w-full h-36 bg-white mt-3">
+		<div className="flex w-full h-36 bg-white mb-3 last:mb-0">
 			<div className="m-2 w-full">
 				<h3 className="text-lg font-medium">{name}</h3>
 				<h4 className="text-sm mb-2">{subheader}</h4>
