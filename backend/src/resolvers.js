@@ -6,10 +6,18 @@ import User from "./models/User";
 
 const jwt_secret = process.env.JWT_SECRET;
 
+
 export const resolvers = {
   Query: {
     getCurrentUser: (root, args, context) => {
       return context.currentUser;
+    },
+    // Should any user be able to query any existing bike with id ? 
+    getBike: async (root,_id) =>{
+
+      // Add some error handling here?
+      const bike = await Bike.findById(_id)
+      return bike
     },
     getMyBikes: async (root, args, context) => {
       // Check if user is logged in.
@@ -64,5 +72,45 @@ export const resolvers = {
         throw new AuthenticationError("Not authenticated.");
       }
     },
+    editBike: async (root, { _id,color }, context) => {   // Can add more inputs to update here color,price ... etc
+      // Check if user is logged in.
+      const currentUser = context.currentUser;
+      if (!currentUser) {
+        throw new AuthenticationError("Not authenticated.");
+      }
+        
+
+      // Implement some error handling here for id? 
+      const filter = { _id: _id };
+      const update = { color: color}; // Can add more updates here color,price... etc
+
+      const editedBike = await Bike.findOneAndUpdate(filter, update, {
+        new: true
+      });
+
+
+      return editedBike;
+    },
+
+    deleteBike: async (root, { _id }, context) => {
+      // Check if user is logged in.
+      const currentUser = context.currentUser;
+      if (!currentUser) {
+        throw new AuthenticationError("Not authenticated.");
+      }
+
+      // Implement some error handling here for id? 
+      const deletedBike = await Bike.findByIdAndDelete(_id, {
+        new: true
+      });
+      
+      currentUser.bikeBuilds = await currentUser.bikeBuilds.pull(_id)
+      currentUser.save()
+
+      return deletedBike
+    },
+
+
+    
   },
 };
