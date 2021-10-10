@@ -22,7 +22,7 @@ interface Props {
 	alternatives: string[];
 }
 
-const Filter: React.FC<Props> = ({
+const PartFilter: React.FC<Props> = ({
 	name,
 	id,
 	setActive,
@@ -105,4 +105,4 @@ const Filter: React.FC<Props> = ({
 	);
 };
 
-export default Filter;
+export default PartFilter;

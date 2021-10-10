@@ -1,5 +1,5 @@
 import CurrentCategory from './CurrentCategory';
-import Filter from './Filter';
+import Filter from './PartFilter';
 import React from 'react';
 import { useState } from 'react';
 
@@ -27,7 +27,7 @@ const Navigation = () => {
 		setActiveFilter('');
 	};
 
-	const productFilters = (
+	const partFilters = (
 		<div className="grid grid-cols-2 px-3 pb-3 gap-3 w-full relative">
 			{/* Hårdkodade exempel */}
 			<Filter
@@ -105,7 +105,7 @@ const Navigation = () => {
 					</svg>
 				</button>
 			</div>
-			{filtersVisible ? productFilters : null}
+			{filtersVisible ? partFilters : null}
 		</div>
 	);
 };
