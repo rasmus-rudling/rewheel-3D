@@ -3,3 +3,12 @@ export interface User {
 	username: string;
 	name: string;
 }
+
+export interface ActiveFilterAlternatives {
+	[filterAlternative: string]: boolean;
+}
+
+export interface PartFilter {
+	filterName: string;
+	activeFilterAlternatives: ActiveFilterAlternatives;
+}

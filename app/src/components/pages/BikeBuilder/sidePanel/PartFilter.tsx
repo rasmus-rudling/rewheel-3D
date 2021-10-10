@@ -1,106 +1,140 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import Button1 from '../../../common/buttons/Button1View';
 import TextInput from '../../../common/form/TextInput';
 
-const FilterCard = (props: { name: string }) => {
-	return (
-		<div className="ml-3 mr-1 mt-3 h-10 bg-white leading-8 filter drop-shadow-sm last:mb-3">
-			<span className="mx-3 inline-block align-middle text-black">
-				{props.name}
-			</span>
-		</div>
-	);
-};
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { ActiveFilterAlternatives, PartFilter } from '../../../../types';
 
-// React.MouseEventHandler<HTMLButtonElement>
 interface Props {
 	name: string;
-	id: string;
-	setActive: any;
+	id: number;
+	setOpenFilter: (filterName: string) => void;
 	isOpen: boolean;
 	closeFilter: () => void;
-	alternatives: string[];
+	alternatives: ActiveFilterAlternatives;
+	toggleAlternative: (filterName: string, alternative: string) => void;
+	clearCurrentFilter: (filterName: string) => void;
 }
 
 const PartFilter: React.FC<Props> = ({
 	name,
 	id,
-	setActive,
+	setOpenFilter,
 	isOpen,
 	closeFilter,
 	alternatives,
+	toggleAlternative,
+	clearCurrentFilter,
 }) => {
-	return (
-		<>
-			<button
-				className="group w-full border-t border-b rounded-none py-2 border-gray-300 hover:border-gray-400 flex flex-row justify-between items-center"
-				onClick={(e) => setActive(e, name)}
-			>
-				<span className="ml-2 text-gray-700 group-hover:text-gray-900">
-					{name}
-				</span>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					className="h-4 w-4 mr-2"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke="currentColor"
-				>
-					<path
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						strokeWidth={1}
-						d={`${isOpen ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7'}`}
-					/>
-				</svg>
-			</button>
+	const arrowUp = <FontAwesomeIcon icon={faChevronUp} size="xs" className="" />;
+	const arrowDown = (
+		<FontAwesomeIcon icon={faChevronDown} size="xs" color="currentColor" />
+	);
 
-			{/* TODO: Make sure the filter cards show correctly, right now it's 
-                laggy could be solved by adding top:0 or something like that */}
-			<div
-				className={`w-full max-h-96 bg-gray-100 absolute filter drop-shadow-lg ${
-					isOpen ? '' : 'invisible'
-				} ${parseInt(id.slice(-1)) % 2 === 0 ? 'right-3' : ''}`}
-			>
-				<header className="bg-gray-50 w-full p-3">
-					<div className="flex flex-row justify-between items-center">
-						<span className="pl-3">0 valda</span>
-						<div>
-							<Button1
-								color="gray"
-								onClickHandler={closeFilter}
-								text="Rensa"
-								addBorder={true}
-							/>
-							<Button1
-								color="red"
-								onClickHandler={closeFilter}
-								text="X"
-								blackTextColor={false}
-								addBorder={true}
-							/>
-						</div>
+	const showFilterOptions = isOpen ? '' : 'invisible';
+
+	const defaultStyle = `
+        w-full 
+        max-h-96 
+        bg-gray-100 
+        absolute 
+        filter 
+        drop-shadow-lg
+    `;
+
+	const classes = [defaultStyle, showFilterOptions];
+
+	const openFilterButton = (
+		<button
+			className={`
+            group 
+            w-full py-2 
+            border-t border-b border-gray-300 
+            rounded-none 
+            flex justify-between items-center
+            hover:border-gray-400 
+            text-gray-700 hover:text-gray-900
+        `}
+			onClick={() => setOpenFilter(name)}
+		>
+			<span className="ml-2">{name}</span>
+
+			{isOpen ? arrowUp : arrowDown}
+		</button>
+	);
+
+	const defaultFilterStyle = `
+        bg-white 
+        mb-2 last:mb-0 px-3 py-2 
+        font-light 
+        cursor-pointer 
+        transition duration-200
+        hover:bg-gray-300 
+    `;
+	const activeFilterAlternative = 'bg-green-500 text-white hover:bg-green-600';
+
+	const filterAlternatives = (
+		<div className="overflow-y-scroll max-h-52">
+			<div className="flex flex-col flex-nowrap overflow-hidden p-3">
+				{Object.keys(alternatives).map((filterAlternative) => (
+					<div
+						className={
+							alternatives[filterAlternative]
+								? defaultFilterStyle + activeFilterAlternative
+								: defaultFilterStyle
+						}
+						onClick={() => toggleAlternative(name, filterAlternative)}
+					>
+						{filterAlternative}
 					</div>
+				))}
+			</div>
+		</div>
+	);
 
-					<div className="mt-3">
-						<TextInput
-							currentTextValue=""
-							onTextChange={() => {
-								console.log('Hej');
-							}}
-							type="Sök"
-							showHeader={false}
+	const openedFilter = (
+		<div className={classes.join(' ')}>
+			<header className="bg-gray-50 w-full p-3">
+				<div className="flex flex-row justify-between items-center">
+					<span className="pl-3">{name}</span>
+					<div>
+						<Button1
+							color="gray"
+							onClickHandler={() => clearCurrentFilter(name)}
+							text="Rensa"
+							addBorder={true}
+						/>
+						<Button1
+							color="red"
+							onClickHandler={closeFilter}
+							text="X"
+							blackTextColor={false}
+							addBorder={true}
 						/>
 					</div>
-				</header>
-				<div className="overflow-y-scroll max-h-52">
-					<div className="flex flex-col flex-nowrap overflow-hidden">
-						{alternatives.map((e) => (
-							<FilterCard name={e} />
-						))}
-					</div>
 				</div>
-			</div>
+
+				<div className="mt-3">
+					<TextInput
+						currentTextValue=""
+						onTextChange={() => {
+							console.log('Hej');
+						}}
+						type="Sök"
+						showHeader={false}
+					/>
+				</div>
+			</header>
+
+			{filterAlternatives}
+		</div>
+	);
+
+	return (
+		<>
+			{openFilterButton}
+			{openedFilter}
 		</>
 	);
 };

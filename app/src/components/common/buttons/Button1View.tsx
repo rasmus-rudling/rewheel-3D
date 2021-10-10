@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface Props {
 	text: string;
 	onClickHandler: () => void;
@@ -65,8 +63,6 @@ const Button1 = ({
 		fontColor = 'text-gray-900';
 	}
 
-	console.log(extraClass);
-
 	const basicStyle = `
         capitalize font-light 
         rounded-sm 
@@ -75,6 +71,7 @@ const Button1 = ({
 
         transition
         duration-200
+        select-none
     `;
 
 	const allStyling = [

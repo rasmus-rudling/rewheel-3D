@@ -49,6 +49,8 @@ const currentProductCards = [
 	},
 ];
 
+// TODO: Context för Filter, sortering och den tillfälligt valda kategorin
+
 const SidePanel = () => {
 	return (
 		<div className="h-full bg-gray-200 flex flex-col">
@@ -65,7 +67,6 @@ const SidePanel = () => {
 					/>
 				))}
 			</div>
-			{/* <div className="bg-blue-600 w-full h-20" /> */}
 
 			<div className="bg-gray-200 px-3 py-3">
 				<div className="flex flex-col">
@@ -101,40 +102,5 @@ const SidePanel = () => {
 		</div>
 	);
 };
-
-// const SidePanel = () => {
-// 	return (
-// 		<div className="h-auto bg-gray-100 flex flex-col">
-// 			<Navigation />
-// 			<div className="flex flex-col flex-grow overflow-y-scroll items-stretch no-scrollbar">
-// 				{currentProductCards.map((product) => (
-// 					<ProductCard
-// 						name={product.name}
-// 						subheader={product.subheader}
-// 						grade={product.grade}
-// 						numReviews={product.numReviews}
-// 						price={product.price}
-// 						imgLink={product.imgLink}
-// 					/>
-// 				))}
-// 			</div>
-// 			<div className="bg-gray-200 flex-none px-3 py-2">
-// 				<div className="grid grid-cols-2">
-// 					<span className="col-span-2">Totalt pris: xx</span>
-// 					<span className="">Klimatkostnad: xx</span>
-// 					<span className="ml-1">Klimatbesparing: xx</span>
-// 				</div>
-// 				<div className="block mt-3">
-// 					<button className="inline-block float-left w-44 h-9 bg-gray-50">
-// 						Spara
-// 					</button>
-// 					<button className="inline-block float-right w-44 h-9 bg-gray-50">
-// 						Nästa
-// 					</button>
-// 				</div>
-// 			</div>
-// 		</div>
-// 	);
-// };
 
 export default SidePanel;
