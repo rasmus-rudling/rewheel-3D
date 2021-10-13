@@ -5,8 +5,26 @@ import NavBarPresenter from "./components/common/NavBar/NavBarPresenter";
 import PageWrapper from "./components/common/PageWrapper";
 import LoginPage from "./components/pages/Login/LoginPage";
 import AuthCallback from "./components/common/AuthCallback";
+import { useCallback, useEffect, useState } from "react";
+import auth from "./Auth";
 
 const App = () => {
+  const [, updateState] = useState({});
+  const forceUpdate = useCallback(() => updateState({}), []);
+
+  useEffect(() => {
+    async () => {
+      if (window.location.href.split("/")[-1] === "callback") return;
+      try {
+        await auth.silentAuth();
+        forceUpdate();
+      } catch (err: any) {
+        if (err.error === "login_required") return;
+        console.log(err.error);
+      }
+    };
+  }, []);
+
   return (
     <Router>
       <Switch>

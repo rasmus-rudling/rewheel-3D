@@ -5,24 +5,57 @@ class Auth {
     this.auth0 = new auth0.WebAuth({
       domain: "dev-84ubssw6.us.auth0.com",
       clientID: "6kgfnWgIi4MOYKC6yklguXeSnpfB0i4a",
-      redirectUri: "http://localhost:3000/callback",
+      redirectUri: "http://localhost:8080/callback",
       audience: "https://dev-84ubssw6.us.auth0.com/userinfo",
       responseType: "token id_token",
       scope: "openid email",
     });
 
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
+    this.login = this.signIn.bind(this);
+    this.logout = this.signOut.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);
     this.isAuthenticated = this.isAuthenticated.bind(this);
+    this.authFlag = "isLoggedIn";
   }
 
-  login() {
+  isAuthenticated() {
+    return JSON.parse(localStorage.getItem(this.authFlag));
+  }
+
+  setSession(authResult) {
+    this.idToken = authResult.idToken;
+    localStorage.setItem(this.authFlag, JSON.stringify(true));
+  }
+
+  signIn() {
     this.auth0.authorize();
+  }
+
+  signOut() {
+    localStorage.setItem(this.authFlag, JSON.stringify(false));
+    this.auth0.logout({
+      returnTo: "http://localhost:8080",
+      clientID: "6kgfnWgIi4MOYKC6yklguXeSnpfB0i4a",
+    });
   }
 
   getIdToken() {
     return this.idToken;
+  }
+
+  silentAuth() {
+    if (this.isAuthenticated()) {
+      return new Promise((resolve, reject) => {
+        this.auth0.checkSession({}, (err, authResult) => {
+          if (err) {
+            localStorage.removeItem(this.authFlag);
+            return reject(err);
+          }
+          this.setSession(authResult);
+          resolve();
+        });
+      });
+    }
   }
 
   handleAuthentication() {
@@ -36,35 +69,6 @@ class Auth {
         resolve();
       });
     });
-  }
-
-  setSession(authResult) {
-    this.idToken = authResult.idToken;
-    console.log(this.idToken);
-    // set the time that the id token will expire at
-    this.expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
-  }
-
-  logout() {
-    this.auth0.logout({
-      returnTo: "http://localhost:3000",
-      clientID: "<YOUR_AUTH0_CLIENT_ID>",
-    });
-  }
-
-  silentAuth() {
-    return new Promise((resolve, reject) => {
-      this.auth0.checkSession({}, (err, authResult) => {
-        if (err) return reject(err);
-        this.setSession(authResult);
-        resolve();
-      });
-    });
-  }
-
-  isAuthenticated() {
-    // Check whether the current time is past the token's expiry time
-    return new Date().getTime() < this.expiresAt;
   }
 }
 
