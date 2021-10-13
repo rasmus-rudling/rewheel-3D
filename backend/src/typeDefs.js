@@ -14,17 +14,40 @@ export const typeDefs = gql`
     id: ID!
     color: String!
   }
+  type Product {
+    id: ID!
+    modelSrc: String!
+    name: String!
+    brand: String!
+    grade: Int!
+    numReviews: Int!
+    price: Float!
+    imgLink: String!
+    type: String!
+  }
   type Query {
     getCurrentUser: User
-    getBike(_id:ID!):Bike!
+    getBike(_id: ID!): Bike!
     getMyBikes: [Bike]!
     getAllBikes: [Bike!]!
+    getProduct(_id: ID!): Product!
+    getAllProducts: [Product!]!
   }
   type Mutation {
     createUser(username: String!, password: String!): User
     login(username: String!, password: String!): Token
     addBike(color: String!): Bike!
-    editBike(_id:ID!, color:String!): Bike!
-    deleteBike(_id:ID!):Bike!
+    editBike(_id: ID!, color: String!): Bike!
+    deleteBike(_id: ID!): Bike!
+    addProduct(
+      modelSrc: String!
+      name: String!
+      brand: String!
+      grade: Int!
+      numReviews: Int!
+      price: Float!
+      imgLink: String!
+      type: String!
+    ): Product
   }
 `;
