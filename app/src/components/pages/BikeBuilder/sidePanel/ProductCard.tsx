@@ -1,27 +1,19 @@
+import { Product } from '../../../../types';
 import QualityIndication from './QualityIndicator';
-
-interface Props {
-	name: string;
-	subheader: string;
-	grade: number;
-	numReviews: number;
-	price: number;
-	imgLink: string;
-}
 
 const ProductCard = ({
 	name,
-	subheader,
+	brand,
 	grade,
 	numReviews,
 	price,
 	imgLink,
-}: Props) => {
+}: Product) => {
 	return (
 		<div className="flex w-full h-36 bg-white mb-3 last:mb-0">
 			<div className="m-2 w-full">
-				<h3 className="text-lg font-medium">{name}</h3>
-				<h4 className="text-sm mb-2">{subheader}</h4>
+				<h3 className="text-lg font-light">{name}</h3>
+				<h4 className="text-sm mb-2 font-light">{brand}</h4>
 				<QualityIndication grade={grade} reviews={numReviews} />
 				<h4 className="text-base">{price} kr</h4>
 			</div>
