@@ -7,12 +7,14 @@ interface Props {
 	currentBuild: BikeBuild;
 	currentProductCards: Product[];
 	productCardClickHandler: Function;
+	currentProductTypeUpdateHandler: Function;
 }
 
 const SidePanelView = ({
 	currentBuild,
 	currentProductCards,
 	productCardClickHandler,
+	currentProductTypeUpdateHandler,
 }: Props) => {
 	return (
 		<div className="h-full bg-gray-200 flex flex-col">
@@ -34,15 +36,11 @@ const SidePanelView = ({
 					<span className="font-light">
 						Totalt pris: {currentBuild.totalPrice} kr
 					</span>
-					{/* <span className="font-light">Klimatkostnad: 123 Co2e</span>
-					<span className="font-light">Klimatbesparing: 1 223 Co2e</span> */}
 				</div>
 				<div className="flex mt-3">
 					<Button1
 						color="blue"
-						onClickHandler={() => {
-							console.log('Spara');
-						}}
+						onClickHandler={() => currentProductTypeUpdateHandler('previous')}
 						text="Förgående"
 						addBorder={true}
 						blackTextColor={false}
@@ -51,9 +49,7 @@ const SidePanelView = ({
 					/>
 					<Button1
 						color="blue"
-						onClickHandler={() => {
-							console.log('Nästa');
-						}}
+						onClickHandler={() => currentProductTypeUpdateHandler('next')}
 						text="Nästa"
 						addBorder={true}
 						blackTextColor={false}

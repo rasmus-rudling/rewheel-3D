@@ -13,6 +13,11 @@ export interface PartFilter {
 	activeFilterAlternatives: ActiveFilterAlternatives;
 }
 
+export interface ProductType {
+	name: 'frame' | 'wheel' | 'handle bar' | 'saddle';
+	idx: number;
+}
+
 export interface Product {
 	id: string;
 	modelSrc: string;
@@ -22,7 +27,7 @@ export interface Product {
 	numReviews: number;
 	price: number;
 	imgLink: string;
-	type: 'frame' | 'handle bar' | 'saddle' | 'wheel';
+	type: ProductType;
 }
 
 export interface BikeBuild {
