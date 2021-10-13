@@ -5,20 +5,29 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 
 import BikeFrameModel from "./../../../resources/testGeometry/bikeFrame.gltf";
-import { BufferGeometry, Group } from "three";
-import { JsxElement } from "typescript";
+import FrontWheelModel from "./../../../resources/testGeometry/frontWheel.gltf";
+
+import { BufferGeometry, Group, Object3D, Vector3 } from "three";
+import { getDefaultCompilerOptions, JsxElement } from "typescript";
+import { groupCollapsed } from "console";
 
 type GLTFResult = GLTF & {
   nodes: {
-    [key: string]: THREE.Object3D;
+    FRAME: THREE.Mesh;
   };
   materials: {};
 };
 
 type BikeCompProps = JSX.IntrinsicElements["group"] & {
-  config: ComponentConfig;
-  setConfig: React.Dispatch<React.SetStateAction<ComponentConfig>>;
+  path: string;
+  bikeConfig: BikeConfig;
 };
+
+// type BikeCompProps = JSX.IntrinsicElements["group"] & {
+//   name: string;
+//   bikeConfig: BikeConfig;
+//   setBikeConfig: React.Dispatch<React.SetStateAction<BikeConfig>>;
+// };
 
 type Anchor = {
   position: THREE.Vector3;
@@ -32,73 +41,124 @@ type Anchors = {
 type ComponentConfig = {
   id: number;
   source: string;
-  visible: boolean;
-  type: string;
   anchors: Anchors;
 };
 
-const BikeFrame = (props: BikeCompProps) => {
-  const group = useRef<THREE.Group>();
-  const { scene } = useGLTF(BikeFrameModel) as GLTF;
+type BikeConfig = {
+  [key: string]: ComponentConfig;
+};
 
-  const bikeComponentConfig = {} as ComponentConfig;
-  const anchors: Anchors = {};
-  const children: any = scene.children;
+const BikeComponent = (props: BikeCompProps) => {
+  const group = useRef<THREE.Mesh>();
+  const scene = useGLTF(props.path) as GLTF;
 
-  let geometry = {} as BufferGeometry;
-  useEffect(() => {
-    for (const idx in scene.children) {
-      const objectName = scene.children[idx].name;
-      const objectType = scene.children[idx].type;
+  let componentPosition = new THREE.Vector3(0, 0, 0);
+  let componentRotation = new THREE.Euler(0, 0, 0);
 
-      if (objectType === "Object3D") {
-        anchors[objectName] = {
-          position: children[idx].position,
-          rotation: children[idx].rotation,
-        } as Anchor;
-      } else if (objectType === "Mesh") {
-        bikeComponentConfig.type = objectType;
-        geometry = children[idx].geometry;
-      }
-    }
+  console.log(scene);
+  const mesh: any = scene.scene.children.find((e) => e.type === "Mesh");
 
-    bikeComponentConfig.anchors = anchors;
-    props.setConfig(bikeComponentConfig);
-  }, []);
+  if (mesh.name === "FRONTWHEEL") {
+    componentPosition = props.bikeConfig["FRAME"].anchors[mesh.name].position;
+    componentRotation = props.bikeConfig["FRAME"].anchors[mesh.name].rotation;
+  }
 
   return (
-    <mesh
-      name={bikeComponentConfig.type}
-      ref={group}
-      castShadow
-      receiveShadow
-      geometry={geometry}
-    />
+    <group ref={group} {...props} dispose={null}>
+      <mesh
+        name="FRAME"
+        castShadow
+        receiveShadow
+        geometry={mesh.geometry}
+        position={componentPosition}
+        rotation={componentRotation}
+      />
+    </group>
   );
 };
+
+// const BikeComponent = (props: BikeCompProps) => {
+//   const group = useRef<THREE.Group>();
+//   const { scene } = useGLTF(BikeFrameModel) as GLTF;
+
+//   let componentPosition = new THREE.Vector3(0, 0, 0);
+//   let componentRotation = new THREE.Euler(0, 0, 0);
+//   const bikeConfigTemp = { ...props.bikeConfig };
+//   const componentConfig = {} as ComponentConfig;
+//   const anchors: Anchors = {};
+//   const children: any = scene.children;
+
+//   let objectName = "";
+
+//   for (const idx in scene.children) {
+//     const childType = scene.children[idx].type;
+//     const childName = scene.children[idx].name;
+
+//     if (childType === "Object3D") {
+//       anchors[childName] = {
+//         position: children[idx].position,
+//         rotation: children[idx].rotation,
+//       } as Anchor;
+//     } else if (childType === "Mesh") {
+//       objectName = scene.children[idx].name;
+//       componentConfig.geometry = children[idx].geometry;
+//     }
+//   }
+
+//   componentConfig.anchors = anchors;
+//   bikeConfigTemp[objectName] = componentConfig;
+
+//   useFrame(() => {
+
+//     props.setBikeConfig(bikeConfigTemp);
+
+//   })
+
+//   // if (objectName == "FRONTWHEEL") {
+//   //   componentPosition = bikeConfig["FRAME"].anchors["FRONTWHEEL"].position;
+//   //   componentRotation = bikeConfig["FRAME"].anchors["FRONTWHEEL"].rotation;
+//   // }
+
+//   return (
+//     <>
+//       <mesh
+//         name={props.name}
+//         ref={group}
+//         castShadow
+//         receiveShadow
+//         geometry={props.bikeConfig[props.name].geometry}
+//         position={componentPosition}
+//         rotation={componentRotation}
+//       />
+//       <Object3D></Object3D>
+//     </>
+//   );
+// };
 
 useGLTF.preload(BikeFrameModel);
 
 const BikeBuild = () => {
-  const [frameConfig, setFrameConfig] = useState({} as ComponentConfig);
-  const [seatPostConfig, setSeatPostConfig] = useState({} as ComponentConfig);
-  const [handlebarConfig, sethandlebarConfig] = useState({} as ComponentConfig);
-  const [backWheelConfig, setBackWheelConfig] = useState({} as ComponentConfig);
-  const [frontWheelConfig, setFrontWheelConfig] = useState(
-    {} as ComponentConfig
+  const bikeConfig: BikeConfig = {
+    FRAME: {
+      id: 0,
+      source: BikeFrameModel,
+      anchors: {
+        "FRONTWHEEL": {
+          position: new THREE.Vector3(-1.638202428817749,16668516397476196, 0),
+          rotation: new THREE.Euler(0, 0, 0, 'y')
+        }
+      }          
+      },
+    };
+
+  const buildComponents = [];
+
+  return (
+    <group name="bikeBuild">
+      <BikeComponent path={BikeFrameModel} bikeConfig={bikeConfig} />
+      <BikeComponent path={FrontWheelModel} bikeConfig={bikeConfig} />
+    </group>
   );
-
-  const bikeComponents: JSX.Element[] = [];
-
-  const displayBikeComponent = () => {
-    bikeComponents.push(
-      <BikeFrame config={frameConfig} setConfig={setFrameConfig} />
-    );
-  };
-
-  displayBikeComponent();
-
-  return <group name="bikeBuild">{bikeComponents.map((e) => e)}</group>;
 };
 
 const BikeView = () => {
