@@ -1,4 +1,4 @@
-import { ProductCard } from '../../../../types';
+import { Product } from '../../../../types';
 import QualityIndication from './QualityIndicator';
 
 const ProductCard = ({
@@ -8,7 +8,7 @@ const ProductCard = ({
 	numReviews,
 	price,
 	imgLink,
-}: ProductCard) => {
+}: Product) => {
 	return (
 		<div className="flex w-full h-36 bg-white mb-3 last:mb-0">
 			<div className="m-2 w-full">
