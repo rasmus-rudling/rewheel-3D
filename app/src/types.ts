@@ -24,3 +24,14 @@ export interface Product {
 	imgLink: string;
 	type: 'frame' | 'handle bar' | 'saddle' | 'wheel';
 }
+
+export interface BikeBuild {
+	parts: Product[];
+} 
+
+export interface SavedBuild {
+	name: string;
+	build: BikeBuild;
+	savedAt?: Date;
+	id: number;
+}
