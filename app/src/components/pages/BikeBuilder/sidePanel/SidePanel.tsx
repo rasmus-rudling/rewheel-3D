@@ -1,51 +1,67 @@
 import ProductCard from './ProductCard';
 import Navigation from './Navigation';
 import Button1 from '../../../common/buttons/Button1View';
+import { ProductCard as ProductCardType } from '../../../../types';
 
-const currentProductCards = [
+const currentProductCards: ProductCardType[] = [
 	{
+		id: '',
+		modelSrc: '',
 		name: 'Super fancy frame',
-		subheader: 'Specialized',
+		brand: 'Specialized',
 		grade: 2,
 		numReviews: 2,
 		price: 324,
 		imgLink:
 			'https://shimmercat.abicart.se/shop/32301/art1/h1325/172811325-origpic-eb3c2a.jpg?max-width=500&max-height=500&quality=85',
+		type: 'frame',
 	},
 	{
+		id: '',
+		modelSrc: '',
 		name: 'Super fancy frame',
-		subheader: 'Specialized',
+		brand: 'Specialized',
 		grade: 5,
 		numReviews: 11,
 		price: 34,
 		imgLink:
 			'https://www.planetx.co.uk/imgs/products/px/950x600_constWH/FTPXTIADV4_P1-05.jpg?v=mo',
+		type: 'frame',
 	},
 	{
+		id: '',
+		modelSrc: '',
 		name: 'Super fancy frame',
-		subheader: 'Specialized',
+		brand: 'Specialized',
 		grade: 1,
 		numReviews: 17,
 		price: 804,
 		imgLink: 'https://www.bike-components.de/assets/p/i/1280x960/386566.jpg',
+		type: 'frame',
 	},
 	{
+		id: '',
+		modelSrc: '',
 		name: 'Super fancy frame',
-		subheader: 'Specialized',
+		brand: 'Specialized',
 		grade: 2,
 		numReviews: 2,
 		price: 324,
 		imgLink:
 			'https://shimmercat.abicart.se/shop/32301/art1/h1325/172811325-origpic-eb3c2a.jpg?max-width=500&max-height=500&quality=85',
+		type: 'frame',
 	},
 	{
+		id: '',
+		modelSrc: '',
 		name: 'Super fancy frame',
-		subheader: 'Specialized',
+		brand: 'Specialized',
 		grade: 5,
 		numReviews: 11,
 		price: 34,
 		imgLink:
 			'https://www.planetx.co.uk/imgs/products/px/950x600_constWH/FTPXTIADV4_P1-05.jpg?v=mo',
+		type: 'frame',
 	},
 ];
 
@@ -58,12 +74,15 @@ const SidePanel = () => {
 			<div className="flex flex-col flex-grow overflow-y-scroll items-stretch no-scrollbar">
 				{currentProductCards.map((product) => (
 					<ProductCard
+						id={product.id}
 						name={product.name}
-						subheader={product.subheader}
+						brand={product.brand}
 						grade={product.grade}
 						numReviews={product.numReviews}
 						price={product.price}
 						imgLink={product.imgLink}
+						type={product.type}
+						modelSrc={product.modelSrc}
 					/>
 				))}
 			</div>
