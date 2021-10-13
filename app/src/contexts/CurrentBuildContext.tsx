@@ -32,7 +32,7 @@ const CurrentBuildProvider: React.FC = ({ children }) => {
 		);
 
 		let oldProductsCleared = oldProducts.filter(
-			(product) => product.type !== newProduct.type
+			(product) => product.type.name !== newProduct.type.name
 		);
 
 		if (!newProductAlreadyInBuild) {

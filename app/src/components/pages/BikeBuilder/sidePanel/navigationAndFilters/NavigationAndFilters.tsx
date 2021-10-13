@@ -5,9 +5,14 @@ import { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { PartFilter } from '../../../../../types';
+import { PartFilter, ProductType } from '../../../../../types';
+import { capitalizeFirstLetter } from '../../../../../utility/functions';
 
-const NavigationAndFilters = () => {
+interface Props {
+	currentProductType: ProductType;
+}
+
+const NavigationAndFilters = ({ currentProductType }: Props) => {
 	const [openFilter, setOpenFilter] = useState('');
 	const [filtersVisible, setFiltersVisible] = useState(false);
 	const [partFiltersList, setPartFiltersList] = useState<PartFilter[]>([
@@ -113,12 +118,28 @@ const NavigationAndFilters = () => {
 	const arrowUp = <FontAwesomeIcon icon={faChevronUp} size="xs" />;
 	const arrowDown = <FontAwesomeIcon icon={faChevronDown} size="xs" />;
 
+	let categoryInEnglish = capitalizeFirstLetter(currentProductType.name);
+	let categoryInSwedish = '';
+
+	if (categoryInEnglish === 'Frame') {
+		categoryInSwedish = 'Välj ram';
+	} else if (categoryInEnglish === 'Wheel') {
+		categoryInSwedish = 'Välj däck';
+	} else if (categoryInEnglish === 'Handle bar') {
+		categoryInSwedish = 'Välj styre';
+	} else if (categoryInEnglish === 'Saddle') {
+		categoryInSwedish = 'Välj sadel';
+	}
+
 	return (
 		<div className="w-full bg-gray-200">
 			<div className="px-3 py-2 flex justify-between">
-				<CurrentCategory categories={['Ramar', 'Stålramar']} />
+				<CurrentCategory categories={[categoryInSwedish]} />
 
-				<button onClick={filterVisabilityHandler} className="flex items-center">
+				<button
+					onClick={filterVisabilityHandler}
+					className="flex items-center hidden"
+				>
 					<span className="mr-1 select-none">Filter</span>
 					{filtersVisible ? arrowUp : arrowDown}
 				</button>
