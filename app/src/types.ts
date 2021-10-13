@@ -12,3 +12,15 @@ export interface PartFilter {
 	filterName: string;
 	activeFilterAlternatives: ActiveFilterAlternatives;
 }
+
+export interface ProductCard {
+	id: string;
+	modelSrc: string;
+	name: string;
+	brand: string;
+	grade: number;
+	numReviews: number;
+	price: number;
+	imgLink: string;
+	type: 'frame' | 'handle bar' | 'saddle' | 'wheel';
+}
