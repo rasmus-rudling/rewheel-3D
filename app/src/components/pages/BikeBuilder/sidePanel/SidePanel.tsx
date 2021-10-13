@@ -1,9 +1,9 @@
 import ProductCard from './ProductCard';
 import Navigation from './Navigation';
 import Button1 from '../../../common/buttons/Button1View';
-import { ProductCard as ProductCardType } from '../../../../types';
+import { Product } from '../../../../types';
 
-const currentProductCards: ProductCardType[] = [
+const currentProductCards: Product[] = [
 	{
 		id: '',
 		modelSrc: '',

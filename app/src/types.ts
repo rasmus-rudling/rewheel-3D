@@ -13,7 +13,7 @@ export interface PartFilter {
 	activeFilterAlternatives: ActiveFilterAlternatives;
 }
 
-export interface ProductCard {
+export interface Product {
 	id: string;
 	modelSrc: string;
 	name: string;
