@@ -6,9 +6,23 @@ import {
 import {
 	useCurrentProductType,
 	useCurrentProductTypeUpdate,
-} from '../../../../contexts/CurrentProductType';
-import { Product } from '../../../../types';
+} from '../../../../contexts/CurrentProductTypeContext';
+import { Product, ProductType } from '../../../../types';
 import SidePanelView from './SidePanelView';
+
+const totNumberOfTypes = 4;
+
+const frameProductType: ProductType = {
+	name: 'frame',
+	idx: 0,
+	numberOfTypes: totNumberOfTypes,
+};
+
+const wheelProductType: ProductType = {
+	name: 'wheel',
+	idx: 1,
+	numberOfTypes: totNumberOfTypes,
+};
 
 const frameProducts: Product[] = [
 	{
@@ -21,10 +35,7 @@ const frameProducts: Product[] = [
 		price: 324,
 		imgLink:
 			'https://shimmercat.abicart.se/shop/32301/art1/h1325/172811325-origpic-eb3c2a.jpg?max-width=500&max-height=500&quality=85',
-		type: {
-			name: 'frame',
-			idx: 0,
-		},
+		type: frameProductType,
 	},
 	{
 		id: 'weqweqwe',
@@ -36,10 +47,7 @@ const frameProducts: Product[] = [
 		price: 34,
 		imgLink:
 			'https://www.planetx.co.uk/imgs/products/px/950x600_constWH/FTPXTIADV4_P1-05.jpg?v=mo',
-		type: {
-			name: 'frame',
-			idx: 0,
-		},
+		type: frameProductType,
 	},
 	{
 		id: 'adjjkqwekjqwe',
@@ -50,10 +58,7 @@ const frameProducts: Product[] = [
 		numReviews: 17,
 		price: 804,
 		imgLink: 'https://www.bike-components.de/assets/p/i/1280x960/386566.jpg',
-		type: {
-			name: 'frame',
-			idx: 0,
-		},
+		type: frameProductType,
 	},
 	{
 		id: '123jo1k2josd',
@@ -65,10 +70,7 @@ const frameProducts: Product[] = [
 		price: 324,
 		imgLink:
 			'https://shimmercat.abicart.se/shop/32301/art1/h1325/172811325-origpic-eb3c2a.jpg?max-width=500&max-height=500&quality=85',
-		type: {
-			name: 'frame',
-			idx: 0,
-		},
+		type: frameProductType,
 	},
 	{
 		id: 'asdjlq2kj3',
@@ -80,10 +82,7 @@ const frameProducts: Product[] = [
 		price: 34,
 		imgLink:
 			'https://www.planetx.co.uk/imgs/products/px/950x600_constWH/FTPXTIADV4_P1-05.jpg?v=mo',
-		type: {
-			name: 'frame',
-			idx: 0,
-		},
+		type: frameProductType,
 	},
 ];
 
@@ -98,10 +97,7 @@ const wheelProducts: Product[] = [
 		price: 750,
 		imgLink:
 			'https://cdnm.bike-discount.de/media/org/orgb_D/orgid_78/thumbs/740591_5949415.jpg',
-		type: {
-			name: 'wheel',
-			idx: 1,
-		},
+		type: wheelProductType,
 	},
 ];
 
@@ -138,6 +134,8 @@ const SidePanelPresenter = () => {
 			currentProductCards={productsToShow}
 			productCardClickHandler={productCardClickHandler}
 			currentProductTypeUpdateHandler={currentProductTypeUpdateHandler}
+			currentProductType={currentProductType}
+			totNumberOfTypes={totNumberOfTypes}
 		/>
 	);
 };

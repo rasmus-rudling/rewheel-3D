@@ -16,6 +16,7 @@ export interface PartFilter {
 export interface ProductType {
 	name: 'frame' | 'wheel' | 'handle bar' | 'saddle';
 	idx: number;
+	numberOfTypes: number;
 }
 
 export interface Product {

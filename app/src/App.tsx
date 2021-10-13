@@ -1,11 +1,10 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ProfilePage from './components/pages/Profile/ProfilePage';
 import BikeBuilderPage from './components/pages/BikeBuilder/BikeBuilderPage';
-import NavBarPresenter from './components/common/NavBar/NavBarPresenter';
 import PageWrapper from './components/common/PageWrapper';
 import LoginPage from './components/pages/Login/LoginPage';
 import CurrentBuildProvider from './contexts/CurrentBuildContext';
-import CurrentProductTypeProvider from './contexts/CurrentProductType';
+import CurrentProductTypeProvider from './contexts/CurrentProductTypeContext';
 
 const App = () => {
 	return (

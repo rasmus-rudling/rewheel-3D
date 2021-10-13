@@ -5,6 +5,7 @@ import { BikeBuild, Product, ProductType } from '../types';
 const CurrentProductTypeContext = createContext<ProductType>({
 	name: 'frame',
 	idx: 0,
+	numberOfTypes: 4,
 });
 const CurrentProductTypeUpdateContext = createContext<
 	(changeTypeOption: 'previous' | 'next') => void
@@ -22,6 +23,7 @@ const CurrentProductTypeProvider: React.FC = ({ children }) => {
 	const [currentProductType, seturrentProductType] = useState<ProductType>({
 		name: 'frame',
 		idx: 0,
+		numberOfTypes: 4,
 	});
 
 	const setNewCurrentProductType = (changeTypeOption: 'previous' | 'next') => {
@@ -51,6 +53,7 @@ const CurrentProductTypeProvider: React.FC = ({ children }) => {
 		seturrentProductType({
 			name: newProductType,
 			idx: newIdx,
+			numberOfTypes: possibleProductTypes.length,
 		});
 	};
 

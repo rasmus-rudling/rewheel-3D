@@ -1,13 +1,15 @@
 import ProductCard from './productCard/ProductCardView';
 import NavigationAndFilters from './navigationAndFilters/NavigationAndFilters';
 import Button1 from '../../../common/buttons/Button1View';
-import { BikeBuild, Product } from '../../../../types';
+import { BikeBuild, Product, ProductType } from '../../../../types';
 
 interface Props {
 	currentBuild: BikeBuild;
 	currentProductCards: Product[];
 	productCardClickHandler: Function;
 	currentProductTypeUpdateHandler: Function;
+	currentProductType: ProductType;
+	totNumberOfTypes: number;
 }
 
 const SidePanelView = ({
@@ -15,10 +17,12 @@ const SidePanelView = ({
 	currentProductCards,
 	productCardClickHandler,
 	currentProductTypeUpdateHandler,
+	currentProductType,
+	totNumberOfTypes,
 }: Props) => {
 	return (
 		<div className="h-full bg-gray-200 flex flex-col">
-			<NavigationAndFilters />
+			<NavigationAndFilters currentProductType={currentProductType} />
 			<div className="flex flex-col flex-grow overflow-y-scroll items-stretch no-scrollbar">
 				{currentProductCards.map((product) => (
 					<ProductCard
@@ -38,24 +42,39 @@ const SidePanelView = ({
 					</span>
 				</div>
 				<div className="flex mt-3">
-					<Button1
-						color="blue"
-						onClickHandler={() => currentProductTypeUpdateHandler('previous')}
-						text="Förgående"
-						addBorder={true}
-						blackTextColor={false}
-						filled={false}
-						extraClass="flex-grow"
-					/>
-					<Button1
-						color="blue"
-						onClickHandler={() => currentProductTypeUpdateHandler('next')}
-						text="Nästa"
-						addBorder={true}
-						blackTextColor={false}
-						filled={true}
-						extraClass="flex-grow"
-					/>
+					{currentProductType.idx > 0 ? (
+						<Button1
+							color="blue"
+							onClickHandler={() => currentProductTypeUpdateHandler('previous')}
+							text="Förgående"
+							addBorder={true}
+							blackTextColor={false}
+							filled={false}
+							extraClass="flex-grow"
+						/>
+					) : null}
+
+					{currentProductType.idx <= totNumberOfTypes - 1 ? (
+						<Button1
+							color="blue"
+							onClickHandler={() => currentProductTypeUpdateHandler('next')}
+							text="Nästa"
+							addBorder={true}
+							blackTextColor={false}
+							filled={true}
+							extraClass="flex-grow"
+						/>
+					) : (
+						<Button1
+							color="green"
+							onClickHandler={() => currentProductTypeUpdateHandler('previous')}
+							text="Spara"
+							addBorder={true}
+							blackTextColor={false}
+							filled={true}
+							extraClass="flex-grow"
+						/>
+					)}
 				</div>
 			</div>
 		</div>
