@@ -1,10 +1,13 @@
-import SidePanel from './SidePanel';
+import SidePanel from './sidePanel/SidePanel';
+import BikeView from './BikeView';
 
 const BikeBuilderPage = () => {
 	return (
-		<div className="App">
-			<div className="flex items-stretch h-full">
-				<div className="flex-grow"></div>
+		<div className="flex h-full">
+			<div className="h-full flex-grow">
+				<BikeView />
+			</div>
+			<div className="h-full w-2/6 max-w-sm">
 				<SidePanel />
 			</div>
 		</div>

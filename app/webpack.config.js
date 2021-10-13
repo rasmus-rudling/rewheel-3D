@@ -29,6 +29,10 @@ module.exports = {
 				test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
 				use: ['file-loader'],
 			},
+			{
+				test: /\.(glb|gltf)$/,
+				loader: 'file-loader'
+			}
 		],
 	},
 	plugins: [

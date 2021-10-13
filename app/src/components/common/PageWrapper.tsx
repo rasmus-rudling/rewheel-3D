@@ -7,7 +7,7 @@ interface Props {
 
 const PageWrapper = ({ children }: Props) => {
 	return (
-		<div className="bg-gray-100 min-h-screen w-full pt-12 mt-1">
+		<div className="bg-gray-100 min-h-screen h-16 w-full pt-13 box-border">
 			<NavBarPresenter />
 			{children}
 		</div>
