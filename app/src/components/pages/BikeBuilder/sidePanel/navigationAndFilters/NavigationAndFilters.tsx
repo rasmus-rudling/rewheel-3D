@@ -1,13 +1,13 @@
-import CurrentCategory from './CurrentCategory';
+import CurrentCategory from './CurrentCategoryView';
 import Filter from './PartFilter';
 import React from 'react';
 import { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { PartFilter } from '../../../../types';
+import { PartFilter } from '../../../../../types';
 
-const Navigation = () => {
+const NavigationAndFilters = () => {
 	const [openFilter, setOpenFilter] = useState('');
 	const [filtersVisible, setFiltersVisible] = useState(false);
 	const [partFiltersList, setPartFiltersList] = useState<PartFilter[]>([
@@ -128,4 +128,4 @@ const Navigation = () => {
 	);
 };
 
-export default Navigation;
+export default NavigationAndFilters;
