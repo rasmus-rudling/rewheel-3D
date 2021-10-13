@@ -4,30 +4,33 @@ import BikeBuilderPage from './components/pages/BikeBuilder/BikeBuilderPage';
 import NavBarPresenter from './components/common/NavBar/NavBarPresenter';
 import PageWrapper from './components/common/PageWrapper';
 import LoginPage from './components/pages/Login/LoginPage';
+import CurrentBuildProvider from './contexts/CurrentBuildContext';
 
 const App = () => {
 	return (
-		<Router>
-			<Switch>
-				<Route exact path={['/', '/bike-builder']}>
-					<PageWrapper>
-						<BikeBuilderPage />
-					</PageWrapper>
-				</Route>
+		<CurrentBuildProvider>
+			<Router>
+				<Switch>
+					<Route exact path={['/', '/bike-builder']}>
+						<PageWrapper>
+							<BikeBuilderPage />
+						</PageWrapper>
+					</Route>
 
-				<Route exact path="/profile">
-					<PageWrapper>
-						<ProfilePage />
-					</PageWrapper>
-				</Route>
+					<Route exact path="/profile">
+						<PageWrapper>
+							<ProfilePage />
+						</PageWrapper>
+					</Route>
 
-				<Route exact path="/login">
-					<PageWrapper>
-						<LoginPage />
-					</PageWrapper>
-				</Route>
-			</Switch>
-		</Router>
+					<Route exact path="/login">
+						<PageWrapper>
+							<LoginPage />
+						</PageWrapper>
+					</Route>
+				</Switch>
+			</Router>
+		</CurrentBuildProvider>
 	);
 };
 
