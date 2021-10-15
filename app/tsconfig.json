@@ -14,8 +14,8 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": false,
-		"jsx": "react-jsx"
+		"jsx": "react-jsx",
+		"baseUrl": "./"
 	},
 	"include": ["src", ".d.ts"]
 }
-
