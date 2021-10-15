@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import TextInput from "../../common/form/TextInput";
-import auth from "../../../Auth";
+import auth from "../../../utility/auth";
 
 const LoginPage = () => {
   const formik = useFormik({

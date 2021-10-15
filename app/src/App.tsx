@@ -6,7 +6,7 @@ import PageWrapper from "./components/common/PageWrapper";
 import LoginPage from "./components/pages/Login/LoginPage";
 import AuthCallback from "./components/common/AuthCallback";
 import { useCallback, useEffect, useState } from "react";
-import auth from "./Auth";
+import auth from "./utility/auth";
 
 const App = () => {
   const [, updateState] = useState({});
