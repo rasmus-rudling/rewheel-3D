@@ -1,10 +1,10 @@
 import React from 'react';
-import Button1 from '../../../common/buttons/Button1View';
-import TextInput from '../../../common/form/TextInput';
+import Button1 from '../../../../common/buttons/Button1View';
+import TextInput from '../../../../common/form/TextInput';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { ActiveFilterAlternatives, PartFilter } from '../../../../types';
+import { ActiveFilterAlternatives, PartFilter } from '../../../../../types';
 
 interface Props {
 	name: string;

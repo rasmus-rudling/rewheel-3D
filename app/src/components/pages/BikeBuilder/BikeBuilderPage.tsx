@@ -1,5 +1,5 @@
-import SidePanel from './sidePanel/SidePanel';
 import BikeView from './BikeView';
+import SidePanel from './sidePanel/SidePanelPresenter';
 
 const BikeBuilderPage = () => {
 	return (

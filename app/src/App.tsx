@@ -7,6 +7,8 @@ import LoginPage from "./components/pages/Login/LoginPage";
 import AuthCallback from "./components/common/AuthCallback";
 import { useCallback, useEffect, useState } from "react";
 import auth from "./utility/auth";
+import CurrentBuildProvider from "./contexts/CurrentBuildContext";
+import CurrentProductTypeProvider from "./contexts/CurrentProductTypeContext";
 
 const App = () => {
   const [, updateState] = useState({});
@@ -26,33 +28,37 @@ const App = () => {
   }, []);
 
   return (
-    <Router>
-      <Switch>
-        <Route exact path={["/", "/bike-builder"]}>
-          <PageWrapper>
-            <BikeBuilderPage />
-          </PageWrapper>
-        </Route>
+    <CurrentBuildProvider>
+      <CurrentProductTypeProvider>
+        <Router>
+          <Switch>
+            <Route exact path={["/", "/bike-builder"]}>
+              <PageWrapper>
+                <BikeBuilderPage />
+              </PageWrapper>
+            </Route>
 
-        <Route exact path="/profile">
-          <PageWrapper>
-            <ProfilePage />
-          </PageWrapper>
-        </Route>
+            <Route exact path="/profile">
+              <PageWrapper>
+                <ProfilePage />
+              </PageWrapper>
+            </Route>
 
-        <Route exact path="/login">
-          <PageWrapper>
-            <LoginPage />
-          </PageWrapper>
-        </Route>
+            <Route exact path="/login">
+              <PageWrapper>
+                <LoginPage />
+              </PageWrapper>
+            </Route>
 
-        <Route exact path="/callback">
-          <PageWrapper>
-            <AuthCallback />
-          </PageWrapper>
-        </Route>
-      </Switch>
-    </Router>
+            <Route exact path="/callback">
+              <PageWrapper>
+                <AuthCallback />
+              </PageWrapper>
+            </Route>
+          </Switch>
+        </Router>
+      </CurrentProductTypeProvider>
+    </CurrentBuildProvider>
   );
 };
 
