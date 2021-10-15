@@ -34,7 +34,7 @@ const BikeView = () => {
 
   useEffect(() => {
     currentBikeBuild.forEach(product => {
-      const scene: GLTF = useGLTF(product.modelSrc);
+      const scene = useGLTF(product.modelSrc) as GLTF;
       Object.keys(scene).forEach((key) => {
         let value = scene[key];
         

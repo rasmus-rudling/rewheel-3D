@@ -1,10 +1,4 @@
-
-
-interface Props {
-  BikeConfig: BikeConfig;
-}
-
-const ComposedBikeBuild = ({BikeConfig}: Props) => {
+const BikeBuild = () => {
     const bikeConfig: BikeConfig = {
       FRAME: {
         id: 0,
@@ -27,5 +21,3 @@ const ComposedBikeBuild = ({BikeConfig}: Props) => {
       </group>
     );
   };
-
-export default ComposedBikeBuild;

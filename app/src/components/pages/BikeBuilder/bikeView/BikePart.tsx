@@ -1,3 +1,5 @@
+
+
 const BikePart = (props: JSX.IntrinsicElements["group"]) => {
     const group = useRef<THREE.Mesh>();
     const scene = useGLTF(props.path) as GLTF;
