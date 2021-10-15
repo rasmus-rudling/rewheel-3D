@@ -1,14 +1,25 @@
-import React from 'react';
-import Spinner from '../../common/Spinner';
+import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const ProfilePage = () => {
-	return (
-		<div className="w-full h-screen flex justify-center items-center">
-			<div className="flex justify-center h-max w-max">
-				<Spinner />
-			</div>
-		</div>
-	);
+  const { user, isAuthenticated } = useAuth0();
+  if (isAuthenticated && user) {
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <div className="flex justify-center h-max w-max">
+          <img className="block" src={user.picture} />
+          <p className="block">{user.email}</p>
+          {/* {JSON.stringify(user, null, 2)} */}
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <p>Ej inloggad.</p>
+      </div>
+    );
+  }
 };
 
 export default ProfilePage;

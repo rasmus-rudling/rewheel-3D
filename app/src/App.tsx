@@ -7,8 +7,13 @@ import LoginPage from "./components/pages/Login/LoginPage";
 import { useCallback, useEffect, useState } from "react";
 import CurrentBuildProvider from "./contexts/CurrentBuildContext";
 import CurrentProductTypeProvider from "./contexts/CurrentProductTypeContext";
+import { useAuth0 } from "@auth0/auth0-react";
+import Spinner from "./components/common/Spinner";
 
 const App = () => {
+  const { isLoading } = useAuth0();
+  if (isLoading) return <Spinner />;
+
   return (
     <CurrentBuildProvider>
       <CurrentProductTypeProvider>
