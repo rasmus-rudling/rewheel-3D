@@ -18,10 +18,20 @@ const NavBarPresenter = () => {
   const history = useHistory();
 
   const navButtonClickHandler = (newRoute: string) => {
-    history.push(newRoute);
+    if (newRoute !== "logout") {
+      history.push(newRoute);
+    } else {
+      ("Logga ut användaren");
+    }
   };
 
-  const navButtonsFiltered = [...navButtons].filter((navButton) => {});
+  const navButtonsFiltered = [...navButtons].filter((navButton) => {
+    if ("användare inloggad") {
+      return navButton.route !== "login" && navButton.route !== "profile";
+    } else {
+      return navButton.route !== "logout";
+    }
+  });
 
   return (
     <>

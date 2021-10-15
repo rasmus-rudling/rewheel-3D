@@ -4,29 +4,11 @@ import BikeBuilderPage from "./components/pages/BikeBuilder/BikeBuilderPage";
 import NavBarPresenter from "./components/common/NavBar/NavBarPresenter";
 import PageWrapper from "./components/common/PageWrapper";
 import LoginPage from "./components/pages/Login/LoginPage";
-import AuthCallback from "./components/common/AuthCallback";
 import { useCallback, useEffect, useState } from "react";
-import auth from "./utility/auth";
 import CurrentBuildProvider from "./contexts/CurrentBuildContext";
 import CurrentProductTypeProvider from "./contexts/CurrentProductTypeContext";
 
 const App = () => {
-  const [, updateState] = useState({});
-  const forceUpdate = useCallback(() => updateState({}), []);
-
-  useEffect(() => {
-    async () => {
-      if (window.location.href.split("/")[-1] === "callback") return;
-      try {
-        await auth.silentAuth();
-        forceUpdate();
-      } catch (err: any) {
-        if (err.error === "login_required") return;
-        console.log(err.error);
-      }
-    };
-  }, []);
-
   return (
     <CurrentBuildProvider>
       <CurrentProductTypeProvider>
@@ -47,12 +29,6 @@ const App = () => {
             <Route exact path="/login">
               <PageWrapper>
                 <LoginPage />
-              </PageWrapper>
-            </Route>
-
-            <Route exact path="/callback">
-              <PageWrapper>
-                <AuthCallback />
               </PageWrapper>
             </Route>
           </Switch>
