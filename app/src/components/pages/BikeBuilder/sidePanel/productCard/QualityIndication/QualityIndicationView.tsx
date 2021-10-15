@@ -3,14 +3,16 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farFaStar } from '@fortawesome/free-regular-svg-icons';
 
 interface Props {
-	grade: number;
 	reviews: number;
+	numberOfFilledStars: number;
+	numberOfEmptyStars: number;
 }
 
-const QualityIndication = ({ grade, reviews }: Props) => {
-	const numberOfFilledStars = Math.floor(grade);
-	const numberOfEmptyStars = 5 - numberOfFilledStars;
-
+const QualityIndicationView = ({
+	reviews,
+	numberOfFilledStars,
+	numberOfEmptyStars,
+}: Props) => {
 	const emptyStar = (
 		<FontAwesomeIcon icon={farFaStar} className="text-green-500" />
 	);
@@ -28,4 +30,4 @@ const QualityIndication = ({ grade, reviews }: Props) => {
 	);
 };
 
-export default QualityIndication;
+export default QualityIndicationView;

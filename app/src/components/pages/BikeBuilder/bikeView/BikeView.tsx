@@ -7,42 +7,24 @@ import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 import BikeFrameModel from "./../../../resources/testGeometry/bikeFrame.gltf";
 import FrontWheelModel from "./../../../resources/testGeometry/frontWheel.gltf";
 
-import { BufferGeometry, Group, Object3D, Vector3 } from "three";
-import { getDefaultCompilerOptions, JsxElement } from "typescript";
-import { groupCollapsed } from "console";
-
 import ComposedBikeBuild from './ComposedBikeBuild';
 
 import { useCurrentBuild } from '../../../../contexts/CurrentBuildContext';
+import { BikeConfig } from "./bikeViewTypes";
 
-
-const bikeConfig: BikeConfig = {
-  FRAME: {
-    id: 0,
-    source: BikeFrameModel,
-      anchors: {
-        "FRONTWHEEL": {
-          position: new THREE.Vector3(-1.638202428817749,16668516397476196, 0),
-          rotation: new THREE.Euler(0, 0, 0, 'y')
-        }
-      }          
-    },
-  };
 
 const BikeView = () => {
   const currentBikeBuild = useCurrentBuild();
+  const bikeConfig: BikeConfig = {}
 
   useEffect(() => {
-    currentBikeBuild.forEach(product => {
-      const scene = useGLTF(product.modelSrc) as GLTF;
-      Object.keys(scene).forEach((key) => {
-        let value = scene[key];
-        
-        
-      })
-      
-      
+    currentBikeBuild.products.forEach(product => {
 
+      const scene = useGLTF(product.modelSrc) as GLTF;
+      console.log(scene)
+      // Object.keys(scene).forEach((key) => {
+      //   let value = scene[key];
+      // })
     })
     
   }, [currentBikeBuild])
@@ -52,7 +34,7 @@ const BikeView = () => {
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
       <Suspense fallback={null}>
-        <ComposedBikeBuild />
+        <ComposedBikeBuild bikeConfig={bikeConfig} />
       </Suspense>
       <OrbitControls
         enablePan={false}

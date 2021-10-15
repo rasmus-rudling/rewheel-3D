@@ -3,21 +3,20 @@ import { UserInputError, AuthenticationError } from "apollo-server-errors";
 import jwt from "jsonwebtoken";
 import { Bike } from "./models/Bike";
 import User from "./models/User";
+import Product from "./models/Product";
 
 const jwt_secret = process.env.JWT_SECRET;
-
 
 export const resolvers = {
   Query: {
     getCurrentUser: (root, args, context) => {
       return context.currentUser;
     },
-    // Should any user be able to query any existing bike with id ? 
-    getBike: async (root,_id) =>{
-
+    // Should any user be able to query any existing bike with id ?
+    getBike: async (root, _id) => {
       // Add some error handling here?
-      const bike = await Bike.findById(_id)
-      return bike
+      const bike = await Bike.findById(_id);
+      return bike;
     },
     getMyBikes: async (root, args, context) => {
       // Check if user is logged in.
@@ -28,6 +27,14 @@ export const resolvers = {
       return currentUser.bikeBuilds;
     },
     getAllBikes: async () => await Bike.find(),
+
+    getProduct: async (root, _id) => {
+      // Add some error handling here?
+      const product = await Product.findById(_id);
+      return product;
+    },
+
+    getAllProducts: async () => await Product.find(),
   },
   Mutation: {
     createUser: async (root, args) => {
@@ -72,22 +79,21 @@ export const resolvers = {
         throw new AuthenticationError("Not authenticated.");
       }
     },
-    editBike: async (root, { _id,color }, context) => {   // Can add more inputs to update here color,price ... etc
+    editBike: async (root, { _id, color }, context) => {
+      // Can add more inputs to update here color,price ... etc
       // Check if user is logged in.
       const currentUser = context.currentUser;
       if (!currentUser) {
         throw new AuthenticationError("Not authenticated.");
       }
-        
 
-      // Implement some error handling here for id? 
+      // Implement some error handling here for id?
       const filter = { _id: _id };
-      const update = { color: color}; // Can add more updates here color,price... etc
+      const update = { color: color }; // Can add more updates here color,price... etc
 
       const editedBike = await Bike.findOneAndUpdate(filter, update, {
-        new: true
+        new: true,
       });
-
 
       return editedBike;
     },
@@ -99,18 +105,25 @@ export const resolvers = {
         throw new AuthenticationError("Not authenticated.");
       }
 
-      // Implement some error handling here for id? 
+      // Implement some error handling here for id?
       const deletedBike = await Bike.findByIdAndDelete(_id, {
-        new: true
+        new: true,
       });
-      
-      currentUser.bikeBuilds = await currentUser.bikeBuilds.pull(_id)
-      currentUser.save()
 
-      return deletedBike
+      currentUser.bikeBuilds = await currentUser.bikeBuilds.pull(_id);
+      currentUser.save();
+
+      return deletedBike;
     },
 
+    addProduct: async (root, args) => {
+      const product = new Product({ ...args });
 
-    
+      return await product.save().catch((error) => {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        });
+      });
+    },
   },
 };

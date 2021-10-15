@@ -1,11 +1,15 @@
 import React, { useState, useContext, createContext, useEffect } from 'react';
 
-import { Product } from '../types';
+import { BikeBuild, Product } from '../types';
 
-const CurrentBuildContext = createContext<Product[]>([]);
-const CurrentBuildUpdateContext = createContext<
-	(newProduct: Product) => void
->(() => null);
+const CurrentBuildContext = createContext<BikeBuild>({
+	products: [],
+	totalPrice: 0,
+});
+
+const CurrentBuildUpdateContext = createContext<(newProduct: Product) => void>(
+	() => null
+);
 
 export const useCurrentBuild = () => {
 	return useContext(CurrentBuildContext);
@@ -16,15 +20,41 @@ export const useCurrentBuildUpdate = () => {
 };
 
 const CurrentBuildProvider: React.FC = ({ children }) => {
-	const [currentBuild, setCurrentBuild] = useState<Product[]>([]);
+	const [currentBuild, setCurrentBuild] = useState<BikeBuild>({
+		products: [],
+		totalPrice: 0,
+	});
 
 	const addNewProduct = (newProduct: Product) => {
-        let oldBuild = [...currentBuild];
-        let oldBuildCleared = oldBuild.filter(product => product.type !== newProduct.type);
+		let oldProducts = [...currentBuild.products];
 
-        oldBuildCleared.push(newProduct);
+		const newProductAlreadyInBuild = oldProducts.some(
+			(product) => product.id === newProduct.id
+		);
 
-        setCurrentBuild(oldBuildCleared);
+		let oldProductsCleared = oldProducts.filter(
+			(product) => product.type.name !== newProduct.type.name
+		);
+
+		if (!newProductAlreadyInBuild) {
+			oldProductsCleared.push(newProduct);
+		}
+
+		let newTotPrice;
+
+		if (oldProductsCleared.length > 0) {
+			const totPriceReducer = (totPrice: number, currentPrice: number) =>
+				totPrice + currentPrice;
+			const productPrices = oldProductsCleared.map((product) => product.price);
+			newTotPrice = productPrices.reduce(totPriceReducer);
+		} else {
+			newTotPrice = 0;
+		}
+
+		setCurrentBuild({
+			products: oldProductsCleared,
+			totalPrice: newTotPrice,
+		});
 	};
 
 	return (

@@ -1,30 +1,35 @@
+import * as THREE from "three";
+import React, { useRef } from "react";
+import { useGLTF } from "@react-three/drei";
+import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 
+type Props = JSX.IntrinsicElements["group"] & {
+  // Can't be interface since base type includes optinal arguments
+  modelSrc: string;
+  position: THREE.Vector3;
+  orientation: THREE.Euler;
+};
 
-const BikePart = (props: JSX.IntrinsicElements["group"]) => {
-    const group = useRef<THREE.Mesh>();
-    const scene = useGLTF(props.path) as GLTF;
-  
-    let componentPosition = new THREE.Vector3(0, 0, 0);
-    let componentRotation = new THREE.Euler(0, 0, 0);
-  
-    console.log(scene);
-    const mesh: any = scene.scene.children.find((e) => e.type === "Mesh");
-  
-    if (mesh.name === "FRONTWHEEL") {
-      componentPosition = props.bikeConfig["FRAME"].anchors[mesh.name].position;
-      componentRotation = props.bikeConfig["FRAME"].anchors[mesh.name].rotation;
-    }
-  
-    return (
-      <group ref={group} {...props} dispose={null}>
-        <mesh
-          name="FRAME"
-          castShadow
-          receiveShadow
-          geometry={mesh.geometry}
-          position={componentPosition}
-          rotation={componentRotation}
-        />
-      </group>
-    );
-  };
+const BikePart = (props: Props) => {
+  const modelSrc = props.modelSrc; // Include geometry instead?
+  const position = props.position;
+  const orientation = props.orientation;
+
+  const group = useRef<THREE.Mesh>();
+  const scene = useGLTF(modelSrc) as GLTF;
+
+  return (
+    <group ref={group} {...props} dispose={null}>
+      <mesh
+        //name="FRAME"
+        castShadow
+        receiveShadow
+        //geometry={mesh.geometry}
+        //position={position}
+        //rotation={orientation}
+      />
+    </group>
+  );
+};
+
+export default BikePart;
