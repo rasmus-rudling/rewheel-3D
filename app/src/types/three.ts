@@ -1,3 +1,7 @@
+import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
+import { Mesh } from "three";
+
+
 export interface Anchor {
     position: THREE.Vector3;
     rotation: THREE.Euler;
@@ -12,10 +16,6 @@ export interface ComponentConfig {
   anchors: Anchors;
 };
 
-export interface BikeConfig {
-  [key: string]: ComponentConfig;
-};
-
-// export interface Scene extends GLTF {
-    
-// }
+export type GLTFResult = GLTF & {
+    nodes: Mesh[];
+  };

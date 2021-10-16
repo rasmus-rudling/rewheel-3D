@@ -5,11 +5,11 @@ import { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { PartFilter, ProductType } from '../../../../../types';
+import { PartFilter } from '../../../../../types';
 import { capitalizeFirstLetter } from '../../../../../utility/functions';
 
 interface Props {
-	currentProductType: ProductType;
+	currentProductType: string;
 }
 
 const NavigationAndFilters = ({ currentProductType }: Props) => {
@@ -118,7 +118,7 @@ const NavigationAndFilters = ({ currentProductType }: Props) => {
 	const arrowUp = <FontAwesomeIcon icon={faChevronUp} size="xs" />;
 	const arrowDown = <FontAwesomeIcon icon={faChevronDown} size="xs" />;
 
-	let categoryInEnglish = capitalizeFirstLetter(currentProductType.name);
+	let categoryInEnglish = capitalizeFirstLetter(currentProductType);
 	let categoryInSwedish = '';
 
 	if (categoryInEnglish === 'Frame') {

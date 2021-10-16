@@ -1,14 +1,15 @@
 import ProductCard from './productCard/ProductCardView';
 import NavigationAndFilters from './navigationAndFilters/NavigationAndFilters';
 import Button1 from '../../../common/buttons/Button1View';
-import { BikeBuild, Product, ProductType } from '../../../../types';
+import { BikeBuild, Product } from '../../../../types';
+import { possibleProductTypes } from '../../../../redux/reducers/currentProductType';
 
 interface Props {
 	currentBuild: BikeBuild;
 	currentProductCards: Product[];
 	productCardClickHandler: Function;
 	currentProductTypeUpdateHandler: Function;
-	currentProductType: ProductType;
+	currentProductType: string;
 	totNumberOfTypes: number;
 }
 
@@ -42,7 +43,7 @@ const SidePanelView = ({
 					</span>
 				</div>
 				<div className="flex mt-3">
-					{currentProductType.idx > 0 ? (
+					{currentProductType !== possibleProductTypes[0] ? (
 						<Button1
 							color="blue"
 							onClickHandler={() => currentProductTypeUpdateHandler('previous')}
@@ -54,7 +55,7 @@ const SidePanelView = ({
 						/>
 					) : null}
 
-					{currentProductType.idx <= totNumberOfTypes - 1 ? (
+					{currentProductType !== possibleProductTypes.at(-1) ? (
 						<Button1
 							color="blue"
 							onClickHandler={() => currentProductTypeUpdateHandler('next')}

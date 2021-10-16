@@ -1,3 +1,5 @@
+import { ComponentConfig } from "./three";
+
 export interface User {
 	id: string;
 	username: string;
@@ -13,12 +15,6 @@ export interface PartFilter {
 	activeFilterAlternatives: ActiveFilterAlternatives;
 }
 
-export interface ProductType {
-	name: string;
-	idx: number;
-	numberOfTypes: number;
-}
-
 export interface Product {
 	id: string;
 	modelSrc: string;
@@ -28,12 +24,17 @@ export interface Product {
 	numReviews: number;
 	price: number;
 	imgLink: string;
-	type: ProductType;
+	type: string;
 }
+
+export interface BikeConfig {
+	[key: string]: ComponentConfig;
+  };
 
 export interface BikeBuild {
 	products: Product[];
 	totalPrice: number;
+	renderedBuildConfig: BikeConfig;
 }
 
 export interface SavedBuild {
