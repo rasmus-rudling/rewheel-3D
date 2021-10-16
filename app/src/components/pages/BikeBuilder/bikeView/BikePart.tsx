@@ -5,28 +5,30 @@ import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 
 type Props = JSX.IntrinsicElements["group"] & {
   // Can't be interface since base type includes optinal arguments
-  modelSrc: string;
+  geometry: THREE.BufferGeometry;
   position: THREE.Vector3;
   orientation: THREE.Euler;
 };
 
 const BikePart = (props: Props) => {
-  const modelSrc = props.modelSrc; // Include geometry instead?
+  const geometry = props.geometry; // Include geometry instead?
   const position = props.position;
   const orientation = props.orientation;
+  const material = new THREE.MeshStandardMaterial({color: '#CB347E', roughness: 0});
 
   const group = useRef<THREE.Mesh>();
-  const scene = useGLTF(modelSrc) as GLTF;
 
+  //{...props}
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} dispose={null}>
       <mesh
         //name="FRAME"
         castShadow
         receiveShadow
-        //geometry={mesh.geometry}
-        //position={position}
-        //rotation={orientation}
+        geometry={geometry}
+        position={position}
+        rotation={orientation}
+        material={material}
       />
     </group>
   );

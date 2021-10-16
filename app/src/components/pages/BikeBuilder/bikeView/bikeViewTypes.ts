@@ -8,8 +8,7 @@ export interface Anchors {
 };
 
 export interface ComponentConfig {
-  id: number;
-  source: string;
+  geometry: THREE.BufferGeometry;
   anchors: Anchors;
 };
 
