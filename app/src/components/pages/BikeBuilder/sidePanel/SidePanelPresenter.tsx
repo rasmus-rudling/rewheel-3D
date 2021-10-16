@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
-import {
-	useCurrentBuild,
-	useCurrentBuildUpdate,
-} from '../../../../contexts/CurrentBuildContext';
-import {
-	useCurrentProductType,
-	useCurrentProductTypeUpdate,
-} from '../../../../contexts/CurrentProductTypeContext';
+
 import { Product, ProductType } from '../../../../types';
 import SidePanelView from './SidePanelView';
+
+import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
+import { toggleProductInBuild } from '../../../../redux/actions/currentBuild';
+import { changeProductType } from '../../../../redux/actions/currentProductType';
 
 const totNumberOfTypes = 4;
 
@@ -104,17 +101,23 @@ const wheelProducts: Product[] = [
 const SidePanelPresenter = () => {
 	const [productsToShow, setProductsToShow] =
 		useState<Product[]>(frameProducts);
-	const currentBuildUpdate = useCurrentBuildUpdate();
-	const currentBuild = useCurrentBuild();
 
-	const currentProductType = useCurrentProductType();
-	const currentProductTypeUpdate = useCurrentProductTypeUpdate();
+	const dispatch = useDispatch();
+
+	const currentBuild = useSelector(
+		(state: RootStateOrAny) => state.currentBuild
+	);
+
+	const currentProductType = useSelector(
+		(state: RootStateOrAny) => state.currentProductType
+	);
 
 	const productCardClickHandler = (newProductForBuild: Product) => {
-		currentBuildUpdate(newProductForBuild);
+		dispatch(toggleProductInBuild(newProductForBuild));
 	};
 
 	useEffect(() => {
+		console.log(currentProductType);
 		if (currentProductType.name === 'frame') {
 			setProductsToShow(frameProducts);
 		} else if (currentProductType.name === 'wheel') {
@@ -125,7 +128,7 @@ const SidePanelPresenter = () => {
 	const currentProductTypeUpdateHandler = (
 		changeTypeOption: 'previous' | 'next'
 	) => {
-		currentProductTypeUpdate(changeTypeOption);
+		dispatch(changeProductType(changeTypeOption));
 	};
 
 	return (
