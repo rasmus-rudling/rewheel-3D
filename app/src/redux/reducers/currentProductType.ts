@@ -1,5 +1,3 @@
-import { ProductType } from '../../types';
-
 interface Action {
 	type: 'CHANGE_PRODUCT_TYPE';
 	data: {
@@ -7,21 +5,15 @@ interface Action {
 	};
 }
 
-const initCurrentProductType: ProductType = {
-	name: 'frame',
-	idx: 0,
-	numberOfTypes: 4,
-};
-
-const possibleProductTypes = ['frame', 'wheel', 'handle bar', 'saddle'];
+export const possibleProductTypes = ['frame', 'wheel', 'handle bar', 'saddle'];
 
 const currentProductTypeReducer = (
-	state = initCurrentProductType,
+	state = "frame",
 	{ type, data }: Action
 ) => {
 	switch (type) {
 		case 'CHANGE_PRODUCT_TYPE':
-			const currentIdx = state.idx;
+			const currentIdx = possibleProductTypes.indexOf(state);
 			let newIdx;
 
 			if (data.changeTypeOption === 'previous') {
@@ -32,13 +24,7 @@ const currentProductTypeReducer = (
 
 			let newProdcutTypeName = possibleProductTypes[newIdx];
 
-			const newProdcutType: ProductType = {
-				name: newProdcutTypeName,
-				idx: newIdx,
-				numberOfTypes: state.numberOfTypes,
-			};
-
-			return newProdcutType;
+			return newProdcutTypeName;
 		default:
 			return state;
 	}

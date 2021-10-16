@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { Product, ProductType } from '../../../../types';
+import { Product } from '../../../../types';
 import SidePanelView from './SidePanelView';
+
+import Framemodel from "./../../../../resources/testGeometry/bikeFrame.gltf";
+import FrontWheelModel from "./../../../../resources/testGeometry/frontWheel.gltf";
 
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import { toggleProductInBuild } from '../../../../redux/actions/currentBuild';
@@ -9,22 +12,11 @@ import { changeProductType } from '../../../../redux/actions/currentProductType'
 
 const totNumberOfTypes = 4;
 
-const frameProductType: ProductType = {
-	name: 'frame',
-	idx: 0,
-	numberOfTypes: totNumberOfTypes,
-};
-
-const wheelProductType: ProductType = {
-	name: 'wheel',
-	idx: 1,
-	numberOfTypes: totNumberOfTypes,
-};
 
 const frameProducts: Product[] = [
 	{
 		id: 'qwe',
-		modelSrc: '',
+		modelSrc: Framemodel,
 		name: 'Super fancy frame',
 		brand: 'Specialized',
 		grade: 2,
@@ -32,11 +24,11 @@ const frameProducts: Product[] = [
 		price: 324,
 		imgLink:
 			'https://shimmercat.abicart.se/shop/32301/art1/h1325/172811325-origpic-eb3c2a.jpg?max-width=500&max-height=500&quality=85',
-		type: frameProductType,
+		type: "frame",
 	},
 	{
 		id: 'weqweqwe',
-		modelSrc: '',
+		modelSrc: Framemodel,
 		name: 'Super fancy frame',
 		brand: 'Specialized',
 		grade: 5,
@@ -44,22 +36,22 @@ const frameProducts: Product[] = [
 		price: 34,
 		imgLink:
 			'https://www.planetx.co.uk/imgs/products/px/950x600_constWH/FTPXTIADV4_P1-05.jpg?v=mo',
-		type: frameProductType,
+		type: "frame",
 	},
 	{
 		id: 'adjjkqwekjqwe',
-		modelSrc: '',
+		modelSrc: Framemodel,
 		name: 'Super fancy frame',
 		brand: 'Specialized',
 		grade: 1,
 		numReviews: 17,
 		price: 804,
 		imgLink: 'https://www.bike-components.de/assets/p/i/1280x960/386566.jpg',
-		type: frameProductType,
+		type: "frame",
 	},
 	{
 		id: '123jo1k2josd',
-		modelSrc: '',
+		modelSrc: Framemodel,
 		name: 'Super fancy frame',
 		brand: 'Specialized',
 		grade: 2,
@@ -67,11 +59,11 @@ const frameProducts: Product[] = [
 		price: 324,
 		imgLink:
 			'https://shimmercat.abicart.se/shop/32301/art1/h1325/172811325-origpic-eb3c2a.jpg?max-width=500&max-height=500&quality=85',
-		type: frameProductType,
+		type: "frame",
 	},
 	{
 		id: 'asdjlq2kj3',
-		modelSrc: '',
+		modelSrc: Framemodel,
 		name: 'Super fancy frame',
 		brand: 'Specialized',
 		grade: 5,
@@ -79,14 +71,14 @@ const frameProducts: Product[] = [
 		price: 34,
 		imgLink:
 			'https://www.planetx.co.uk/imgs/products/px/950x600_constWH/FTPXTIADV4_P1-05.jpg?v=mo',
-		type: frameProductType,
+		type: "frame",
 	},
 ];
 
 const wheelProducts: Product[] = [
 	{
 		id: 'qwdqwe12312e',
-		modelSrc: '',
+		modelSrc: FrontWheelModel,
 		name: 'Super fancy wheel',
 		brand: 'Cool',
 		grade: 5,
@@ -94,7 +86,7 @@ const wheelProducts: Product[] = [
 		price: 750,
 		imgLink:
 			'https://cdnm.bike-discount.de/media/org/orgb_D/orgid_78/thumbs/740591_5949415.jpg',
-		type: wheelProductType,
+		type: "wheel",
 	},
 ];
 
@@ -117,10 +109,9 @@ const SidePanelPresenter = () => {
 	};
 
 	useEffect(() => {
-		console.log(currentProductType);
-		if (currentProductType.name === 'frame') {
+		if (currentProductType === 'frame') {
 			setProductsToShow(frameProducts);
-		} else if (currentProductType.name === 'wheel') {
+		} else if (currentProductType === 'wheel') {
 			setProductsToShow(wheelProducts);
 		}
 	}, [currentProductType]);
