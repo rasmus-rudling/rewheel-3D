@@ -58,11 +58,16 @@ const getNewBuild = (products: Product[], newProduct: Product) => {
 		(product) => product.id === newProduct.id
 	);
 
+	const framExist = oldProducts.some((product) => product.type === 'frame');
+
 	let oldProductsCleared = oldProducts.filter(
 		(product) => product.type !== newProduct.type
 	);
 
-	if (newProductAlreadyInBuild && newProduct.type === 'frame') {
+	if (
+		(newProductAlreadyInBuild && newProduct.type === 'frame') ||
+		(!framExist && newProduct.type !== 'frame')
+	) {
 		return {
 			products: [],
 			totalPrice: 0,
