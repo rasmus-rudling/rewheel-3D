@@ -7,6 +7,7 @@ import jwksClient from "jwks-rsa";
 import { resolvers } from "./resolvers";
 import { typeDefs } from "./typeDefs";
 import User from "./models/User";
+var cors = require("cors");
 
 const url = process.env.MONGODB_URI;
 const port = process.env.PORT;
@@ -37,11 +38,13 @@ const startServer = async () => {
 
   const app = express();
 
+  app.use(cors());
+
   // CORS configuration
-  const corsOptions = {
-    origin: `${app_url}:${app_port}`,
-    credentials: true,
-  };
+  // const corsOptions = {
+  //   origin: `${app_url}:${app_port}`,
+  //   credentials: true,
+  // };
 
   const server = new ApolloServer({
     typeDefs,
@@ -66,7 +69,8 @@ const startServer = async () => {
 
   await server.start();
 
-  server.applyMiddleware({ app, cors: corsOptions });
+  // server.applyMiddleware({ app, cors: corsOptions });
+  server.applyMiddleware({ app });
 
   await mongoose
     .connect(url, {
