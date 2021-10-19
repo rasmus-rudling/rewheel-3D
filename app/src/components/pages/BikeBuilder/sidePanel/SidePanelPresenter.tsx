@@ -10,6 +10,10 @@ import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import { toggleProductInBuild } from '../../../../redux/actions/currentBuild';
 import { changeProductType } from '../../../../redux/actions/currentProductType';
 
+const models = {
+	qwe: Framemodel,
+};
+
 const totNumberOfTypes = 4;
 
 const frameProducts: Product[] = [
