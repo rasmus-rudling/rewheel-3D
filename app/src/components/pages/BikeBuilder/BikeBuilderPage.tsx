@@ -1,7 +1,8 @@
+import BikeView from "./bikeView/BikeView";
+import SidePanel from "./sidePanel/SidePanelPresenter";
+import { Suspense } from "react";
 import LoginButton from "../../common/buttons/LoginButton";
 import LogoutButton from "../../common/buttons/LogoutButton";
-import BikeView from "./BikeView";
-import SidePanel from "./sidePanel/SidePanelPresenter";
 
 const BikeBuilderPage = () => {
   return (
@@ -9,7 +10,9 @@ const BikeBuilderPage = () => {
       <LoginButton />
       <LogoutButton />
       <div className="h-full flex-grow">
-        <BikeView />
+        <Suspense fallback={<div>Loading... </div>}>
+          <BikeView />
+        </Suspense>
       </div>
       <div className="h-full w-2/6 max-w-sm">
         <SidePanel />

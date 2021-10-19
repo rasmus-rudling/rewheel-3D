@@ -1,12 +1,8 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import ProfilePage from "./components/pages/Profile/ProfilePage";
-import BikeBuilderPage from "./components/pages/BikeBuilder/BikeBuilderPage";
-import NavBarPresenter from "./components/common/NavBar/NavBarPresenter";
-import PageWrapper from "./components/common/PageWrapper";
-import LoginPage from "./components/pages/Login/LoginPage";
-import { useCallback, useEffect, useState } from "react";
-import CurrentBuildProvider from "./contexts/CurrentBuildContext";
-import CurrentProductTypeProvider from "./contexts/CurrentProductTypeContext";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import ProfilePage from './components/pages/Profile/ProfilePage';
+import BikeBuilderPage from './components/pages/BikeBuilder/BikeBuilderPage';
+import PageWrapper from './components/common/PageWrapper';
+import LoginPage from './components/pages/Login/LoginPage';
 import { useAuth0 } from "@auth0/auth0-react";
 import Spinner from "./components/common/Spinner";
 
@@ -15,32 +11,27 @@ const App = () => {
   if (isLoading) return <Spinner />;
 
   return (
-    <CurrentBuildProvider>
-      <CurrentProductTypeProvider>
-        <Router>
-          <Switch>
-            <Route exact path={["/", "/bike-builder"]}>
-              <PageWrapper>
-                <BikeBuilderPage />
-              </PageWrapper>
-            </Route>
+    <Router>
+      <Switch>
+      <Route exact path={['/', '/bike-builder']}>
+          <PageWrapper>
+            <BikeBuilderPage />
+          </PageWrapper>
+        </Route>
 
-            <Route exact path="/profile">
-              <PageWrapper>
-                <ProfilePage />
-              </PageWrapper>
-            </Route>
+        <Route exact path="/profile">
+          <PageWrapper>
+            <ProfilePage />
+          </PageWrapper>
+        </Route>
 
-            <Route exact path="/login">
-              <PageWrapper>
-                <LoginPage />
-              </PageWrapper>
-            </Route>
-          </Switch>
-        </Router>
-      </CurrentProductTypeProvider>
-    </CurrentBuildProvider>
+        <Route exact path="/login">
+          <PageWrapper>
+            <LoginPage />
+          </PageWrapper>
+        </Route>
+      </Switch>
+    </Router>
   );
-};
-
+}
 export default App;

@@ -4,6 +4,9 @@ import ReactDOM from "react-dom";
 import "../build/build.css";
 import App from "./App";
 import "./style/tailwind.css";
+// Redux
+import { Provider as ReduxProvider } from "react-redux";
+import store from "./redux/store";
 
 const auth0_domain: string = process.env.AUTH0_DOMAIN ?? "undefined";
 const auth0_clientId: string = process.env.AUTH0_CLIENT_ID ?? "undefined";
@@ -15,7 +18,9 @@ ReactDOM.render(
       clientId={auth0_clientId}
       redirectUri={window.location.origin}
     >
-      <App />
+      <ReduxProvider store={store}>
+        <App />
+      </ReduxProvider>
     </Auth0Provider>
   </React.StrictMode>,
   document.getElementById("root")
