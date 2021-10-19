@@ -102,6 +102,7 @@ const NavigationAndFilters = ({ currentProductType }: Props) => {
 		<div className="grid grid-cols-2 px-3 pb-3 gap-3 w-full relative">
 			{partFiltersList.map((partFilter: PartFilter, idx: number) => (
 				<Filter
+					key={'navAndFilters ' + partFilter.filterName}
 					name={partFilter.filterName}
 					id={idx + 1}
 					setOpenFilter={setOpenFilterHandler}
