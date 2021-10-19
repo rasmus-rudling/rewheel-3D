@@ -1,34 +1,37 @@
-import { Suspense, useState, useEffect } from 'react';
-import { OrbitControls } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
+import React, { useRef, Suspense, useState, useEffect } from "react";
+import { useGLTF, OrbitControls } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
 
-import ComposedBikeBuild from './ComposedBikeBuild';
 
-import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
+import ComposedBikeBuild from "./ComposedBikeBuild";
 
-const BikeView = () => {
-	const currentBikeBuild = useSelector(
-		(state: RootStateOrAny) => state.currentBuild
-	);
+type Props = {
+  // Can't be interface since base type includes optinal arguments
+  bikeBuild: any
 
-	return (
-		<Canvas dpr={[1, 2]} camera={{ position: [-4, 2, -4], fov: 45 }}>
-			<ambientLight intensity={0.5} />
-			<pointLight position={[-1.16, 1.262, -2.143]} />
-			<pointLight position={[0.442, 0.868, 1.574]} />
-			<pointLight position={[-2.427, 2.07, 1.574]} />
+};
 
-			<Suspense fallback={<div>Loading... </div>}>
-				<ComposedBikeBuild bikeConfig={currentBikeBuild.renderedBuildConfig} />
-			</Suspense>
-			<OrbitControls
-				enablePan={false}
-				enableZoom={false}
-				minPolarAngle={Math.PI / 2}
-				maxPolarAngle={Math.PI / 2}
-			/>
-		</Canvas>
-	);
+const BikeView = (props: Props) => {
+  // const currentBikeBuild = useCurrentBuild();
+
+  return (
+    <Canvas dpr={[1, 2]} camera={{ position: [-4, 2, -4], fov: 45 }}>
+      <ambientLight intensity={.5} />
+      <pointLight position={[-1.160, 1.262, -2.143]} />
+      <pointLight position={[0.442, 0.868, 1.574]} />
+      <pointLight position={[-2.427, 2.070, 1.574]} />
+
+      <Suspense fallback={<div>Loading... </div>}>
+        <ComposedBikeBuild bikeConfig={props.bikeBuild.renderedBuildConfig} />
+      </Suspense>
+      <OrbitControls
+        enablePan={false}
+        enableZoom={false}
+        minPolarAngle={Math.PI / 2}
+        maxPolarAngle={Math.PI / 2}
+      />
+    </Canvas>
+  );
 };
 
 export default BikeView;
