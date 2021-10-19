@@ -3,8 +3,16 @@ import { useEffect, useState } from 'react';
 import { Product } from '../../../../types';
 import SidePanelView from './SidePanelView';
 
-import Framemodel from './../../../../resources/testGeometry/bikeFrame.gltf';
-import FrontWheelModel from './../../../../resources/testGeometry/frontWheel.gltf';
+import dropbarBlack from './../../../../resources/testGeometry/models/dropbarBlack.gltf';
+import dropbarBlue from './../../../../resources/testGeometry/models/dropbarBlue.gltf';
+import frameHighBlack from './../../../../resources/testGeometry/models/frameHighBlack.gltf';
+import frameHighRed from './../../../../resources/testGeometry/models/frameHighRed.gltf';
+import frameLowRed from './../../../../resources/testGeometry/models/frameLowBlack.gltf';
+import frameLowTeal from './../../../../resources/testGeometry/models/frameLowTeal.gltf';
+import saddleBlack from './../../../../resources/testGeometry/models/saddleBlack.gltf';
+
+
+
 
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import { toggleProductInBuild } from '../../../../redux/actions/currentBuild';
@@ -14,21 +22,21 @@ const totNumberOfTypes = 4;
 
 const frameProducts: Product[] = [
 	{
-		id: 'qwe',
-		modelSrc: Framemodel,
-		name: 'Super fancy frame',
+		id: '111',
+		modelSrc: 'https://drive.google.com/uc?export=view&id=1bu4MJPpKljOpDxd_8Hs40gjwlk9pOAWP',
+		name: 'Black Turbo',
 		brand: 'Specialized',
-		grade: 2,
+		grade: 4,
 		numReviews: 2,
 		price: 324,
 		imgLink:
-			'https://shimmercat.abicart.se/shop/32301/art1/h1325/172811325-origpic-eb3c2a.jpg?max-width=500&max-height=500&quality=85',
+			'https://drive.google.com/uc?export=view&id=1am3DpGgcz-vTSF76J2jMo94_qeOU_eZX',
 		type: 'frame',
 	},
 	{
-		id: 'weqweqwe',
-		modelSrc: Framemodel,
-		name: 'Super fancy frame',
+		id: '222',
+		modelSrc: FrameRed,
+		name: 'Super Speed Red',
 		brand: 'Specialized',
 		grade: 5,
 		numReviews: 11,
@@ -36,48 +44,25 @@ const frameProducts: Product[] = [
 		imgLink:
 			'https://www.planetx.co.uk/imgs/products/px/950x600_constWH/FTPXTIADV4_P1-05.jpg?v=mo',
 		type: 'frame',
-	},
-	{
-		id: 'adjjkqwekjqwe',
-		modelSrc: Framemodel,
-		name: 'Super fancy frame',
-		brand: 'Specialized',
-		grade: 1,
-		numReviews: 17,
-		price: 804,
-		imgLink: 'https://www.bike-components.de/assets/p/i/1280x960/386566.jpg',
-		type: 'frame',
-	},
-	{
-		id: '123jo1k2josd',
-		modelSrc: Framemodel,
-		name: 'Super fancy frame',
-		brand: 'Specialized',
-		grade: 2,
-		numReviews: 2,
-		price: 324,
-		imgLink:
-			'https://shimmercat.abicart.se/shop/32301/art1/h1325/172811325-origpic-eb3c2a.jpg?max-width=500&max-height=500&quality=85',
-		type: 'frame',
-	},
-	{
-		id: 'asdjlq2kj3',
-		modelSrc: Framemodel,
-		name: 'Super fancy frame',
-		brand: 'Specialized',
-		grade: 5,
-		numReviews: 11,
-		price: 34,
-		imgLink:
-			'https://www.planetx.co.uk/imgs/products/px/950x600_constWH/FTPXTIADV4_P1-05.jpg?v=mo',
-		type: 'frame',
-	},
+	}
 ];
 
 const wheelProducts: Product[] = [
 	{
-		id: 'qwdqwe12312e',
-		modelSrc: FrontWheelModel,
+		id: '333',
+		modelSrc: FrontWheelWhite,
+		name: 'Super fancy wheel',
+		brand: 'Wheel co',
+		grade: 4,
+		numReviews: 2,
+		price: 850,
+		imgLink:
+			'https://cdnm.bike-discount.de/media/org/orgb_D/orgid_78/thumbs/740591_5949415.jpg',
+		type: 'wheel',
+	},
+	{
+		id: '999',
+		modelSrc: BackWheelWhite,
 		name: 'Super fancy wheel',
 		brand: 'Cool',
 		grade: 5,
@@ -86,6 +71,36 @@ const wheelProducts: Product[] = [
 		imgLink:
 			'https://cdnm.bike-discount.de/media/org/orgb_D/orgid_78/thumbs/740591_5949415.jpg',
 		type: 'wheel',
+	},
+];
+
+const handlebarProducts: Product[] = [
+	{
+		id: '444',
+		modelSrc: HandlebarBlack,
+		name: 'Black Thunder',
+		brand: '2Cool4School',
+		grade: 5,
+		numReviews: 2,
+		price: 750,
+		imgLink:
+			'https://cdnm.bike-discount.de/media/org/orgb_D/orgid_78/thumbs/740591_5949415.jpg',
+		type: 'handle bar',
+	},
+];
+
+const seatpostProducts: Product[] = [
+	{
+		id: '123',
+		modelSrc: SeatpostBlue,
+		name: 'Black Thunder',
+		brand: '2Cool4School',
+		grade: 5,
+		numReviews: 2,
+		price: 350,
+		imgLink:
+			'https://cdnm.bike-discount.de/media/org/orgb_D/orgid_78/thumbs/740591_5949415.jpg',
+		type: 'saddle',
 	},
 ];
 
@@ -112,6 +127,10 @@ const SidePanelPresenter = () => {
 			setProductsToShow(frameProducts);
 		} else if (currentProductType === 'wheel') {
 			setProductsToShow(wheelProducts);
+		} else if (currentProductType === 'handle bar') {
+			setProductsToShow(handlebarProducts);
+		} else if (currentProductType === 'saddle') {
+			setProductsToShow(seatpostProducts);
 		}
 	}, [currentProductType]);
 
