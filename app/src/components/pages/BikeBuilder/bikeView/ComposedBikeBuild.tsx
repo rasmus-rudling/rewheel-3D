@@ -10,10 +10,6 @@ interface Props {
 const ComposedBikeBuild = ({ bikeConfig }: Props) => {
 	const bikeParts: JSX.Element[] = [];
 
-	// useEffect(() => {
-	console.log('Bikeconfig in composedbuild', bikeConfig);
-	// }, [bikeConfig]);
-
 	Object.keys(bikeConfig).forEach((key) => {
 		let position = {} as THREE.Vector3;
 		let rotation = {} as THREE.Euler;
