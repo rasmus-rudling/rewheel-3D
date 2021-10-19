@@ -10,6 +10,8 @@ import User from "./models/User";
 
 const url = process.env.MONGODB_URI;
 const port = process.env.PORT;
+const app_url = process.env.APP_URI;
+const app_port = process.env.APP_PORT;
 const jwt_secret = process.env.JWT_SECRET;
 const jwks_url = process.env.JWKS_URL;
 const auth0_client_id = process.env.AUTH0_CLIENT_ID;
@@ -35,6 +37,12 @@ const startServer = async () => {
 
   const app = express();
 
+  // CORS configuration
+  const corsOptions = {
+    origin: `${app_url}:${app_port}`,
+    credentials: true,
+  };
+
   const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -54,19 +62,11 @@ const startServer = async () => {
         user,
       };
     },
-    // context: async ({ req }) => {
-    //   const auth = req ? req.headers.authorization : null;
-    //   if (auth && auth.toLowerCase().startsWith("bearer ")) {
-    //     const decodedToken = jwt.verify(auth.substring(7), jwt_secret);
-    //     const currentUser = await User.findById(decodedToken.id);
-    //     return { currentUser };
-    //   }
-    // },
   });
 
   await server.start();
 
-  server.applyMiddleware({ app });
+  server.applyMiddleware({ app, cors: corsOptions });
 
   await mongoose
     .connect(url, {
