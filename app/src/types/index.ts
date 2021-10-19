@@ -1,4 +1,4 @@
-import { ComponentConfig } from "./three";
+import { ComponentConfig } from './three';
 
 export interface User {
 	id: string;
@@ -29,7 +29,7 @@ export interface Product {
 
 export interface BikeConfig {
 	[key: string]: ComponentConfig;
-  };
+}
 
 export interface BikeBuild {
 	products: Product[];
