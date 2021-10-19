@@ -98,4 +98,3 @@ const prodExport = {
 };
 
 module.exports = isDevelopment ? devExport : prodExport;
-// module.exports = prodExport;
