@@ -72,10 +72,18 @@ const SidePanelPresenter = () => {
 	}, [loading]);
 
 	useEffect(() => {
-		const relevantProducts = allProducts.filter(
-			(product) =>
-				product.type.toLowerCase() === currentProductType.toLowerCase()
-		);
+		const relevantProducts = allProducts.filter((product) => {
+			// console.log('');
+			// console.log('---');
+			// console.log(product.id);
+			// console.log(product.type.toLowerCase());
+			// console.log(currentProductType.toLowerCase());
+			// console.log('---');
+			// console.log('');
+			return product.type.toLowerCase() === currentProductType.toLowerCase();
+		});
+
+		console.log(relevantProducts);
 
 		setProductsToShow(relevantProducts);
 	}, [currentProductType, allProducts]);
