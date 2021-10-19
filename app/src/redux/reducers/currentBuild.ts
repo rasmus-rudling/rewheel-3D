@@ -88,7 +88,7 @@ const getNewRenderedBuildConfig = (products: Product[]) => {
   products.forEach((product: Product) => {
     // console.log(scene)
     const productGLTF = useGLTF(product.modelSrc) as GLTFResult;
-    // console.log(productGLTF);
+    console.log(productGLTF);
 
     const componentConfig = {} as ComponentConfig;
     const anchors: Anchors = {};
@@ -103,8 +103,10 @@ const getNewRenderedBuildConfig = (products: Product[]) => {
         anchors[key.name] = anchor;
       }
       if (key.type === "Mesh") {
+        const material = key.material as THREE.MeshStandardMaterial
         partType = key.name;
         componentConfig.geometry = key.geometry;
+        componentConfig.color = material.color;
       }
     });
 

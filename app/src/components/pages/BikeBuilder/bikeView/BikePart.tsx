@@ -8,13 +8,15 @@ type Props = JSX.IntrinsicElements["group"] & {
   geometry: THREE.BufferGeometry;
   position: THREE.Vector3;
   orientation: THREE.Euler;
+  color: THREE.Color;
+
 };
 
 const BikePart = (props: Props) => {
   const geometry = props.geometry; // Include geometry instead?
   const position = props.position;
   const orientation = props.orientation;
-  const material = new THREE.MeshStandardMaterial({color: '#CB347E', roughness: 0});
+  const material = new THREE.MeshStandardMaterial({color: props.color, roughness: 0});
 
   const group = useRef<THREE.Mesh>();
 

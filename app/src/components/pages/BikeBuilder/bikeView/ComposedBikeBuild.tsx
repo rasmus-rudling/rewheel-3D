@@ -49,6 +49,7 @@ const ComposedBikeBuild = ({ bikeConfig }: Props) => {
         geometry={bikeConfig[key].geometry}
         position={position}
         orientation={rotation}
+        color={bikeConfig[key].color}
       />
     );
 
