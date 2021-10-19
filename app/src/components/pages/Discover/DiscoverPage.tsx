@@ -1,5 +1,4 @@
 import React, { Component, useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
 
 import Button1 from "../../common/buttons/Button1View";
 
@@ -55,47 +54,39 @@ const DiscoverPage = () => {
   };
 
   return (
-    <div className="w-full h-full bg-blue-100">
-      <div className=" flex justify-center">DISCOVER</div>
-
-      <div className=" flex justify-center items-center w-full h-4/6 -mx-2 bg-red-100">
-        <div className="w-1/6 px-2">
+    <div className="w-full h-full  mt-10 mb-5 -mx-2">
+      <div className=" flex justify-center items-center w-full h-4/6 -mx-2">
+        <div className="w-1/4 h-3/6 px-2">
           {index > 0 ? (
             <div
               className={
-                data.properties[index - 1].color + " hover:bg-yellow-50 ..."
+                data.properties[index - 1].color +
+                " h-full hover:bg-yellow-50 ..."
               }
-            >
-              {" "}
-              PREV
-            </div>
+            ></div>
           ) : (
             ""
           )}
         </div>
 
-        <div className="w-3/6 px-2">
+        <div className="w-2/4 px-2">
           {
             <div
               className={
-                data.properties[index].color + " h-36  hover:bg-yellow-50  ..."
+                data.properties[index].color + " h-80  hover:bg-yellow-50  ..."
               }
-            >
-              CURR
-            </div>
+            ></div>
           }
         </div>
 
-        <div className="w-1/6 px-2">
+        <div className="w-1/4 h-3/6 px-2">
           {index < numberOfObjects - 1 ? (
             <div
               className={
-                data.properties[index + 1].color + " hover:bg-yellow-50 ..."
+                data.properties[index + 1].color +
+                " h-full hover:bg-yellow-50 ..."
               }
-            >
-              {" "}
-              NEXT{" "}
-            </div>
+            ></div>
           ) : (
             ""
           )}
@@ -104,18 +95,21 @@ const DiscoverPage = () => {
 
       <div className="flex justify-center">
         <Button1
-          color="gray"
+          color="blue"
           onClickHandler={() => prevProperty()}
           disabled={index === 0}
-          text="Prev"
+          text="Föregående"
           addBorder={true}
+          blackTextColor={false}
         />
         <Button1
-          color="gray"
+          color="blue"
           onClickHandler={() => nextProperty()}
           disabled={index === numberOfObjects - 1}
-          text="Next"
+          text="Nästa"
           addBorder={true}
+          filled={true}
+          blackTextColor={false}
         />
       </div>
     </div>
