@@ -10,6 +10,7 @@ const BikePartNavivation = () => {
     border-2
     rounded-md
     mr-3
+    last:mr-0
     font-light
   `;
 
@@ -62,7 +63,10 @@ const BikePartNavivation = () => {
 				}
 
 				return (
-					<div key={'partNav ' + part + idx} className="flex mr-3 items-center">
+					<div
+						key={'partNav ' + part + idx}
+						className="flex mr-3 items-center last:mr-0"
+					>
 						<div
 							className={currentStyles.join(' ')}
 							onClick={() => {
