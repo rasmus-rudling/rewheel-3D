@@ -40,12 +40,6 @@ const startServer = async () => {
 
   app.use(cors());
 
-  // CORS configuration
-  // const corsOptions = {
-  //   origin: `${app_url}:${app_port}`,
-  //   credentials: true,
-  // };
-
   const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -69,7 +63,6 @@ const startServer = async () => {
 
   await server.start();
 
-  // server.applyMiddleware({ app, cors: corsOptions });
   server.applyMiddleware({ app });
 
   await mongoose
