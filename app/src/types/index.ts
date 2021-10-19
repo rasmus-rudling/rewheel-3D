@@ -17,13 +17,13 @@ export interface PartFilter {
 
 export interface Product {
 	id: string;
-	modelSrc: string;
+	// modelSrc: string;
 	name: string;
 	brand: string;
 	grade: number;
 	numReviews: number;
 	price: number;
-	imgLink: string;
+	// imgLink: string;
 	type: string;
 }
 

@@ -2,6 +2,7 @@ import { useGLTF } from '@react-three/drei';
 import { useEffect } from 'react';
 import { Product } from '../../../../../types';
 import QualityIndication from './QualityIndication/QualityIndicationPresenter';
+import { modelsAndImages } from '../../../../../utility/models';
 
 interface Props {
 	productInfo: Product;
@@ -29,7 +30,7 @@ const ProductCardView = ({
 	}
 
 	useEffect(() => {
-		useGLTF.preload(productInfo.modelSrc);
+		useGLTF.preload(modelsAndImages[productInfo.id].model);
 	}, []);
 
 	return (
@@ -48,7 +49,7 @@ const ProductCardView = ({
 			</div>
 			<div className="w-full flex justify-center">
 				<img
-					src={productInfo.imgLink}
+					src={modelsAndImages[productInfo.id].img}
 					className="p-2 h-full max-h-full object-scale-down"
 				/>
 			</div>
