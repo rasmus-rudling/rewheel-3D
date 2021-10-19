@@ -39,15 +39,17 @@ const data = {
 var numberOfObjects = data.properties.length;
 
 function Slides() {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(Math.floor(numberOfObjects / 2));
 
   const nextProperty = () => {
     setIndex(index + 1);
+
     console.log(index);
   };
 
   const prevProperty = () => {
     setIndex(index - 1);
+
     console.log(index);
   };
 
@@ -60,7 +62,6 @@ function Slides() {
         text="Prev"
         addBorder={true}
       />
-
       <Button1
         color="gray"
         onClickHandler={() => nextProperty()}
@@ -69,7 +70,11 @@ function Slides() {
         addBorder={true}
       />
 
-      <div> {data.properties[index].color}</div>
+      <div className="flex items-stretch ...">
+        {index > 0 ? data.properties[index - 1].color : ""}{" "}
+        {data.properties[index].color}{" "}
+        {index < numberOfObjects - 1 ? data.properties[index + 1].color : ""}
+      </div>
     </div>
   );
 }
