@@ -73,17 +73,8 @@ const SidePanelPresenter = () => {
 
 	useEffect(() => {
 		const relevantProducts = allProducts.filter((product) => {
-			// console.log('');
-			// console.log('---');
-			// console.log(product.id);
-			// console.log(product.type.toLowerCase());
-			// console.log(currentProductType.toLowerCase());
-			// console.log('---');
-			// console.log('');
 			return product.type.toLowerCase() === currentProductType.toLowerCase();
 		});
-
-		console.log(relevantProducts);
 
 		setProductsToShow(relevantProducts);
 	}, [currentProductType, allProducts]);
@@ -94,6 +85,10 @@ const SidePanelPresenter = () => {
 		dispatch(changeProductType(changeTypeOption, undefined));
 	};
 
+	const saveBikeHandler = () => {
+		console.log('Nu sparas den');
+	};
+
 	return (
 		<SidePanelView
 			currentBuild={currentBuild}
@@ -102,6 +97,7 @@ const SidePanelPresenter = () => {
 			currentProductTypeUpdateHandler={currentProductTypeUpdateHandler}
 			currentProductType={currentProductType}
 			totNumberOfTypes={totNumberOfTypes}
+			saveBikeHandler={saveBikeHandler}
 		/>
 	);
 };

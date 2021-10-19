@@ -7,6 +7,7 @@ interface Props {
 	blackTextColor?: boolean;
 	filled?: boolean;
 	extraClass?: string;
+	disabled?: boolean;
 }
 
 const Button1 = ({
@@ -18,6 +19,7 @@ const Button1 = ({
 	blackTextColor = true,
 	filled = false,
 	extraClass = '',
+	disabled = false,
 }: Props) => {
 	let colorStyling = '',
 		borderStyling = '',
@@ -68,7 +70,6 @@ const Button1 = ({
         rounded-sm 
         h-8 px-3 mr-2
         last:mr-0
-
         transition
         duration-200
         select-none
@@ -82,9 +83,17 @@ const Button1 = ({
 		extraClass,
 	];
 
+	if (disabled) {
+		allStyling.push('opacity-50 cursor-default');
+	}
+
 	return (
 		<button
-			onClick={onClickHandler}
+			onClick={() => {
+				if (!disabled) {
+					onClickHandler();
+				}
+			}}
 			className={allStyling.join(' ')}
 			type={type}
 		>
