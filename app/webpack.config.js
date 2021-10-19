@@ -49,6 +49,7 @@ const devExport = {
 			template: path.join(__dirname, 'public', 'index.html'),
 			favicon: './public/512x512_icon.png',
 		}),
+		new Dotenv(),
 		new ReactRefreshWebpackPlugin(),
 	],
 };
@@ -92,6 +93,7 @@ const prodExport = {
 			template: path.join(__dirname, 'public', 'index.html'),
 			favicon: './public/512x512_icon.png',
 		}),
+		new Dotenv(),
 	],
 };
 
