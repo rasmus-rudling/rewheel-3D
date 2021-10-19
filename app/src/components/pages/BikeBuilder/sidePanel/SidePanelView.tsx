@@ -27,6 +27,7 @@ const SidePanelView = ({
 			<div className="flex flex-col flex-grow overflow-y-scroll items-stretch no-scrollbar">
 				{currentProductCards.map((product) => (
 					<ProductCard
+						key={'sidePanelView ' + product.id}
 						productInfo={product}
 						onCardClick={() => productCardClickHandler(product)}
 						inCurrentBuild={currentBuild.products.some(
@@ -55,7 +56,7 @@ const SidePanelView = ({
 						/>
 					) : null}
 
-					{currentProductType !== possibleProductTypes.at(-1) ? (
+					{currentProductType !== possibleProductTypes.at(-1) && (
 						<Button1
 							color="blue"
 							onClickHandler={() => currentProductTypeUpdateHandler('next')}
@@ -65,18 +66,17 @@ const SidePanelView = ({
 							filled={true}
 							extraClass="flex-grow"
 						/>
-					) : (
-						<Button1
-							color="green"
-							onClickHandler={() => currentProductTypeUpdateHandler('previous')}
-							text="Spara"
-							addBorder={true}
-							blackTextColor={false}
-							filled={true}
-							extraClass="flex-grow"
-						/>
 					)}
 				</div>
+				<Button1
+					color="green"
+					onClickHandler={() => currentProductTypeUpdateHandler('previous')}
+					text="Spara"
+					addBorder={true}
+					blackTextColor={false}
+					filled={true}
+					extraClass="w-full mt-3"
+				/>
 			</div>
 		</div>
 	);

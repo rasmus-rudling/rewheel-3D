@@ -1,19 +1,14 @@
-import {useEffect} from 'react';
-import { BikeConfig } from "../../../../types";
-import * as THREE from "three";
-import BikePart from "./BikePart";
+import { useEffect } from 'react';
+import { BikeConfig } from '../../../../types';
+import * as THREE from 'three';
+import BikePart from './BikePart';
 
 interface Props {
-  bikeConfig: BikeConfig;
+	bikeConfig: BikeConfig;
 }
 
 const ComposedBikeBuild = ({ bikeConfig }: Props) => {
   const bikeParts: JSX.Element[] = [];
-
-
-  // useEffect(() => {
-    console.log('Bikeconfig in composedbuild', bikeConfig)
-  // }, [bikeConfig]);
 
   Object.keys(bikeConfig).forEach((key) => {
     let position = {} as THREE.Vector3;
@@ -49,6 +44,7 @@ const ComposedBikeBuild = ({ bikeConfig }: Props) => {
         geometry={bikeConfig[key].geometry}
         position={position}
         orientation={rotation}
+        color={bikeConfig[key].color}
       />
     );
 
