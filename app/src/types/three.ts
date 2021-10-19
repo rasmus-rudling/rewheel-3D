@@ -13,6 +13,7 @@ export interface Anchors {
 
 export interface ComponentConfig {
   geometry: THREE.BufferGeometry;
+  color: THREE.Color;
   anchors: Anchors;
 };
 

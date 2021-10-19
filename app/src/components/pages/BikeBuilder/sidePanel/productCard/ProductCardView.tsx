@@ -2,6 +2,7 @@ import { useGLTF } from '@react-three/drei';
 import { useEffect } from 'react';
 import { Product } from '../../../../../types';
 import QualityIndication from './QualityIndication/QualityIndicationPresenter';
+import { modelsAndImages } from '../../../../../utility/models';
 
 interface Props {
 	productInfo: Product;
@@ -14,19 +15,22 @@ const ProductCardView = ({
 	onCardClick,
 	inCurrentBuild,
 }: Props) => {
-	const basicStyling =
-		'flex w-full h-36 mb-3 last:mb-0 cursor-pointer select-none ';
+	const basicStyling = `
+    flex
+    w-full h-36 mb-3 last:mb-0 
+    cursor-pointer select-none 
+  `;
 
 	let conditionalStyling;
 
 	if (inCurrentBuild) {
-		conditionalStyling = 'bg-green-200 font-white';
+		conditionalStyling = 'bg-green-200 font-white hover:bg-red-200';
 	} else {
-		conditionalStyling = 'bg-white';
+		conditionalStyling = 'bg-white hover:bg-green-50';
 	}
 
 	useEffect(() => {
-		useGLTF.preload(productInfo.modelSrc);
+		useGLTF.preload(modelsAndImages[productInfo.id].model);
 	}, []);
 
 	return (
@@ -45,7 +49,7 @@ const ProductCardView = ({
 			</div>
 			<div className="w-full flex justify-center">
 				<img
-					src={productInfo.imgLink}
+					src={modelsAndImages[productInfo.id].img}
 					className="p-2 h-full max-h-full object-scale-down"
 				/>
 			</div>
