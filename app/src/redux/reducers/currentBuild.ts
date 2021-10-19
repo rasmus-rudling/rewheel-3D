@@ -62,6 +62,14 @@ const getNewBuild = (products: Product[], newProduct: Product) => {
 		(product) => product.type !== newProduct.type
 	);
 
+	if (newProductAlreadyInBuild && newProduct.type === 'frame') {
+		return {
+			products: [],
+			totalPrice: 0,
+			renderedBuildConfig: {},
+		};
+	}
+
 	if (!newProductAlreadyInBuild) {
 		oldProductsCleared.push(newProduct);
 	}
