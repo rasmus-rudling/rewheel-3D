@@ -8,5 +8,7 @@ export const convertStringToCamelCase = (stringToConvert: string) => {
 	);
 };
 
-export const capitalizeFirstLetter = (stringToConvert: string) =>
-	stringToConvert.charAt(0).toUpperCase() + stringToConvert.slice(1);
+export const capitalizeFirstLetter = (stringToConvert: string) => {
+	console.log(stringToConvert);
+	return stringToConvert.charAt(0).toUpperCase() + stringToConvert.slice(1);
+};
