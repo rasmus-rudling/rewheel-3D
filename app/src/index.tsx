@@ -18,6 +18,8 @@ ReactDOM.render(
       domain={auth0_domain}
       clientId={auth0_clientId}
       redirectUri={window.location.origin}
+      audience="rewheel-api-identifier"
+      scope="openid profile email"
     >
       <ApolloWrapper>
         <ReduxProvider store={store}>

@@ -6,7 +6,6 @@ import {
   NormalizedCacheObject,
   InMemoryCache,
   HttpLink,
-  from,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -34,27 +33,20 @@ const ApolloWrapper = ({ children }: Props) => {
     uri: `${backend_url}:${backend_port}/graphql`,
   });
 
-  const authLink = setContext((_, { headers }, ...rest) => {
-    if (!bearerToken) return { headers, ...rest };
+  const authLink = setContext((_, { headers }) => {
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...headers,
+        authorization: bearerToken ? `Bearer ${bearerToken}` : "",
+      },
+    };
   });
 
   const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
-    link: from([authLink, httpLink]),
   });
-
-  // client
-  //   .query({
-  //     query: gql`
-  //       query Query {
-  //         getAllBikes {
-  //           id
-  //           color
-  //         }
-  //       }
-  //     `,
-  //   })
-  //   .then((result) => console.log(result));
 
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
