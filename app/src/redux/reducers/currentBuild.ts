@@ -7,6 +7,7 @@ import {
 } from '../../types/three';
 
 import { useGLTF } from '@react-three/drei';
+import { modelsAndImages } from '../../utility/models';
 
 interface Action {
 	type: 'TOGGLE_PRODUCT';
@@ -14,6 +15,7 @@ interface Action {
 		newProduct: Product;
 	};
 }
+
 
 
 const initBuild: BikeBuild = {
@@ -75,7 +77,7 @@ const getNewRenderedBuildConfig = (products: Product[]) => {
 
   products.forEach((product: Product) => {
     // console.log(scene)
-    const productGLTF = useGLTF(product.modelSrc) as GLTFResult;
+    const productGLTF = useGLTF(modelsAndImages[product.id].model) as GLTFResult;
     console.log(productGLTF);
 
     const componentConfig = {} as ComponentConfig;
