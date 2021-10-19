@@ -7,10 +7,6 @@ import {
 } from '../../types/three';
 
 import { useGLTF } from '@react-three/drei';
-import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
-
-import BikeFrameModel from './../../resources/testGeometry/bikeFrame.gltf';
-import FrontWheelModel from './../../resources/testGeometry/frontWheel.gltf';
 
 interface Action {
 	type: 'TOGGLE_PRODUCT';
@@ -19,31 +15,6 @@ interface Action {
 	};
 }
 
-// const part = {
-//     id: "12435",
-//     modelSrc: BikeFrameModel,
-//     name: "Super fancy frame",
-//     brand: "Specialized",
-//     grade: 2,
-//     numReviews: 2,
-//     price: 324,
-//     imgLink:
-//       "https://shimmercat.abicart.se/shop/32301/art1/h1325/172811325-origpic-eb3c2a.jpg?max-width=500&max-height=500&quality=85",
-//     type: 'frame',
-//   };
-
-//   const part2 = {
-//     id: "342",
-//     modelSrc: FrontWheelModel,
-//     name: "Super fancy frame",
-//     brand: "Specialized",
-//     grade: 2,
-//     numReviews: 2,
-//     price: 324,
-//     imgLink:
-//       "https://shimmercat.abicart.se/shop/32301/art1/h1325/172811325-origpic-eb3c2a.jpg?max-width=500&max-height=500&quality=85",
-//     type: 'wheel',
-//   };
 
 const initBuild: BikeBuild = {
 	products: [],
@@ -58,11 +29,16 @@ const getNewBuild = (products: Product[], newProduct: Product) => {
 		(product) => product.id === newProduct.id
 	);
 
+	const framExist = oldProducts.some((product) => product.type === 'frame');
+
 	let oldProductsCleared = oldProducts.filter(
 		(product) => product.type !== newProduct.type
 	);
 
-	if (newProductAlreadyInBuild && newProduct.type === 'frame') {
+	if (
+		(newProductAlreadyInBuild && newProduct.type === 'frame') ||
+		(!framExist && newProduct.type !== 'frame')
+	) {
 		return {
 			products: [],
 			totalPrice: 0,
