@@ -62,6 +62,14 @@ const getNewBuild = (products: Product[], newProduct: Product) => {
 		(product) => product.type !== newProduct.type
 	);
 
+	if (newProductAlreadyInBuild && newProduct.type === 'frame') {
+		return {
+			products: [],
+			totalPrice: 0,
+			renderedBuildConfig: {},
+		};
+	}
+
 	if (!newProductAlreadyInBuild) {
 		oldProductsCleared.push(newProduct);
 	}
@@ -90,11 +98,7 @@ const getNewRenderedBuildConfig = (products: Product[]) => {
 	const bikeConfig: BikeConfig = {};
 
 	products.forEach((product: Product) => {
-		// console.log(scene)
-		console.log('1');
 		const productGLTF = useGLTF(product.modelSrc) as GLTFResult;
-		console.log('2');
-		// console.log(productGLTF);
 
 		const componentConfig = {} as ComponentConfig;
 		const anchors: Anchors = {};
