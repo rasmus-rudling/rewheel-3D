@@ -54,9 +54,9 @@ const DiscoverPage = () => {
   };
 
   return (
-    <div className="w-full h-full  mt-10 mb-5 -mx-2">
+    <div className="w-full h-full mt-10 mb-5 -mx-2">
       <div className=" flex justify-center items-center w-full h-4/6 -mx-2">
-        <div className="w-1/4 h-3/6 px-2">
+        <div className="w-1/4 h-3/6 px-2 animate-bounce">
           {index > 0 ? (
             <div
               className={
@@ -79,7 +79,7 @@ const DiscoverPage = () => {
           }
         </div>
 
-        <div className="w-1/4 h-3/6 px-2">
+        <div className="w-1/4 h-3/6 px-2 animate-bounce">
           {index < numberOfObjects - 1 ? (
             <div
               className={
