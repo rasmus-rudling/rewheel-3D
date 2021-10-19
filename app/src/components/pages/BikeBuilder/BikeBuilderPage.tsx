@@ -3,12 +3,17 @@ import SidePanel from './sidePanel/SidePanelPresenter';
 import { Suspense } from 'react';
 import BikePartNavivation from './BikePartNavivation';
 
+import { useSelector, RootStateOrAny } from 'react-redux';
+
+
 const BikeBuilderPage = () => {
+  const currentBikeBuild = useSelector((state: RootStateOrAny) => state.currentBuild);
+
 	return (
 		<div className="flex h-full w-full">
 			<div className="h-full flex-grow w-4/6 relative">
 				<Suspense fallback={<div>Loading... </div>}>
-					<BikeView />
+					<BikeView bikeBuild={currentBikeBuild} />
 					<BikePartNavivation />
 				</Suspense>
 			</div>

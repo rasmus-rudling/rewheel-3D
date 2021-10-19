@@ -7,10 +7,6 @@ import {
 } from '../../types/three';
 
 import { useGLTF } from '@react-three/drei';
-import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
-
-import BikeFrameModel from './../../resources/testGeometry/bikeFrame.gltf';
-import FrontWheelModel from './../../resources/testGeometry/frontWheel.gltf';
 
 interface Action {
 	type: 'TOGGLE_PRODUCT';
@@ -19,31 +15,6 @@ interface Action {
 	};
 }
 
-// const part = {
-//     id: "12435",
-//     modelSrc: BikeFrameModel,
-//     name: "Super fancy frame",
-//     brand: "Specialized",
-//     grade: 2,
-//     numReviews: 2,
-//     price: 324,
-//     imgLink:
-//       "https://shimmercat.abicart.se/shop/32301/art1/h1325/172811325-origpic-eb3c2a.jpg?max-width=500&max-height=500&quality=85",
-//     type: 'frame',
-//   };
-
-//   const part2 = {
-//     id: "342",
-//     modelSrc: FrontWheelModel,
-//     name: "Super fancy frame",
-//     brand: "Specialized",
-//     grade: 2,
-//     numReviews: 2,
-//     price: 324,
-//     imgLink:
-//       "https://shimmercat.abicart.se/shop/32301/art1/h1325/172811325-origpic-eb3c2a.jpg?max-width=500&max-height=500&quality=85",
-//     type: 'wheel',
-//   };
 
 const initBuild: BikeBuild = {
 	products: [],
@@ -100,34 +71,38 @@ const getNewBuild = (products: Product[], newProduct: Product) => {
 };
 
 const getNewRenderedBuildConfig = (products: Product[]) => {
-	const bikeConfig: BikeConfig = {};
+  const bikeConfig: BikeConfig = {};
 
-	products.forEach((product: Product) => {
-		const productGLTF = useGLTF(product.modelSrc) as GLTFResult;
+  products.forEach((product: Product) => {
+    // console.log(scene)
+    const productGLTF = useGLTF(product.modelSrc) as GLTFResult;
+    console.log(productGLTF);
 
-		const componentConfig = {} as ComponentConfig;
-		const anchors: Anchors = {};
-		let partType = '';
+    const componentConfig = {} as ComponentConfig;
+    const anchors: Anchors = {};
+    let partType = "";
 
-		Object.values(productGLTF.nodes).forEach((key) => {
-			if (key.type === 'Object3D') {
-				const anchor: Anchor = {
-					position: key.position,
-					rotation: key.rotation,
-				};
-				anchors[key.name] = anchor;
-			}
-			if (key.type === 'Mesh') {
-				partType = key.name;
-				componentConfig.geometry = key.geometry;
-			}
-		});
+    Object.values(productGLTF.nodes).forEach((key) => {
+      if (key.type === "Object3D") {
+        const anchor: Anchor = {
+          position: key.position,
+          rotation: key.rotation,
+        };
+        anchors[key.name] = anchor;
+      }
+      if (key.type === "Mesh") {
+        const material = key.material as THREE.MeshStandardMaterial
+        partType = key.name;
+        componentConfig.geometry = key.geometry;
+        componentConfig.color = material.color;
+      }
+    });
 
-		componentConfig.anchors = anchors;
-		bikeConfig[partType] = componentConfig;
-	});
+    componentConfig.anchors = anchors;
+    bikeConfig[partType] = componentConfig;
+  });
 
-	return bikeConfig;
+  return bikeConfig;
 };
 
 const currentBuildReducers = (state = initBuild, { type, data }: Action) => {

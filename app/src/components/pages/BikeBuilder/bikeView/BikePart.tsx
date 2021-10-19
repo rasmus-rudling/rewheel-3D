@@ -1,21 +1,20 @@
 import * as THREE from 'three';
 import { useRef } from 'react';
 
-type Props = JSX.IntrinsicElements['group'] & {
-	// Can't be interface since base type includes optinal arguments
-	geometry: THREE.BufferGeometry;
-	position: THREE.Vector3;
-	orientation: THREE.Euler;
+type Props = JSX.IntrinsicElements["group"] & {
+  // Can't be interface since base type includes optinal arguments
+  geometry: THREE.BufferGeometry;
+  position: THREE.Vector3;
+  orientation: THREE.Euler;
+  color: THREE.Color;
+
 };
 
 const BikePart = (props: Props) => {
-	const geometry = props.geometry; // Include geometry instead?
-	const position = props.position;
-	const orientation = props.orientation;
-	const material = new THREE.MeshStandardMaterial({
-		color: '#CB347E',
-		roughness: 0,
-	});
+  const geometry = props.geometry; // Include geometry instead?
+  const position = props.position;
+  const orientation = props.orientation;
+  const material = new THREE.MeshStandardMaterial({color: props.color, roughness: 0});
 
 	const group = useRef<THREE.Mesh>();
 
