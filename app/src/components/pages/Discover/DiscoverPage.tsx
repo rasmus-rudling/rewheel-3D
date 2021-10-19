@@ -7,83 +7,116 @@ const data = {
   properties: [
     {
       index: 0,
-      color: "red",
+      color: "bg-red-500",
     },
     {
       index: 1,
-      color: "green",
+      color: "bg-green-500",
     },
     {
       index: 2,
-      color: "yellow",
+      color: "bg-pink-500",
     },
     {
       index: 3,
-      color: "orange",
+      color: "bg-yellow-300",
     },
     {
       index: 4,
-      color: "purple",
+      color: "bg-purple-500",
     },
     {
       index: 5,
-      color: "blue",
+      color: "bg-blue-500",
     },
     {
       index: 6,
-      color: "gray",
+      color: "bg-gray-500",
     },
   ],
 };
 
 var numberOfObjects = data.properties.length;
 
-function Slides() {
+const DiscoverPage = () => {
   const [index, setIndex] = useState(Math.floor(numberOfObjects / 2));
 
+  console.log(index);
   const nextProperty = () => {
     setIndex(index + 1);
 
-    console.log(index);
+    //console.log(index);
   };
 
   const prevProperty = () => {
     setIndex(index - 1);
 
-    console.log(index);
+    //console.log(index);
   };
 
   return (
-    <div>
-      <Button1
-        color="gray"
-        onClickHandler={() => prevProperty()}
-        disabled={index === 0}
-        text="Prev"
-        addBorder={true}
-      />
-      <Button1
-        color="gray"
-        onClickHandler={() => nextProperty()}
-        disabled={index === numberOfObjects - 1}
-        text="Next"
-        addBorder={true}
-      />
+    <div className="w-full h-full bg-blue-100">
+      <div className=" flex justify-center">DISCOVER</div>
 
-      <div className="flex items-stretch ...">
-        {index > 0 ? data.properties[index - 1].color : ""}{" "}
-        {data.properties[index].color}{" "}
-        {index < numberOfObjects - 1 ? data.properties[index + 1].color : ""}
+      <div className=" flex justify-center items-center w-full h-4/6 -mx-2 bg-red-100">
+        <div className="w-1/6 px-2">
+          {index > 0 ? (
+            <div
+              className={
+                data.properties[index - 1].color + " hover:bg-yellow-50 ..."
+              }
+            >
+              {" "}
+              PREV
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+
+        <div className="w-3/6 px-2">
+          {
+            <div
+              className={
+                data.properties[index].color + " h-36  hover:bg-yellow-50  ..."
+              }
+            >
+              CURR
+            </div>
+          }
+        </div>
+
+        <div className="w-1/6 px-2">
+          {index < numberOfObjects - 1 ? (
+            <div
+              className={
+                data.properties[index + 1].color + " hover:bg-yellow-50 ..."
+              }
+            >
+              {" "}
+              NEXT{" "}
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
-    </div>
-  );
-}
 
-const DiscoverPage = () => {
-  return (
-    <div className="w-full h-screen flex justify-center items-center">
-      <div className="flex justify-center h-max w-max">
-        <Slides></Slides>
+      <div className="flex justify-center">
+        <Button1
+          color="gray"
+          onClickHandler={() => prevProperty()}
+          disabled={index === 0}
+          text="Prev"
+          addBorder={true}
+        />
+        <Button1
+          color="gray"
+          onClickHandler={() => nextProperty()}
+          disabled={index === numberOfObjects - 1}
+          text="Next"
+          addBorder={true}
+        />
       </div>
     </div>
   );
