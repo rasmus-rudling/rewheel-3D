@@ -7,6 +7,7 @@ import "./style/tailwind.css";
 // Redux
 import { Provider as ReduxProvider } from "react-redux";
 import store from "./redux/store";
+import ApolloWrapper from "./components/common/ApolloWrapper";
 
 const auth0_domain: string = process.env.AUTH0_DOMAIN ?? "undefined";
 const auth0_clientId: string = process.env.AUTH0_CLIENT_ID ?? "undefined";
@@ -17,10 +18,14 @@ ReactDOM.render(
       domain={auth0_domain}
       clientId={auth0_clientId}
       redirectUri={window.location.origin}
+      audience="rewheel-api-identifier"
+      scope="openid profile email"
     >
-      <ReduxProvider store={store}>
-        <App />
-      </ReduxProvider>
+      <ApolloWrapper>
+        <ReduxProvider store={store}>
+          <App />
+        </ReduxProvider>
+      </ApolloWrapper>
     </Auth0Provider>
   </React.StrictMode>,
   document.getElementById("root")
