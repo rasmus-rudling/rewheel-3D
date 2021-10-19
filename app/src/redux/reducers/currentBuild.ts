@@ -90,11 +90,7 @@ const getNewRenderedBuildConfig = (products: Product[]) => {
 	const bikeConfig: BikeConfig = {};
 
 	products.forEach((product: Product) => {
-		// console.log(scene)
-		console.log('1');
 		const productGLTF = useGLTF(product.modelSrc) as GLTFResult;
-		console.log('2');
-		// console.log(productGLTF);
 
 		const componentConfig = {} as ComponentConfig;
 		const anchors: Anchors = {};
