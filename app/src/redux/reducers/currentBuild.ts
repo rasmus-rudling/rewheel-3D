@@ -16,8 +16,6 @@ interface Action {
 	};
 }
 
-
-
 const initBuild: BikeBuild = {
 	products: [],
 	totalPrice: 0,
@@ -73,38 +71,38 @@ const getNewBuild = (products: Product[], newProduct: Product) => {
 };
 
 const getNewRenderedBuildConfig = (products: Product[]) => {
-  const bikeConfig: BikeConfig = {};
+	const bikeConfig: BikeConfig = {};
 
-  products.forEach((product: Product) => {
-    // console.log(scene)
-    const productGLTF = useGLTF(modelsAndImages[product.id].model) as GLTFResult;
-    console.log(productGLTF);
+	products.forEach((product: Product) => {
+		const productGLTF = useGLTF(
+			modelsAndImages[product.id].model
+		) as GLTFResult;
 
-    const componentConfig = {} as ComponentConfig;
-    const anchors: Anchors = {};
-    let partType = "";
+		const componentConfig = {} as ComponentConfig;
+		const anchors: Anchors = {};
+		let partType = '';
 
-    Object.values(productGLTF.nodes).forEach((key) => {
-      if (key.type === "Object3D") {
-        const anchor: Anchor = {
-          position: key.position,
-          rotation: key.rotation,
-        };
-        anchors[key.name] = anchor;
-      }
-      if (key.type === "Mesh") {
-        const material = key.material as THREE.MeshStandardMaterial
-        partType = key.name;
-        componentConfig.geometry = key.geometry;
-        componentConfig.color = material.color;
-      }
-    });
+		Object.values(productGLTF.nodes).forEach((key) => {
+			if (key.type === 'Object3D') {
+				const anchor: Anchor = {
+					position: key.position,
+					rotation: key.rotation,
+				};
+				anchors[key.name] = anchor;
+			}
+			if (key.type === 'Mesh') {
+				const material = key.material as THREE.MeshStandardMaterial;
+				partType = key.name;
+				componentConfig.geometry = key.geometry;
+				componentConfig.color = material.color;
+			}
+		});
 
-    componentConfig.anchors = anchors;
-    bikeConfig[partType] = componentConfig;
-  });
+		componentConfig.anchors = anchors;
+		bikeConfig[partType] = componentConfig;
+	});
 
-  return bikeConfig;
+	return bikeConfig;
 };
 
 const currentBuildReducers = (state = initBuild, { type, data }: Action) => {
@@ -118,6 +116,7 @@ const currentBuildReducers = (state = initBuild, { type, data }: Action) => {
 
 			newBuild.renderedBuildConfig = newRenderedBuildConfig;
 
+			console.log(newBuild);
 			return newBuild;
 		default:
 			return state;
