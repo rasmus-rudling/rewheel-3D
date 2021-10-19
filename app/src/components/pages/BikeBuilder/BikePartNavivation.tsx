@@ -24,6 +24,10 @@ const BikePartNavivation = () => {
 	const nonActiveStyles = `
     cursor-pointer
     border-gray-300
+    transition
+    duration-200
+    hover:bg-blue-100
+    hover:border-blue-200
     bg-white
   `;
 
