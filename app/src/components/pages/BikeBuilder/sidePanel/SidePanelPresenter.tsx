@@ -1,112 +1,148 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { Product } from '../../../../types';
-import SidePanelView from './SidePanelView';
+import { Product } from "../../../../types";
+import SidePanelView from "./SidePanelView";
 
-import dropbarBlack from './../../../../resources/testGeometry/models/dropbarBlack.gltf';
-import dropbarBlue from './../../../../resources/testGeometry/models/dropbarBlue.gltf';
-import frameHighBlack from './../../../../resources/testGeometry/models/frameHighBlack.gltf';
-import frameHighRed from './../../../../resources/testGeometry/models/frameHighRed.gltf';
-import frameLowRed from './../../../../resources/testGeometry/models/frameLowBlack.gltf';
-import frameLowTeal from './../../../../resources/testGeometry/models/frameLowTeal.gltf';
-import saddleBlack from './../../../../resources/testGeometry/models/saddleBlack.gltf';
-
-
-
-
-import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
-import { toggleProductInBuild } from '../../../../redux/actions/currentBuild';
-import { changeProductType } from '../../../../redux/actions/currentProductType';
+import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
+import { toggleProductInBuild } from "../../../../redux/actions/currentBuild";
+import { changeProductType } from "../../../../redux/actions/currentProductType";
 
 const totNumberOfTypes = 4;
 
-const frameProducts: Product[] = [
-	{
-		id: '111',
-		modelSrc: 'https://drive.google.com/uc?export=view&id=1bu4MJPpKljOpDxd_8Hs40gjwlk9pOAWP',
-		name: 'Black Turbo',
-		brand: 'Specialized',
-		grade: 4,
-		numReviews: 2,
-		price: 324,
-		imgLink:
-			'https://drive.google.com/uc?export=view&id=1am3DpGgcz-vTSF76J2jMo94_qeOU_eZX',
-		type: 'frame',
-	},
-	{
-		id: '222',
-		modelSrc: FrameRed,
-		name: 'Super Speed Red',
-		brand: 'Specialized',
-		grade: 5,
-		numReviews: 11,
-		price: 34,
-		imgLink:
-			'https://www.planetx.co.uk/imgs/products/px/950x600_constWH/FTPXTIADV4_P1-05.jpg?v=mo',
-		type: 'frame',
-	}
-];
+// const frameProducts: Product[] = [
+// 	{
+// 		"id": "1",
+// 		"name": "High frame",
+// 		"brand": "Black",
+// 		"grade": 4,
+// 		"numReviews": 2,
+// 		"price": 324,
+// 		"type": "frame",
+// 	},
+// 	{
+// 		id: "2",
+// 		name: "High frame",
+// 		brand: "Red",
+// 		grade: 5,
+// 		numReviews: 11,
+// 		price: 34,
+// 		type: "frame",
+// 	},
+// 	{
+// 		id: "3",
+// 		name: "Low frame",
+// 		brand: "Red",
+// 		grade: 5,
+// 		numReviews: 11,
+// 		price: 34,
+// 		type: "frame",
+// 	},
+// 	{
+// 		id: "4",
+// 		name: "Low frame",
+// 		brand: "Teal",
+// 		grade: 5,
+// 		numReviews: 11,
+// 		price: 34,
+// 		type: "frame",
+// 	}
+// ];
 
-const wheelProducts: Product[] = [
-	{
-		id: '333',
-		modelSrc: FrontWheelWhite,
-		name: 'Super fancy wheel',
-		brand: 'Wheel co',
-		grade: 4,
-		numReviews: 2,
-		price: 850,
-		imgLink:
-			'https://cdnm.bike-discount.de/media/org/orgb_D/orgid_78/thumbs/740591_5949415.jpg',
-		type: 'wheel',
-	},
-	{
-		id: '999',
-		modelSrc: BackWheelWhite,
-		name: 'Super fancy wheel',
-		brand: 'Cool',
-		grade: 5,
-		numReviews: 2,
-		price: 750,
-		imgLink:
-			'https://cdnm.bike-discount.de/media/org/orgb_D/orgid_78/thumbs/740591_5949415.jpg',
-		type: 'wheel',
-	},
-];
+// const wheelProducts: Product[] = [
+// 	{
+// 		id: "5",
+// 		name: "Fast wheels",
+// 		brand: "White",
+// 		grade: 4,
+// 		numReviews: 2,
+// 		price: 850,
+// 		type: "wheel",
+// 	},
+// 	{
+// 		id: "6",
+// 		name: "Basic wheels",
+// 		brand: "Black",
+// 		grade: 5,
+// 		numReviews: 2,
+// 		price: 750,
+// 		type: "wheel",
+// 	},
+// ];
 
-const handlebarProducts: Product[] = [
-	{
-		id: '444',
-		modelSrc: HandlebarBlack,
-		name: 'Black Thunder',
-		brand: '2Cool4School',
-		grade: 5,
-		numReviews: 2,
-		price: 750,
-		imgLink:
-			'https://cdnm.bike-discount.de/media/org/orgb_D/orgid_78/thumbs/740591_5949415.jpg',
-		type: 'handle bar',
-	},
-];
+// const handlebarProducts: Product[] = [
+// 	{
+// 		id: "7",
+// 		name: "Drop bar",
+// 		brand: "Black",
+// 		grade: 4,
+// 		numReviews: 2,
+// 		price: 324,
+// 		type: "handle bar",
+// 	},
+// 	{
+// 		id: "8",
+// 		name: "Drop bar",
+// 		brand: "Blue",
+// 		grade: 5,
+// 		numReviews: 11,
+// 		price: 34,
+// 		type: "handle bar",
+// 	},
+// 	{
+// 		id: "9",
+// 		name: "Straight bar",
+// 		brand: "Black",
+// 		grade: 5,
+// 		numReviews: 11,
+// 		price: 34,
+// 		type: "handle bar",
+// 	},
+// 	{
+// 		id: "10",
+// 		name: "Straight bar",
+// 		brand: "Teal",
+// 		grade: 5,
+// 		numReviews: 11,
+// 		price: 34,
+// 		type: "handle bar",
+// 	}
+// ];
 
-const seatpostProducts: Product[] = [
-	{
-		id: '123',
-		modelSrc: SeatpostBlue,
-		name: 'Black Thunder',
-		brand: '2Cool4School',
-		grade: 5,
-		numReviews: 2,
-		price: 350,
-		imgLink:
-			'https://cdnm.bike-discount.de/media/org/orgb_D/orgid_78/thumbs/740591_5949415.jpg',
-		type: 'saddle',
-	},
-];
+// const saddleProducts: Product[] = [
+// 	{
+// 		id: "11",
+// 		name: "Comfy saddle",
+// 		brand: "Black",
+// 		grade: 5,
+// 		numReviews: 2,
+// 		price: 350,
+// 		type: "saddle",
+// 	},
+// 	{
+// 		id: "12",
+// 		name: "Comfy saddle",
+// 		brand: "Blue",
+// 		grade: 5,
+// 		numReviews: 2,
+// 		price: 350,
+// 		type: "saddle",
+// 	},
+// 	{
+// 		id: "13",
+// 		name: "Comfy saddle",
+// 		brand: "Brown",
+// 		grade: 5,
+// 		numReviews: 2,
+// 		price: 350,
+// 		type: "saddle",
+// 	},
+// ];
 
 const SidePanelPresenter = () => {
+	const [allProducts, setAllProducts] = useState<Product[]>([]);
+
 	const [productsToShow, setProductsToShow] =
-		useState<Product[]>(frameProducts);
+		useState<Product[]>([]);
 
 	const dispatch = useDispatch();
 
@@ -123,19 +159,22 @@ const SidePanelPresenter = () => {
 	};
 
 	useEffect(() => {
-		if (currentProductType === 'frame') {
-			setProductsToShow(frameProducts);
-		} else if (currentProductType === 'wheel') {
-			setProductsToShow(wheelProducts);
-		} else if (currentProductType === 'handle bar') {
-			setProductsToShow(handlebarProducts);
-		} else if (currentProductType === 'saddle') {
-			setProductsToShow(seatpostProducts);
-		}
+		// 1. Get all products
+		
+		const allProducts: Product[] = [];
+		
+		setAllProducts(allProducts)
+	}, [])
+
+
+	useEffect(() => {
+		const relevantProducts = allProducts.filter(product => product.type === currentProductType)
+		
+		setProductsToShow(relevantProducts)
 	}, [currentProductType]);
 
 	const currentProductTypeUpdateHandler = (
-		changeTypeOption: 'previous' | 'next'
+		changeTypeOption: "previous" | "next"
 	) => {
 		dispatch(changeProductType(changeTypeOption, undefined));
 	};

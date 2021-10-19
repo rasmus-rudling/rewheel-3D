@@ -19,35 +19,55 @@ const ComposedBikeBuild = ({ bikeConfig }: Props) => {
         position = new THREE.Vector3();
         rotation = new THREE.Euler();
         break;
-      case 'FRONTWHEEL':
+      case 'WHEEL':
         position = bikeConfig['FRAME'].anchors['FRONTWHEEL'].position;
         rotation = bikeConfig['FRAME'].anchors['FRONTWHEEL'].rotation;
-        break;
-      case 'BACKWHEEL':
+        bikeParts.push(
+          <BikePart
+            geometry={bikeConfig[key].geometry}
+            position={position}
+            orientation={rotation}
+            color={bikeConfig[key].color}
+          />
+        );
         position = bikeConfig['FRAME'].anchors['BACKWHEEL'].position;
         rotation = bikeConfig['FRAME'].anchors['BACKWHEEL'].rotation;
+        bikeParts.push(
+          <BikePart
+            geometry={bikeConfig[key].geometry}
+            position={position}
+            orientation={rotation}
+            color={bikeConfig[key].color}
+          />
+        );
         break;
       case 'HANDLEBAR':
         position = bikeConfig['FRAME'].anchors['HANDLEBAR'].position;
         rotation = bikeConfig['FRAME'].anchors['HANDLEBAR'].rotation;
+        bikeParts.push(
+          <BikePart
+            geometry={bikeConfig[key].geometry}
+            position={position}
+            orientation={rotation}
+            color={bikeConfig[key].color}
+          />
+        );
         break;
       case 'SEATPOST':
         position = bikeConfig['FRAME'].anchors['SEATPOST'].position;
         rotation = bikeConfig['FRAME'].anchors['SEATPOST'].rotation;
+        bikeParts.push(
+          <BikePart
+            geometry={bikeConfig[key].geometry}
+            position={position}
+            orientation={rotation}
+            color={bikeConfig[key].color}
+          />
+        );
         break;
       default:
         console.log('This type does not exist, check correctness of product type names.')
     }
-
-    bikeParts.push(
-      <BikePart
-        geometry={bikeConfig[key].geometry}
-        position={position}
-        orientation={rotation}
-        color={bikeConfig[key].color}
-      />
-    );
-
   })
 
   return (
