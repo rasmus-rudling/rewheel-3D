@@ -14,15 +14,18 @@ const ProductCardView = ({
 	onCardClick,
 	inCurrentBuild,
 }: Props) => {
-	const basicStyling =
-		'flex w-full h-36 mb-3 last:mb-0 cursor-pointer select-none ';
+	const basicStyling = `
+    flex
+    w-full h-36 mb-3 last:mb-0 
+    cursor-pointer select-none 
+  `;
 
 	let conditionalStyling;
 
 	if (inCurrentBuild) {
-		conditionalStyling = 'bg-green-200 font-white';
+		conditionalStyling = 'bg-green-200 font-white hover:bg-red-200';
 	} else {
-		conditionalStyling = 'bg-white';
+		conditionalStyling = 'bg-white hover:bg-green-50';
 	}
 
 	useEffect(() => {
