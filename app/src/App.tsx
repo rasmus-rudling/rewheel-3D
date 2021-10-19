@@ -1,8 +1,7 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import ProfilePage from './components/pages/Profile/ProfilePage';
-import BikeBuilderPage from './components/pages/BikeBuilder/BikeBuilderPage';
-import PageWrapper from './components/common/PageWrapper';
-import LoginPage from './components/pages/Login/LoginPage';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import ProfilePage from "./components/pages/Profile/ProfilePage";
+import BikeBuilderPage from "./components/pages/BikeBuilder/BikeBuilderPage";
+import PageWrapper from "./components/common/PageWrapper";
 import { useAuth0 } from "@auth0/auth0-react";
 import Spinner from "./components/common/Spinner";
 
@@ -13,7 +12,7 @@ const App = () => {
   return (
     <Router>
       <Switch>
-      <Route exact path={['/', '/bike-builder']}>
+        <Route exact path={["/", "/bike-builder"]}>
           <PageWrapper>
             <BikeBuilderPage />
           </PageWrapper>
@@ -24,14 +23,8 @@ const App = () => {
             <ProfilePage />
           </PageWrapper>
         </Route>
-
-        <Route exact path="/login">
-          <PageWrapper>
-            <LoginPage />
-          </PageWrapper>
-        </Route>
       </Switch>
     </Router>
   );
-}
+};
 export default App;
