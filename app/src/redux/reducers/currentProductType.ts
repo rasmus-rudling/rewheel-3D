@@ -1,18 +1,20 @@
 interface Action {
 	type: 'CHANGE_PRODUCT_TYPE';
 	data: {
-		changeTypeOption: string;
+		changeTypeOption?: string;
+		newProductType?: string;
 	};
 }
 
 export const possibleProductTypes = ['frame', 'wheel', 'handle bar', 'saddle'];
 
-const currentProductTypeReducer = (
-	state = "frame",
-	{ type, data }: Action
-) => {
+const currentProductTypeReducer = (state = 'frame', { type, data }: Action) => {
 	switch (type) {
 		case 'CHANGE_PRODUCT_TYPE':
+			if (data.newProductType) {
+				return data.newProductType;
+			}
+
 			const currentIdx = possibleProductTypes.indexOf(state);
 			let newIdx;
 

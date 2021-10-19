@@ -1,18 +1,22 @@
-import { BikeBuild, BikeConfig, Product } from "../../types";
-import { GLTFResult, ComponentConfig, Anchor, Anchors } from "../../types/three";
+import { BikeBuild, BikeConfig, Product } from '../../types';
+import {
+	GLTFResult,
+	ComponentConfig,
+	Anchor,
+	Anchors,
+} from '../../types/three';
 
+import { useGLTF } from '@react-three/drei';
+import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 
-import { useGLTF } from "@react-three/drei";
-import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
-
-import BikeFrameModel from "./../../resources/testGeometry/bikeFrame.gltf";
-import FrontWheelModel from "./../../resources/testGeometry/frontWheel.gltf";
+import BikeFrameModel from './../../resources/testGeometry/bikeFrame.gltf';
+import FrontWheelModel from './../../resources/testGeometry/frontWheel.gltf';
 
 interface Action {
-  type: "TOGGLE_PRODUCT";
-  data: {
-    newProduct: Product;
-  };
+	type: 'TOGGLE_PRODUCT';
+	data: {
+		newProduct: Product;
+	};
 }
 
 // const part = {
@@ -42,44 +46,52 @@ interface Action {
 //   };
 
 const initBuild: BikeBuild = {
-  products: [],
-  totalPrice: 0,
-  renderedBuildConfig: {},
+	products: [],
+	totalPrice: 0,
+	renderedBuildConfig: {},
 };
 
 const getNewBuild = (products: Product[], newProduct: Product) => {
-  let oldProducts = [...products];
+	let oldProducts = [...products];
 
-  const newProductAlreadyInBuild = oldProducts.some(
-    (product) => product.id === newProduct.id
-  );
+	const newProductAlreadyInBuild = oldProducts.some(
+		(product) => product.id === newProduct.id
+	);
 
-  let oldProductsCleared = oldProducts.filter(
-    (product) => product.type !== newProduct.type
-  );
+	let oldProductsCleared = oldProducts.filter(
+		(product) => product.type !== newProduct.type
+	);
 
-  if (!newProductAlreadyInBuild) {
-    oldProductsCleared.push(newProduct);
-  }
+	if (newProductAlreadyInBuild && newProduct.type === 'frame') {
+		return {
+			products: [],
+			totalPrice: 0,
+			renderedBuildConfig: {},
+		};
+	}
 
-  let newTotPrice;
+	if (!newProductAlreadyInBuild) {
+		oldProductsCleared.push(newProduct);
+	}
 
-  if (oldProductsCleared.length > 0) {
-    const totPriceReducer = (totPrice: number, currentPrice: number) =>
-      totPrice + currentPrice;
-    const productPrices = oldProductsCleared.map((product) => product.price);
-    newTotPrice = productPrices.reduce(totPriceReducer);
-  } else {
-    newTotPrice = 0;
-  }
+	let newTotPrice;
 
-  let newBuild = {
-    products: oldProductsCleared,
-    totalPrice: newTotPrice,
-    renderedBuildConfig: {},
-  };
+	if (oldProductsCleared.length > 0) {
+		const totPriceReducer = (totPrice: number, currentPrice: number) =>
+			totPrice + currentPrice;
+		const productPrices = oldProductsCleared.map((product) => product.price);
+		newTotPrice = productPrices.reduce(totPriceReducer);
+	} else {
+		newTotPrice = 0;
+	}
 
-  return newBuild;
+	let newBuild = {
+		products: oldProductsCleared,
+		totalPrice: newTotPrice,
+		renderedBuildConfig: {},
+	};
+
+	return newBuild;
 };
 
 const getNewRenderedBuildConfig = (products: Product[]) => {
@@ -118,18 +130,20 @@ const getNewRenderedBuildConfig = (products: Product[]) => {
 };
 
 const currentBuildReducers = (state = initBuild, { type, data }: Action) => {
-  switch (type) {
-    case "TOGGLE_PRODUCT":
-      let newBuild: BikeBuild = getNewBuild(state.products, data.newProduct);
+	switch (type) {
+		case 'TOGGLE_PRODUCT':
+			let newBuild: BikeBuild = getNewBuild(state.products, data.newProduct);
 
-      const newRenderedBuildConfig = getNewRenderedBuildConfig(newBuild.products);
+			const newRenderedBuildConfig = getNewRenderedBuildConfig(
+				newBuild.products
+			);
 
-      newBuild.renderedBuildConfig = newRenderedBuildConfig;
+			newBuild.renderedBuildConfig = newRenderedBuildConfig;
 
-      return newBuild;
-    default:
-      return state;
-  }
+			return newBuild;
+		default:
+			return state;
+	}
 };
 
 export default currentBuildReducers;
