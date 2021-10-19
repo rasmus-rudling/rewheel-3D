@@ -1,3 +1,5 @@
+import { useGLTF } from '@react-three/drei';
+import { useEffect } from 'react';
 import { Product } from '../../../../../types';
 import QualityIndication from './QualityIndication/QualityIndicationPresenter';
 
@@ -22,6 +24,10 @@ const ProductCardView = ({
 	} else {
 		conditionalStyling = 'bg-white';
 	}
+
+	useEffect(() => {
+		useGLTF.preload(productInfo.modelSrc);
+	}, []);
 
 	return (
 		<div
