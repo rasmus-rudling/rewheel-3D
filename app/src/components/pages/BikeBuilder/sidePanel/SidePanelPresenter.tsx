@@ -1,28 +1,24 @@
 import { useEffect, useState } from 'react';
 
-import { Product } from '../../../../types';
+import { Product, User } from '../../../../types';
 import SidePanelView from './SidePanelView';
 
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import { toggleProductInBuild } from '../../../../redux/actions/currentBuild';
 import { changeProductType } from '../../../../redux/actions/currentProductType';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { GET_ALL_PRODUCTS } from '../../../../graphql/queries/products';
+import { SAVE_NEW_BIKE } from '../../../../graphql/mutations/bikeBuilds';
 
 const totNumberOfTypes = 4;
 
-interface ProductFromDB {
-	product_id?: string;
-	id?: string;
-	name: string;
-	brand: string;
-	grade: number;
-	numReviews: number;
-	price: number;
-	type: string;
-}
-
 const SidePanelPresenter = () => {
+	const [addBike, saveBikeObj] = useMutation(SAVE_NEW_BIKE);
+
+	const loggedInUser: User = useSelector(
+		(state: RootStateOrAny) => state.loggedInUser
+	);
+
 	const { loading, error, data } = useQuery(GET_ALL_PRODUCTS);
 
 	const [allProducts, setAllProducts] = useState<Product[]>([]);
@@ -47,28 +43,8 @@ const SidePanelPresenter = () => {
 		const allProductsFromDB = data?.getAllProducts;
 
 		let allProductsCopy = allProductsFromDB ? [...allProductsFromDB] : [];
-		let allProductsFiltered: Product[] = [];
 
-		allProductsCopy.forEach((product: ProductFromDB) => {
-			let productCopy: ProductFromDB = { ...product };
-
-			productCopy.id = productCopy.product_id;
-			delete productCopy.product_id;
-
-			let filteredProduct = {
-				id: productCopy.id ? productCopy.id : '',
-				name: productCopy.name,
-				brand: productCopy.brand,
-				grade: productCopy.grade,
-				numReviews: productCopy.numReviews,
-				price: productCopy.price,
-				type: productCopy.type,
-			};
-
-			allProductsFiltered.push(filteredProduct);
-		});
-
-		setAllProducts(allProductsFiltered);
+		setAllProducts(allProductsCopy);
 	}, [loading]);
 
 	useEffect(() => {
@@ -86,7 +62,23 @@ const SidePanelPresenter = () => {
 	};
 
 	const saveBikeHandler = () => {
-		console.log('Nu sparas den');
+		if (currentBuild.products.length !== 4) return;
+
+		const productIDs: Product[] = currentBuild.products.map(
+			(product: Product) => product.id
+		);
+
+		// const creatorID = loggedInUser.id;
+
+		// console.log(loggedInUser)
+
+		// const bikeBuildToSave = {
+		// 	products: productIDs,
+		// 	createdBy: creatorID,
+		// 	// createdAt: new Date(),
+		// };
+
+		addBike({ variables: { products: productIDs, createdBy: 'asdwqe' } });
 	};
 
 	return (

@@ -1,3 +1,9 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-export const Bike = mongoose.model("Bike", { color: String });
+const schema = new mongoose.Schema({
+	products: [String],
+	createdBy: String,
+	// createdAt: Date,
+});
+
+export const Bike = mongoose.model('Bike', schema);

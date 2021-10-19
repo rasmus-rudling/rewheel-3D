@@ -12,11 +12,11 @@ export const typeDefs = gql`
 	}
 	type Bike {
 		id: ID!
-		color: String!
+		products: [String]
+		createdBy: String
 	}
 	type Product {
 		id: ID!
-		product_id: String!
 		name: String!
 		brand: String!
 		grade: Int!
@@ -24,6 +24,7 @@ export const typeDefs = gql`
 		price: Float!
 		type: String!
 	}
+
 	type Query {
 		getCurrentUser: User
 		getBike(_id: ID!): Bike!
@@ -35,7 +36,7 @@ export const typeDefs = gql`
 	type Mutation {
 		createUser(username: String!, password: String!): User
 		login(username: String!, password: String!): Token
-		addBike(color: String!): Bike!
+		addBike(products: [String]!, createdBy: String!): Bike!
 		editBike(_id: ID!, color: String!): Bike!
 		deleteBike(_id: ID!): Bike!
 		addProduct(
