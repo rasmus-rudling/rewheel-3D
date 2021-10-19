@@ -53,23 +53,26 @@ const ProfilePage = () => {
     //console.log(index);
   };
 
-  {
-    /* <div className="flex justify-evenly mt-10 mx-5 w-full h-full">
-          <div className="flex-row bg-blue-100">
-            <img className="block" src={user.picture} />
-            <p className="block">{user.email}</p>
-          </div>
-        </div> */
-  }
-
   const { user, isAuthenticated } = useAuth0();
 
   if (isAuthenticated && user) {
     return (
-      <div className="w-full h-full mt-10 ">
-        <div className="justify-items-start">HEJ</div>
+      <div className="w-full h-full  ">
+        <div className="flex content-evenly">
+          <div>
+            <img className=" w-25 h-25 mx-10 " src={user.picture} />
+          </div>
+          <div className="mx-10">{user.email}</div>
 
-        <div className=" flex justify-center items-center w-full h-4/6">
+          <div className="mx-20 mt-12">MY BIKEBUILDS</div>
+        </div>
+        {/* <div className="flex space-evenly bg-blue-100 ">
+          <img className=" w-25 h-25 " src={user.picture} />
+          <p className="">{user.email}</p>
+          <div>MY BIKES</div>
+        </div> */}
+
+        <div className=" flex justify-center items-center w-full h-4/6 -mt-8">
           <div className="w-1/4 h-3/6 px-2 animate-bounce">
             {index > 0 ? (
               <div
@@ -137,25 +140,5 @@ const ProfilePage = () => {
     );
   }
 };
-
-// const ProfilePage = () => {
-//   const { user, isAuthenticated } = useAuth0();
-//   if (isAuthenticated && user) {
-//     return (
-//       <div className="flex justify-evenly mt-10 mx-5 w-full h-full">
-//         <div className="flex-col bg-blue-100">
-//           <img className="block" src={user.picture} />
-//           <p className="block">{user.email}</p>
-//         </div>
-//       </div>
-//     );
-//   } else {
-//     return (
-//       <div>
-//         <p>Ej inloggad.</p>
-//       </div>
-//     );
-//   }
-// };
 
 export default ProfilePage;
