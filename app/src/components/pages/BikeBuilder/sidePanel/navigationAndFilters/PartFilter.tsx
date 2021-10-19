@@ -79,6 +79,7 @@ const PartFilter: React.FC<Props> = ({
 			<div className="flex flex-col flex-nowrap overflow-hidden p-3">
 				{Object.keys(alternatives).map((filterAlternative) => (
 					<div
+						key={'partFilter ' + filterAlternative}
 						className={
 							alternatives[filterAlternative]
 								? defaultFilterStyle + activeFilterAlternative

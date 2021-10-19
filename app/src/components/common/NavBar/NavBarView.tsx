@@ -15,6 +15,7 @@ const DesktopNavBarView = ({ navButtons, navButtonClickHandler }: Props) => {
 		<div className="flex h-max">
 			{navButtons.map((navButton) => (
 				<Button1
+					key={'navBarView ' + navButton.text}
 					color="green"
 					text={navButton.text}
 					onClickHandler={() => navButtonClickHandler(navButton.route)}
