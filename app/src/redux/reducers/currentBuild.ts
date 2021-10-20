@@ -16,8 +16,6 @@ interface Action {
 	};
 }
 
-
-
 const initBuild: BikeBuild = {
 	products: [],
 	totalPrice: 0,
