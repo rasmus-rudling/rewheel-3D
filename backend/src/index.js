@@ -2,40 +2,15 @@ require("dotenv").config();
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
 import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
-import jwksClient from "jwks-rsa";
 import { resolvers } from "./resolvers";
 import { typeDefs } from "./typeDefs";
-import User from "./models/User";
+import { verifyToken } from "./verifyToken";
 var cors = require("cors");
 
 const url = process.env.MONGODB_URI;
 const port = process.env.PORT;
-const app_url = process.env.APP_URI;
-const app_port = process.env.APP_PORT;
-const jwt_secret = process.env.JWT_SECRET;
-const jwks_url = process.env.JWKS_URL;
-const auth0_client_id = process.env.AUTH0_CLIENT_ID;
-const auth0_domain = process.env.AUTH0_DOMAIN;
 
 const startServer = async () => {
-  const client = jwksClient({
-    jwksUri: jwks_url,
-  });
-
-  function getKey(header, cb) {
-    client.getSigningKey(header.kid, function (err, key) {
-      var signingKey = key.publicKey || key.rsaPublicKey;
-      cb(null, signingKey);
-    });
-  }
-
-  const options = {
-    audience: auth0_client_id,
-    issuer: auth0_domain,
-    algorithms: ["RS256"],
-  };
-
   const app = express();
 
   app.use(cors());
@@ -43,21 +18,36 @@ const startServer = async () => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => {
-      // Authorization check on every request.
-      const token = req.headers.authorization;
-      const user = new Promise((resolve, reject) => {
-        jwt.verify(token, getKey, options, (err, decoded) => {
-          if (err) {
-            return reject(err);
-          }
-          resolve(decoded.email);
-        });
-      });
+    context: async ({ req, res }) => {
+      let isAuthenticated = false;
 
-      return {
-        user,
-      };
+      try {
+        const authHeader =
+          req.headers.authorization || "No-authorization-header";
+        if (authHeader) {
+          let token;
+
+          if (authHeader !== "No-authorization-header") {
+            token = authHeader.split(" ")[1];
+          } else {
+            token = undefined;
+          }
+
+          const payload = await verifyToken(token);
+          isAuthenticated = payload && payload.sub ? true : false;
+          // Get the user from db.
+          if (isAuthenticated) {
+            console.log(payload);
+          } else {
+            console.log("Is not logged in");
+          }
+        }
+      } catch (error) {
+        console.log("PE1");
+        console.log();
+      }
+
+      return { ...res, req, auth: { user, isAuthenticated } };
     },
   });
 

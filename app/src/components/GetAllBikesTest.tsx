@@ -1,4 +1,4 @@
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useApolloClient } from "@apollo/client";
 
 const GET_ALL_BIKES = gql`
   query GetAllBikes {
@@ -10,37 +10,37 @@ const GET_ALL_BIKES = gql`
 `;
 
 export const GetAllBikesTest = () => {
-  let loading;
-  let error;
-  let data;
-  let dataDiv = <div></div>;
+  const apolloClient = useApolloClient();
+  const { loading, error, data } = useQuery(GET_ALL_BIKES);
 
-  const onClickHandler = () => {
-    const queryAnswer = useQuery(GET_ALL_BIKES);
-    loading = queryAnswer.loading;
-    error = queryAnswer.error;
-    data = queryAnswer.data;
+  //   dataDiv = data.getAllBikes.map(
+  //     ({ id, color }: { id: string; color: string }) => (
+  //       <div>
+  //         <p>
+  //           {id}: {color}
+  //         </p>
+  //       </div>
+  //     )
 
-    dataDiv = data.getAllBikes.map(
-      ({ id, color }: { id: string; color: string }) => (
-        <div>
-          <p>
-            {id}: {color}
-          </p>
-        </div>
-      )
-    );
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error when querying API :(</p>;
+
+  // const [dataDiv, setDataDiv] = useState(null);
+
+  const onClickHandler = async () => {
+    const result = await apolloClient.query({
+      query: GET_ALL_BIKES,
+    });
+
+    console.log(result);
   };
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error when querying API :(</p>;
 
   return (
     <div>
       <button onClick={onClickHandler} className="bg-blue-400">
         TEST API
       </button>
-      {dataDiv}
+      {/* {dataDiv} */}
     </div>
   );
 };
