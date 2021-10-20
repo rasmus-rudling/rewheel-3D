@@ -54,20 +54,18 @@ export const resolvers = {
 				});
 			});
 		},
-		addBike: async (_, { email, products, createdBy }) => {
+		addBike: async (_, { email, products, createdBy, createdAt }) => {
 			const user = (await User.find({ email: email }))[0];
 
 			if (!user) {
 				throw new AuthenticationError('Invalid e-mail address.');
 			}
 
-			console.log(user);
-
 			// Create new bike.
 			const newBike = new Bike({
 				products: products,
 				createdBy: createdBy,
-				// createdAt: createdBike.createdAt,
+				createdAt: createdAt,
 			});
 
 			await newBike.save();

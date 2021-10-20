@@ -58,6 +58,8 @@ const NavBarPresenter = () => {
 			};
 
 			dispatch(loginUser(currentUser));
+
+			// Add user to DB if not exists
 		}
 	}, [user]);
 

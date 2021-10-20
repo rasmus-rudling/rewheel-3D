@@ -3,7 +3,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { changeProductType } from '../../../redux/actions/currentProductType';
 
-const BikePartNavivation = () => {
+const BikePartNavigation = () => {
 	const basicStyle = `
     px-3
     py-2
@@ -93,4 +93,4 @@ const BikePartNavivation = () => {
 	);
 };
 
-export default BikePartNavivation;
+export default BikePartNavigation;

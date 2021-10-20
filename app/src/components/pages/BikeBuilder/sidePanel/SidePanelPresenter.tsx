@@ -42,10 +42,16 @@ const SidePanelPresenter = () => {
 	useEffect(() => {
 		const allProductsFromDB = data?.getAllProducts;
 
+		console.log(allProductsFromDB)
+
 		let allProductsCopy = allProductsFromDB ? [...allProductsFromDB] : [];
 
 		setAllProducts(allProductsCopy);
 	}, [loading]);
+
+	useEffect(() => {
+		console.log(error)
+	}, [error])
 
 	useEffect(() => {
 		const relevantProducts = allProducts.filter((product) => {
@@ -67,16 +73,6 @@ const SidePanelPresenter = () => {
 		const productIDs: Product[] = currentBuild.products.map(
 			(product: Product) => product.id
 		);
-
-		// const creatorID = loggedInUser.id;
-
-		// console.log(loggedInUser)
-
-		// const bikeBuildToSave = {
-		// 	products: productIDs,
-		// 	createdBy: creatorID,
-		// 	// createdAt: new Date(),
-		// };
 
 		addBike({
 			variables: {

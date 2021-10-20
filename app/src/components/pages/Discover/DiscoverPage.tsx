@@ -1,11 +1,13 @@
-import React, { Component, useRef, useState } from "react";
+import React, { Component, useRef, useState, useEffect } from "react";
 import { useQuery, gql } from "@apollo/client";
 import Button1 from "../../common/buttons/Button1View";
 import BikeView from "../BikeBuilder/bikeView/BikeView";
 import Carousel from "../../common/Carousel";
 import { GET_ALL_BIKES } from '../../../graphql/queries/bikes';
 
-import { BikeBuild } from "./../../../types/index";
+import { getNewRenderedBuildConfig } from '../../../utility/functions'
+
+import { BikeBuild, BikeConfig } from "./../../../types/index";
 
 
 // const GetAllBikes = () => {
@@ -25,9 +27,6 @@ import { BikeBuild } from "./../../../types/index";
 //   );
 // };
 
-
-
-
 const bikeBuilds = [
   { products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
   { products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
@@ -36,9 +35,33 @@ const bikeBuilds = [
   { products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
 ];
 
+// type Bike {
+//   id: ID!
+//   products: [String]
+//   createdBy: String
+// }
+
 const DiscoverPage = () => {
   const { loading, error, data } = useQuery(GET_ALL_BIKES);
-  console.log(data.getAllBikes)
+
+  const [currentBikeConfigs, setCurrentBikeConfigs] = useState<BikeConfig[]>([]);
+
+  useEffect(() => {
+    const allBikes = data.getAllBikes;
+
+    if (allBikes) {
+      const newCurrentBikes: BikeConfig[] = [];
+
+      allBikes.map((bike: any) => {
+        const bikeRenderConfig: BikeConfig = getNewRenderedBuildConfig(bike.products);
+        
+        newCurrentBikes.push(bikeRenderConfig)
+      })
+
+      setCurrentBikeConfigs(newCurrentBikes)
+    } 
+
+  }, [loading])
 
   let numberOfObjects = bikeBuilds.length;
   const [index, setIndex] = useState(Math.floor(numberOfObjects / 2));
@@ -58,7 +81,7 @@ const DiscoverPage = () => {
 
   return (
     <div className="w-full h-full mt-10 mb-5">
-      <Carousel bikeBuilds={bikeBuilds} index={index} />
+      <Carousel bikeConfigs={currentBikeConfigs} index={index} />
       <div className="flex justify-center">
         <Button1
           color="blue"

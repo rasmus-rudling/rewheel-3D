@@ -17,6 +17,7 @@ export const typeDefs = gql`
     id: ID!
     products: [String]
     createdBy: String
+    createdAt: String
   }
   type Product {
     id: ID!
