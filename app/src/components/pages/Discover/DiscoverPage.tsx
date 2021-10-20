@@ -38,22 +38,31 @@ const DiscoverPage = () => {
 			const allBikes = bikesFetchInfo.data.getAllBikes;
 			const allProducts = productsFetchInfo.data.getAllProducts;
 
+			console.log(allBikes);
+			console.log(allProducts);
+
 			const newCurrentConfigs: BikeConfig[] = [];
 
 			allBikes.forEach((bike: any) => {
+				const currentBikeParts: Product[] = [];
 				const bikePartIds = bike.products;
-				const bikeParts: Product[] = [];
 
 				bikePartIds.forEach((bikePartId: string) => {
-					const bikePart = allProducts[bikePartId];
-					bikeParts.push(bikePart);
+					const bikePart = allProducts.find(
+						(currentProduct: Product) =>
+							currentProduct.product_id === bikePartId
+					);
+
+					currentBikeParts.push(bikePart);
 				});
 
 				const currentBikeConfig: BikeConfig =
-					getNewRenderedBuildConfig(bikeParts);
+					getNewRenderedBuildConfig(currentBikeParts);
 
 				newCurrentConfigs.push(currentBikeConfig);
 			});
+
+			console.log('newCurrentConfigs', newCurrentConfigs);
 
 			setCurrentBikeConfigs(newCurrentConfigs);
 		}
@@ -69,10 +78,6 @@ const DiscoverPage = () => {
 	const prevProperty = () => {
 		setIndex(index - 1);
 	};
-
-	useEffect(() => {
-		console.log(currentBikeConfigs);
-	}, [currentBikeConfigs]);
 
 	return (
 		<div className="w-full h-full mt-10 mb-5">
