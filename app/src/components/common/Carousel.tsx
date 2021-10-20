@@ -8,6 +8,11 @@ interface Props {
   index: number;
 }
 
+// Add boolean for edit buttons or not
+// Add edit button for the profile page where you can directly edit the bike
+
+// Add Made by , Price etc
+
 const Carousel = ({ bikeBuilds, index }: Props) => {
   var numberOfObjects = bikeBuilds.length;
 
@@ -17,8 +22,9 @@ const Carousel = ({ bikeBuilds, index }: Props) => {
         {index > 0 ? <BikeView bikeBuild={bikeBuilds[index]} /> : ""}
       </div>
 
-      <div className="w-2/4 px-2 h-80">
+      <div className="w-2/4 px-2 h-80 mb-20 mt-12">
         <BikeView bikeBuild={bikeBuilds[index]} />
+        <div>Created by Isak </div>
       </div>
 
       <div className="w-1/4 h-3/6 px-2 animate-bounce">

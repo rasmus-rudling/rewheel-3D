@@ -33,6 +33,11 @@ const DiscoverPage = () => {
 
   return (
     <div className="w-full h-full mt-10 mb-5">
+      <div className="flex justify-center">
+        {" "}
+        Se vad andra har byggt och inspireras!
+      </div>
+
       <Carousel bikeBuilds={bikeBuilds} index={index} />
       <div className="flex justify-center">
         <Button1
