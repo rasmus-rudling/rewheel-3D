@@ -30,6 +30,7 @@ export const typeDefs = gql`
 
   type Query {
     getCurrentUser(email: String!): User
+    getAllUsers: [User]
     getBike(_id: ID!): Bike!
     getMyBikes(email: String!): [Bike]!
     getAllBikes: [Bike!]!
