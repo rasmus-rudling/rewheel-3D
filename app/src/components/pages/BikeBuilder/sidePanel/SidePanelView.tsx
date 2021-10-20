@@ -29,11 +29,11 @@ const SidePanelView = ({
 			<div className="flex flex-col flex-grow overflow-y-scroll items-stretch no-scrollbar">
 				{currentProductCards.map((product) => (
 					<ProductCard
-						key={'sidePanelView ' + product.id}
+						key={'sidePanelView ' + product.product_id}
 						productInfo={product}
 						onCardClick={() => productCardClickHandler(product)}
 						inCurrentBuild={currentBuild.products.some(
-							(productInBuild) => productInBuild.id === product.id
+							(productInBuild) => productInBuild.product_id === product.product_id
 						)}
 					/>
 				))}

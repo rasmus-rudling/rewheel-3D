@@ -47,6 +47,7 @@ const SidePanelPresenter = () => {
 		setAllProducts(allProductsCopy);
 	}, [loading]);
 
+
 	useEffect(() => {
 		const relevantProducts = allProducts.filter((product) => {
 			return product.type.toLowerCase() === currentProductType.toLowerCase();
@@ -65,18 +66,8 @@ const SidePanelPresenter = () => {
 		if (currentBuild.products.length !== 4) return;
 
 		const productIDs: Product[] = currentBuild.products.map(
-			(product: Product) => product.id
+			(product: Product) => product.product_id
 		);
-
-		// const creatorID = loggedInUser.id;
-
-		// console.log(loggedInUser)
-
-		// const bikeBuildToSave = {
-		// 	products: productIDs,
-		// 	createdBy: creatorID,
-		// 	// createdAt: new Date(),
-		// };
 
 		addBike({
 			variables: {

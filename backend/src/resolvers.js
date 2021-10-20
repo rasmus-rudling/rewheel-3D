@@ -1,7 +1,7 @@
 require('dotenv').config();
 import { UserInputError, AuthenticationError } from 'apollo-server-errors';
 import jwt from 'jsonwebtoken';
-import { Bike } from './models/Bike';
+import Bike from './models/Bike';
 import User from './models/User';
 import Product from './models/Product';
 
@@ -18,9 +18,9 @@ export const resolvers = {
 			return user;
 		},
 		// Should any user be able to query any existing bike with id ?
-		getBike: async (root, _id) => {
+		getBike: async (root, id) => {
 			// Add some error handling here?
-			const bike = await Bike.findById(_id);
+			const bike = await Bike.findById(id);
 			return bike;
 		},
 		getMyBikes: async (root, { email }) => {
@@ -33,9 +33,10 @@ export const resolvers = {
 		},
 		getAllBikes: async () => await Bike.find(),
 
-		getProduct: async (root, _id) => {
-			// Add some error handling here?
-			const product = await Product.findById(_id);
+		getProduct: async (root, { product_id }) => {
+			const product = (await Product.find({ product_id: product_id }))[0];
+			console.log('Fetching product', product);
+
 			return product;
 		},
 
@@ -54,20 +55,18 @@ export const resolvers = {
 				});
 			});
 		},
-		addBike: async (_, { email, products, createdBy }) => {
+		addBike: async (_, { email, products, createdBy, createdAt }) => {
 			const user = (await User.find({ email: email }))[0];
 
 			if (!user) {
 				throw new AuthenticationError('Invalid e-mail address.');
 			}
 
-			console.log(user);
-
 			// Create new bike.
 			const newBike = new Bike({
 				products: products,
 				createdBy: createdBy,
-				// createdAt: createdBike.createdAt,
+				createdAt: createdAt,
 			});
 
 			await newBike.save();

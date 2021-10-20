@@ -1,35 +1,41 @@
-import React, { Component, useRef, useState } from "react";
-import BikeView from "../pages/BikeBuilder/bikeView/BikeView";
+import React, { Component, useRef, useState } from 'react';
+import BikeView from '../pages/BikeBuilder/bikeView/BikeView';
 
-import { BikeBuild } from "../../types/index";
+import { BikeConfig } from '../../types/index';
 
 interface Props {
-  bikeBuilds: BikeBuild[];
-  index: number;
+	bikeConfigs: BikeConfig[];
+	index: number;
 }
 
-const Carousel = ({ bikeBuilds, index }: Props) => {
-  var numberOfObjects = bikeBuilds.length;
+const Carousel = ({ bikeConfigs, index }: Props) => {
+	const numberOfObjects = bikeConfigs.length;
 
-  return (
-    <div className=" flex justify-center items-center w-full h-4/6">
-      <div className="w-1/4 h-3/6 px-2 animate-bounce">
-        {index > 0 ? <BikeView bikeBuild={bikeBuilds[index]} /> : ""}
-      </div>
+	const mainObject = (
+		<div className="w-2/4 px-2 h-80">
+			<BikeView bikeConfig={bikeConfigs[index]} />
+		</div>
+	);
 
-      <div className="w-2/4 px-2 h-80">
-        <BikeView bikeBuild={bikeBuilds[index]} />
-      </div>
+	const leftSideObject = (
+		<div className="w-1/4 h-3/6 px-2 animate-bounce">
+			<BikeView bikeConfig={bikeConfigs[index - 1]} />
+		</div>
+	);
 
-      <div className="w-1/4 h-3/6 px-2 animate-bounce">
-        {index < numberOfObjects - 1 ? (
-          <BikeView bikeBuild={bikeBuilds[index]} />
-        ) : (
-          ""
-        )}
-      </div>
-    </div>
-  );
+	const rightSideObject = (
+		<div className="w-1/4 h-3/6 px-2 animate-bounce">
+			<BikeView bikeConfig={bikeConfigs[index + 1]} />
+		</div>
+	);
+
+	return (
+		<div className=" flex justify-center items-center w-full h-4/6">
+			{index > 0 && leftSideObject}
+			{mainObject}
+			{index < numberOfObjects - 1 && rightSideObject}
+		</div>
+	);
 };
 
 export default Carousel;
