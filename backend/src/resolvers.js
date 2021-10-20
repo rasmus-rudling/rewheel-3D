@@ -9,8 +9,13 @@ const jwt_secret = process.env.JWT_SECRET;
 
 export const resolvers = {
 	Query: {
-		getCurrentUser: (root, args, context) => {
-			return context.currentUser;
+		getCurrentUser: async (root, { email }) => {
+			const user = (await User.find({ email: email }))[0];
+
+			if (!user) {
+				throw new AuthenticationError('Invalid e-mail address.');
+			}
+			return user;
 		},
 		// Should any user be able to query any existing bike with id ?
 		getBike: async (root, _id) => {
@@ -18,13 +23,13 @@ export const resolvers = {
 			const bike = await Bike.findById(_id);
 			return bike;
 		},
-		getMyBikes: async (root, args, context) => {
-			// Check if user is logged in.
-			const currentUser = context.currentUser;
-			if (!currentUser) {
-				throw new AuthenticationError('Not authenticated.');
+		getMyBikes: async (root, { email }) => {
+			const user = (await User.find({ email: email }))[0];
+
+			if (!user) {
+				throw new AuthenticationError('Invalid e-mail address.');
 			}
-			return currentUser.bikeBuilds;
+			return user.bikeBuilds;
 		},
 		getAllBikes: async () => await Bike.find(),
 
@@ -37,90 +42,42 @@ export const resolvers = {
 		getAllProducts: async () => await Product.find(),
 	},
 	Mutation: {
-		createUser: async (root, args) => {
-			const user = new User({ ...args });
+		createUser: async (
+			root,
+			{ email, username, firstName, lastName, imgUrl }
+		) => {
+			const user = new User({ email, username, firstName, lastName, imgUrl });
 
 			return await user.save().catch((error) => {
 				throw new UserInputError(error.message, {
-					invalidArgs: args,
+					invalidArgs: { email, username, firstName, lastName, imgUrl },
 				});
 			});
 		},
-		login: async (root, args) => {
-			const user = await User.findOne({
-				username: args.username,
-				password: args.password,
-			});
+		addBike: async (_, { email, products, createdBy }) => {
+			const user = (await User.find({ email: email }))[0];
 
 			if (!user) {
-				throw new UserInputError('Wrong login credentials.');
+				throw new AuthenticationError('Invalid e-mail address.');
 			}
 
-			const userForToken = {
-				username: user.username,
-				id: user._id,
-			};
+			console.log(user);
 
-			return { value: jwt.sign(userForToken, jwt_secret) };
-		},
-		addBike: async (_, { products, createdBy }, { user }) => {
-			try {
-				const email = await user;
-
-				// Create new bike.
-				const newBike = new Bike({
-					products: products,
-					createdBy: createdBy,
-					// createdAt: createdBike.createdAt,
-				});
-				await newBike.save();
-
-				// Save new bike to user's list of bikeBuilds.
-				currentUser.bikeBuilds.push(newBike);
-				await currentUser.save();
-
-				return newBike;
-			} catch (e) {
-				throw new AuthenticationError('Not authenticated.');
-			}
-		},
-		editBike: async (root, { _id, color }, context) => {
-			// Can add more inputs to update here color,price ... etc
-			// Check if user is logged in.
-			const currentUser = context.currentUser;
-			if (!currentUser) {
-				throw new AuthenticationError('Not authenticated.');
-			}
-
-			// Implement some error handling here for id?
-			const filter = { _id: _id };
-			const update = { color: color }; // Can add more updates here color,price... etc
-
-			const editedBike = await Bike.findOneAndUpdate(filter, update, {
-				new: true,
+			// Create new bike.
+			const newBike = new Bike({
+				products: products,
+				createdBy: createdBy,
+				// createdAt: createdBike.createdAt,
 			});
 
-			return editedBike;
+			await newBike.save();
+
+			// Save new bike to user's list of bikeBuilds.
+			user.bikeBuilds.push(newBike);
+			await user.save();
+
+			return newBike;
 		},
-
-		deleteBike: async (root, { _id }, context) => {
-			// Check if user is logged in.
-			const currentUser = context.currentUser;
-			if (!currentUser) {
-				throw new AuthenticationError('Not authenticated.');
-			}
-
-			// Implement some error handling here for id?
-			const deletedBike = await Bike.findByIdAndDelete(_id, {
-				new: true,
-			});
-
-			currentUser.bikeBuilds = await currentUser.bikeBuilds.pull(_id);
-			currentUser.save();
-
-			return deletedBike;
-		},
-
 		addProduct: async (root, args) => {
 			const product = new Product({ ...args });
 

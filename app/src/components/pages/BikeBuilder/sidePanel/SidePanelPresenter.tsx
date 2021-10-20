@@ -78,7 +78,15 @@ const SidePanelPresenter = () => {
 		// 	// createdAt: new Date(),
 		// };
 
-		addBike({ variables: { products: productIDs, createdBy: 'asdwqe' } });
+		const emailOfLoggedInUser = 'rasmusrudling@gmail.com';
+
+		addBike({
+			variables: {
+				email: emailOfLoggedInUser,
+				products: productIDs,
+				createdBy: 'asdwqe',
+			},
+		});
 	};
 
 	return (
