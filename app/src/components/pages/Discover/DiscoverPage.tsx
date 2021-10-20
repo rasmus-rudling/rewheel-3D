@@ -2,49 +2,11 @@ import React, { Component, useRef, useState } from "react";
 
 import Button1 from "../../common/buttons/Button1View";
 import BikeView from "../BikeBuilder/bikeView/BikeView";
+import Carousel from "../../common/Carousel";
 
 import { BikeBuild } from "./../../../types/index";
 
-// export interface BikeBuild {
-// 	products: Product[];
-// 	totalPrice: number;
-// 	renderedBuildConfig: BikeConfig;
-// }
-
-// const data = {
-//   properties: [
-//     {
-//       index: 0,
-//       color: "bg-red-500",
-//     },
-//     {
-//       index: 1,
-//       color: "bg-green-500",
-//     },
-//     {
-//       index: 2,
-//       color: "bg-pink-500",
-//     },
-//     {
-//       index: 3,
-//       color: "bg-yellow-300",
-//     },
-//     {
-//       index: 4,
-//       color: "bg-purple-500",
-//     },
-//     {
-//       index: 5,
-//       color: "bg-blue-500",
-//     },
-//     {
-//       index: 6,
-//       color: "bg-gray-500",
-//     },
-//   ],
-// };
-
-const data = [
+const bikeBuilds = [
   { products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
   { products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
   { products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
@@ -52,9 +14,8 @@ const data = [
   { products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
 ];
 
-var numberOfObjects = data.length;
-
 const DiscoverPage = () => {
+  var numberOfObjects = bikeBuilds.length;
   const [index, setIndex] = useState(Math.floor(numberOfObjects / 2));
 
   console.log(index);
@@ -72,24 +33,7 @@ const DiscoverPage = () => {
 
   return (
     <div className="w-full h-full mt-10 mb-5">
-      <div className=" flex justify-center items-center w-full h-4/6">
-        <div className="w-1/4 h-3/6 px-2 animate-bounce">
-          {index > 0 ? <BikeView bikeBuild={data[index]} /> : ""}
-        </div>
-
-        <div className="w-2/4 px-2 h-80">
-          <BikeView bikeBuild={data[index]} />
-        </div>
-
-        <div className="w-1/4 h-3/6 px-2 animate-bounce">
-          {index < numberOfObjects - 1 ? (
-            <BikeView bikeBuild={data[index]} />
-          ) : (
-            ""
-          )}
-        </div>
-      </div>
-
+      <Carousel bikeBuilds={bikeBuilds} index={index} />
       <div className="flex justify-center">
         <Button1
           color="blue"
