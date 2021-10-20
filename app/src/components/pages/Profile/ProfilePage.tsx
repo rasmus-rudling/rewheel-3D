@@ -18,7 +18,7 @@ const ProfilePage = () => {
   } else {
     return (
       <div className="flex flex-col mt-10 items-center">
-        <p className={'m-1 font-medium text-2xl'}>Du måste vara inloggad för att se den här sidan.</p>
+        <p className={'font-medium text-2xl'}>Du måste vara inloggad för att se den här sidan.</p>
       </div>
     );
   }

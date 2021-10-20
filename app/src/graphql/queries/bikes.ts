@@ -4,7 +4,7 @@ export const GET_ALL_BIKES = gql`
 	query GetAllBikes {
 		getAllBikes {
 			id
-			color
+			createdBy
 		}
 	}
 `;

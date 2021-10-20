@@ -1,10 +1,32 @@
 import React, { Component, useRef, useState } from "react";
-
+import { useQuery, gql } from "@apollo/client";
 import Button1 from "../../common/buttons/Button1View";
 import BikeView from "../BikeBuilder/bikeView/BikeView";
 import Carousel from "../../common/Carousel";
+import { GET_ALL_BIKES } from '../../../graphql/queries/bikes';
 
 import { BikeBuild } from "./../../../types/index";
+
+
+// const GetAllBikes = () => {
+//   const { loading, error, data } = useQuery(GET_ALL_BIKES);
+
+//   if (loading) return <p>Loading...</p>;
+//   if (error) return <p>Error when querying API :(</p>;
+
+//   return data.getAllBikes.map(
+//     ({ id, color }: { id: String; color: String }) => (
+//       <div>
+//         <p>
+//           {id}: {color}
+//         </p>
+//       </div>
+//     )
+//   );
+// };
+
+
+
 
 const bikeBuilds = [
   { products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
@@ -15,7 +37,10 @@ const bikeBuilds = [
 ];
 
 const DiscoverPage = () => {
-  var numberOfObjects = bikeBuilds.length;
+  const { loading, error, data } = useQuery(GET_ALL_BIKES);
+  console.log(data.getAllBikes)
+
+  let numberOfObjects = bikeBuilds.length;
   const [index, setIndex] = useState(Math.floor(numberOfObjects / 2));
 
   console.log(index);
