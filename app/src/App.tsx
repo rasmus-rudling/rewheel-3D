@@ -38,7 +38,7 @@ const GET_ALL_BIKES = gql`
 const App = () => {
   const { isLoading } = useAuth0();
   if (isLoading) return <Spinner />;
-
+  console.log(process.env.AUTH0_DOMAIN)
   return (
     <Router>
       <Switch>

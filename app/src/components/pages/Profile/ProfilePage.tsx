@@ -6,19 +6,19 @@ const ProfilePage = () => {
   const { user, isAuthenticated } = useAuth0();
   if (isAuthenticated && user) {
     return (
-      <div className="w-full h-screen flex justify-center items-center">
-        <div className="flex justify-center h-max w-max">
-          <img className="block" src={user.picture} />
-          <p className="block">{user.email}</p>
-          <button>Get all bike builds</button>
+      <div className="w-full">
+        <div className="flex flex-col mt-5 items-center">
+          <img className="w-20 m-2 rounded-full" src={user.picture} />
+          <span className="m-1 font-medium text-2xl">Välkommen {user.email}!</span>
+          <p className="m-2 font-light">Här kan du se de cyklar du har sparat.</p>
           {/* {JSON.stringify(user, null, 2)} */}
         </div>
       </div>
     );
   } else {
     return (
-      <div>
-        <p>Ej inloggad.</p>
+      <div className="flex flex-col mt-10 items-center">
+        <p className={'m-1 font-medium text-2xl'}>Du måste vara inloggad för att se den här sidan.</p>
       </div>
     );
   }
