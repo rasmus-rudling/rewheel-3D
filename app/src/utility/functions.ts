@@ -1,10 +1,5 @@
 import { BikeConfig, Product } from '../types/index';
-import {
-	GLTFResult,
-	ComponentConfig,
-	Anchor,
-	Anchors,
-} from '../types/three';
+import { GLTFResult, ComponentConfig, Anchor, Anchors } from '../types/three';
 
 import { useGLTF } from '@react-three/drei';
 import { modelsAndImages } from './models';
@@ -25,7 +20,7 @@ export const capitalizeFirstLetter = (stringToConvert: string) => {
 
 export const getNewRenderedBuildConfig = (products: Product[]) => {
 	const bikeConfig: BikeConfig = {};
-	console.log("products", products)
+
 	products.forEach((product: Product) => {
 		const productGLTF = useGLTF(
 			modelsAndImages[product.product_id].model

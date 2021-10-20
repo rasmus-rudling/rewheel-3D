@@ -33,8 +33,10 @@ export const resolvers = {
 		},
 		getAllBikes: async () => await Bike.find(),
 
-		getProduct: async (root, product_id) => {
-			const product = await Product.find({product_id: product_id});
+		getProduct: async (root, { product_id }) => {
+			const product = (await Product.find({ product_id: product_id }))[0];
+			console.log('Fetching product', product);
+
 			return product;
 		},
 
