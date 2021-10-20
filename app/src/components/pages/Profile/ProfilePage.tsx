@@ -2,7 +2,6 @@ import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery, gql } from "@apollo/client";
 
-
 const ProfilePage = () => {
   const { user, isAuthenticated } = useAuth0();
   if (isAuthenticated && user) {
