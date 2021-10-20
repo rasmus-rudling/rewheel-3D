@@ -78,13 +78,11 @@ const SidePanelPresenter = () => {
 		// 	// createdAt: new Date(),
 		// };
 
-		const emailOfLoggedInUser = 'rasmusrudling@gmail.com';
-
 		addBike({
 			variables: {
-				email: emailOfLoggedInUser,
+				email: loggedInUser.email,
 				products: productIDs,
-				createdBy: 'asdwqe',
+				createdBy: loggedInUser.email,
 			},
 		});
 	};

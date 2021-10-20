@@ -1,9 +1,12 @@
 import { ComponentConfig } from './three';
 
 export interface User {
-	id: string;
+	// id: string;
+	email: string;
 	username: string;
-	name: string;
+	firstName: string;
+	lastName: string;
+	imgUrl: string;
 }
 
 export interface ActiveFilterAlternatives {
