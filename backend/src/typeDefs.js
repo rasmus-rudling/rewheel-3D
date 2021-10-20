@@ -21,6 +21,7 @@ export const typeDefs = gql`
   }
   type Product {
     id: ID!
+    product_id: String!
     name: String!
     brand: String!
     grade: Int!
@@ -31,10 +32,10 @@ export const typeDefs = gql`
 
   type Query {
     getCurrentUser(email: String!): User
-    getBike(_id: ID!): Bike!
+    getBike(id: ID!): Bike!
     getMyBikes(email: String!): [Bike]!
     getAllBikes: [Bike!]!
-    getProduct(_id: ID!): Product!
+    getProduct(product_id: String): Product!
     getAllProducts: [Product!]!
   }
   type Mutation {
@@ -46,8 +47,8 @@ export const typeDefs = gql`
       imgUrl: String
     ): User
     addBike(email: String!, products: [String]!, createdBy: String!): Bike!
-    editBike(email: String!, _id: ID!, color: String!): Bike!
-    deleteBike(email: String!, _id: ID!): Bike!
+    editBike(email: String!, id: ID!, color: String!): Bike!
+    deleteBike(email: String!, id: ID!): Bike!
     addProduct(
       modelSrc: String!
       name: String!

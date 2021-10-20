@@ -8,3 +8,6 @@ export const GET_ALL_BIKES = gql`
 		}
 	}
 `;
+
+
+

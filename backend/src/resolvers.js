@@ -1,7 +1,7 @@
 require('dotenv').config();
 import { UserInputError, AuthenticationError } from 'apollo-server-errors';
 import jwt from 'jsonwebtoken';
-import { Bike } from './models/Bike';
+import Bike from './models/Bike';
 import User from './models/User';
 import Product from './models/Product';
 
@@ -18,9 +18,9 @@ export const resolvers = {
 			return user;
 		},
 		// Should any user be able to query any existing bike with id ?
-		getBike: async (root, _id) => {
+		getBike: async (root, id) => {
 			// Add some error handling here?
-			const bike = await Bike.findById(_id);
+			const bike = await Bike.findById(id);
 			return bike;
 		},
 		getMyBikes: async (root, { email }) => {
@@ -33,9 +33,8 @@ export const resolvers = {
 		},
 		getAllBikes: async () => await Bike.find(),
 
-		getProduct: async (root, _id) => {
-			// Add some error handling here?
-			const product = await Product.findById(_id);
+		getProduct: async (root, product_id) => {
+			const product = await Product.find({product_id: product_id});
 			return product;
 		},
 

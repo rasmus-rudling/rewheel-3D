@@ -25,10 +25,10 @@ export const capitalizeFirstLetter = (stringToConvert: string) => {
 
 export const getNewRenderedBuildConfig = (products: Product[]) => {
 	const bikeConfig: BikeConfig = {};
-
+	console.log("products", products)
 	products.forEach((product: Product) => {
 		const productGLTF = useGLTF(
-			modelsAndImages[product.id].model
+			modelsAndImages[product.product_id].model
 		) as GLTFResult;
 
 		const componentConfig = {} as ComponentConfig;

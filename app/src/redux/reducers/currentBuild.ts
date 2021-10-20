@@ -18,7 +18,7 @@ const getNewBuild = (products: Product[], newProduct: Product) => {
 	let oldProducts = [...products];
 
 	const newProductAlreadyInBuild = oldProducts.some(
-		(product) => product.id === newProduct.id
+		(product) => product.product_id === newProduct.product_id
 	);
 
 	const framExist = oldProducts.some((product) => product.type === 'frame');
@@ -73,7 +73,6 @@ const currentBuildReducers = (state = initBuild, { type, data }: Action) => {
 
 			newBuild.renderedBuildConfig = newRenderedBuildConfig;
 
-			console.log(newBuild);
 			return newBuild;
 		default:
 			return state;

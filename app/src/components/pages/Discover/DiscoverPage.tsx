@@ -1,31 +1,16 @@
 import React, { Component, useRef, useState, useEffect } from "react";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useApolloClient } from "@apollo/client";
 import Button1 from "../../common/buttons/Button1View";
 import BikeView from "../BikeBuilder/bikeView/BikeView";
 import Carousel from "../../common/Carousel";
 import { GET_ALL_BIKES } from '../../../graphql/queries/bikes';
+import { GET_PRODUCT } from '../../../graphql/queries/products';
+
 
 import { getNewRenderedBuildConfig } from '../../../utility/functions'
 
 import { BikeBuild, BikeConfig } from "./../../../types/index";
 
-
-// const GetAllBikes = () => {
-//   const { loading, error, data } = useQuery(GET_ALL_BIKES);
-
-//   if (loading) return <p>Loading...</p>;
-//   if (error) return <p>Error when querying API :(</p>;
-
-//   return data.getAllBikes.map(
-//     ({ id, color }: { id: String; color: String }) => (
-//       <div>
-//         <p>
-//           {id}: {color}
-//         </p>
-//       </div>
-//     )
-//   );
-// };
 
 const bikeBuilds = [
   { products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
@@ -35,27 +20,44 @@ const bikeBuilds = [
   { products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
 ];
 
-// type Bike {
-//   id: ID!
-//   products: [String]
-//   createdBy: String
-// }
+
 
 const DiscoverPage = () => {
+  const apolloClient = useApolloClient();
+
   const { loading, error, data } = useQuery(GET_ALL_BIKES);
 
   const [currentBikeConfigs, setCurrentBikeConfigs] = useState<BikeConfig[]>([]);
 
   useEffect(() => {
-    const allBikes = data.getAllBikes;
+    const allBikes = data?.getAllBikes;
+
+    console.log(allBikes)
+    
 
     if (allBikes) {
       const newCurrentBikes: BikeConfig[] = [];
 
       allBikes.map((bike: any) => {
-        const bikeRenderConfig: BikeConfig = getNewRenderedBuildConfig(bike.products);
+        const bikeParts = []
+        const bikePartIds = bike.products
+
+        bikePartIds.forEach(async (bikePartId: string) => {
+          console.log("part-id =", bikePartId)
+          const result = await apolloClient.query({
+            query: GET_PRODUCT,
+            variables: {
+              id: bikePartId,
+            },
+          })
+          console.log(result)
+          // 1. Get bike part info from DB
+          // 2: Push to bikeParts
+        })
+
+        // const bikeRenderConfig: BikeConfig = getNewRenderedBuildConfig();
         
-        newCurrentBikes.push(bikeRenderConfig)
+        // newCurrentBikes.push(bikeRenderConfig)
       })
 
       setCurrentBikeConfigs(newCurrentBikes)
@@ -63,10 +65,13 @@ const DiscoverPage = () => {
 
   }, [loading])
 
+  useEffect(() => {
+    console.log(error)
+  }, [error])
+
   let numberOfObjects = bikeBuilds.length;
   const [index, setIndex] = useState(Math.floor(numberOfObjects / 2));
 
-  console.log(index);
   const nextProperty = () => {
     setIndex(index + 1);
 

@@ -22,4 +22,4 @@ schema.set('toObject', {
   }
 })
 
-export const Bike = mongoose.model('Bike', schema);
+module.exports = mongoose.model('Bike', schema);

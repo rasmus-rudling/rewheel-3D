@@ -44,55 +44,55 @@ interface ModelsAndImages {
 }
 
 export const modelsAndImages: ModelsAndImages = {
-	'616ed3cde54b2cd4223ead5a': {
+	'1': {
 		model: frameHighBlack,
 		img: frameHighBlackImg,
 	},
-	'616ed436e54b2cd4223ead5b': {
+	'2': {
 		model: frameHighRed,
 		img: frameHighRedImg,
 	},
-	'616ed46de54b2cd4223ead5d': {
+	'3': {
 		model: frameLowRed,
 		img: frameLowRedImg,
 	},
-	'616ed4b6e54b2cd4223ead5e': {
+	'4': {
 		model: frameLowTeal,
 		img: frameLowTealImg,
 	},
-	'616ed4e6e54b2cd4223ead5f': {
+	'5': {
 		model: wheelWhite,
 		img: wheelWhiteImg,
 	},
-	'616ed4fae54b2cd4223ead60': {
+	'6': {
 		model: wheelBlack,
 		img: wheelBlackImg,
 	},
-	'616ed568e54b2cd4223ead63': {
+	'7': {
 		model: dropbarBlack,
 		img: dropbarBlackImg,
 	},
-	'616ed5ace54b2cd4223ead64': {
+	'8': {
 		model: dropbarBlue,
 		img: dropbarBlueImg,
 	},
-	'616ed5b6e54b2cd4223ead65': {
+	'9': {
 		model: straightbarBlack,
 		img: straightbarBlackImg,
 	},
-	'616ed5c9e54b2cd4223ead66': {
+	'10': {
 		model: straightbarTeal,
 		img: straightbarTealImg,
 	},
-	'616ed5e2e54b2cd4223ead68': {
+	'11': {
 		model: saddleBlack,
 		img: saddleBlackImg,
 	},
-	'616ed62ce54b2cd4223ead69': {
+	'12': {
 		model: saddleBlue,
 		img: saddleBlueImg,
 	},
-	'616ed651e54b2cd4223ead6a': {
+	'13': {
 		model: saddleBrown,
 		img: saddleBrownImg,
 	},

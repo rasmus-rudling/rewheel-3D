@@ -42,16 +42,11 @@ const SidePanelPresenter = () => {
 	useEffect(() => {
 		const allProductsFromDB = data?.getAllProducts;
 
-		console.log(allProductsFromDB)
-
 		let allProductsCopy = allProductsFromDB ? [...allProductsFromDB] : [];
 
 		setAllProducts(allProductsCopy);
 	}, [loading]);
 
-	useEffect(() => {
-		console.log(error)
-	}, [error])
 
 	useEffect(() => {
 		const relevantProducts = allProducts.filter((product) => {
@@ -71,7 +66,7 @@ const SidePanelPresenter = () => {
 		if (currentBuild.products.length !== 4) return;
 
 		const productIDs: Product[] = currentBuild.products.map(
-			(product: Product) => product.id
+			(product: Product) => product.product_id
 		);
 
 		addBike({
