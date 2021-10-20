@@ -11,19 +11,7 @@ import {
 
 import { getNewRenderedBuildConfig } from '../../../utility/functions';
 
-import { BikeBuild, BikeConfig, Product } from './../../../types/index';
-
-const bikeBuilds = [
-	{ products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
-	{ products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
-	{ products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
-	{ products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
-	{ products: [], totalPrice: 0, renderedBuildConfig: {} } as BikeBuild,
-];
-
-interface CurrentBikes {
-	[bikeIdx: string]: Product[];
-}
+import { BikeConfig, Product } from './../../../types/index';
 
 const DiscoverPage = () => {
 	const bikesFetchInfo = useQuery(GET_ALL_BIKES);
@@ -38,9 +26,6 @@ const DiscoverPage = () => {
 			const allBikes = bikesFetchInfo.data.getAllBikes;
 			const allProducts = productsFetchInfo.data.getAllProducts;
 
-			console.log(allBikes);
-			console.log(allProducts);
-
 			const newCurrentConfigs: BikeConfig[] = [];
 
 			allBikes.forEach((bike: any) => {
@@ -48,10 +33,13 @@ const DiscoverPage = () => {
 				const bikePartIds = bike.products;
 
 				bikePartIds.forEach((bikePartId: string) => {
+					console.log(bikePartId);
 					const bikePart = allProducts.find(
 						(currentProduct: Product) =>
 							currentProduct.product_id === bikePartId
 					);
+
+					console.log(bikePart);
 
 					currentBikeParts.push(bikePart);
 				});
@@ -62,13 +50,11 @@ const DiscoverPage = () => {
 				newCurrentConfigs.push(currentBikeConfig);
 			});
 
-			console.log('newCurrentConfigs', newCurrentConfigs);
-
 			setCurrentBikeConfigs(newCurrentConfigs);
 		}
 	}, [bikesFetchInfo, productsFetchInfo]);
 
-	let numberOfObjects = bikeBuilds.length;
+	let numberOfObjects = currentBikeConfigs.length;
 	const [index, setIndex] = useState(Math.floor(numberOfObjects / 2));
 
 	const nextProperty = () => {

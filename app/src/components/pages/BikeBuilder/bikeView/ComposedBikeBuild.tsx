@@ -9,14 +9,12 @@ interface Props {
 
 const ComposedBikeBuild = ({ bikeConfig }: Props) => {
 	const bikeParts: JSX.Element[] = [];
-	// console.log("bikeConfig", bikeConfig)
 
 	if (bikeConfig) {
-		console.log(bikeConfig)
 		Object.keys(bikeConfig).forEach((key) => {
 			let position = {} as THREE.Vector3;
 			let rotation = {} as THREE.Euler;
-	
+
 			switch (key) {
 				case 'FRAME':
 					position = new THREE.Vector3();
@@ -83,7 +81,6 @@ const ComposedBikeBuild = ({ bikeConfig }: Props) => {
 			}
 		});
 	}
-
 
 	return (
 		<group name="bikeBuild" position={[0, -0.4, 0]}>
