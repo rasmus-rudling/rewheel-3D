@@ -1,4 +1,4 @@
-import { ComponentConfig } from "./three";
+import { ComponentConfig } from './three';
 
 export interface User {
 	id: string;
@@ -17,19 +17,19 @@ export interface PartFilter {
 
 export interface Product {
 	id: string;
-	modelSrc: string;
+	// modelSrc: string;
 	name: string;
 	brand: string;
 	grade: number;
 	numReviews: number;
 	price: number;
-	imgLink: string;
+	// imgLink: string;
 	type: string;
 }
 
 export interface BikeConfig {
 	[key: string]: ComponentConfig;
-  };
+}
 
 export interface BikeBuild {
 	products: Product[];

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useHistory } from "react-router";
 import DesktopNavBarView from "./NavBarView";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useApolloClient } from "@apollo/client";
+import { debug } from "console";
 
 export interface NavButton {
   route: string;
@@ -21,11 +23,14 @@ const NavBarPresenter = () => {
 
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
+  const client = useApolloClient();
+
   const navButtonClickHandler = (newRoute: string) => {
     if (newRoute === "login") {
       loginWithRedirect();
     } else if (newRoute === "logout") {
       logout();
+      client.resetStore();
     } else {
       history.push(newRoute);
     }

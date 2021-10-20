@@ -11,6 +11,7 @@ interface Props {
 	currentProductTypeUpdateHandler: Function;
 	currentProductType: string;
 	totNumberOfTypes: number;
+	saveBikeHandler: Function;
 }
 
 const SidePanelView = ({
@@ -20,6 +21,7 @@ const SidePanelView = ({
 	currentProductTypeUpdateHandler,
 	currentProductType,
 	totNumberOfTypes,
+	saveBikeHandler,
 }: Props) => {
 	return (
 		<div className="h-full bg-gray-200 flex flex-col">
@@ -70,11 +72,12 @@ const SidePanelView = ({
 				</div>
 				<Button1
 					color="green"
-					onClickHandler={() => currentProductTypeUpdateHandler('previous')}
+					onClickHandler={() => saveBikeHandler()}
 					text="Spara"
 					addBorder={true}
 					blackTextColor={false}
 					filled={true}
+					disabled={currentBuild.products.length !== 4}
 					extraClass="w-full mt-3"
 				/>
 			</div>

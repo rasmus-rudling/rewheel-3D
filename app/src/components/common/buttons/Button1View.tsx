@@ -66,15 +66,14 @@ const Button1 = ({
   }
 
   const basicStyle = `
-		  capitalize font-light 
-		  rounded-sm 
-		  h-8 px-3 mr-2
-		  last:mr-0
-  
-		  transition
-		  duration-200
-		  select-none
-	  `;
+        capitalize font-light 
+        rounded-sm 
+        h-8 px-3 mr-2
+        last:mr-0
+        transition
+        duration-200
+        select-none
+    `;
 
   const allStyling = [
     basicStyle,
@@ -84,12 +83,19 @@ const Button1 = ({
     extraClass,
   ];
 
+  if (disabled) {
+    allStyling.push("opacity-50 cursor-default");
+  }
+
   return (
     <button
-      onClick={onClickHandler}
+      onClick={() => {
+        if (!disabled) {
+          onClickHandler();
+        }
+      }}
       className={allStyling.join(" ")}
       type={type}
-      disabled={disabled}
     >
       {text}
     </button>

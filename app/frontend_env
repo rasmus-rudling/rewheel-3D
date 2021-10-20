@@ -1,0 +1,4 @@
+BACKEND_URI="http://localhost"
+BACKEND_PORT=3001
+AUTH0_DOMAIN="dev-84ubssw6.us.auth0.com"
+AUTH0_CLIENT_ID="6kgfnWgIi4MOYKC6yklguXeSnpfB0i4a"
