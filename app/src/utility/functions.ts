@@ -21,16 +21,18 @@ export const capitalizeFirstLetter = (stringToConvert: string) => {
 export const getNewRenderedBuildConfig = (products: Product[]) => {
 	const bikeConfig: BikeConfig = {};
 
-	products.forEach((product: Product) => {
-		const productGLTF = useGLTF(
-			modelsAndImages[product.product_id].model
-		) as GLTFResult;
+	products.forEach((product: Product, productIdx: number) => {
+		const currentModel = modelsAndImages[product.product_id].model;
+
+		const productGLTF = useGLTF(currentModel) as GLTFResult;
 
 		const componentConfig = {} as ComponentConfig;
 		const anchors: Anchors = {};
 		let partType = '';
 
-		Object.values(productGLTF.nodes).forEach((key) => {
+		const nodeKeys = Object.values(productGLTF.nodes);
+
+		nodeKeys.forEach((key: any, idx: number) => {
 			if (key.type === 'Object3D') {
 				const anchor: Anchor = {
 					position: key.position,

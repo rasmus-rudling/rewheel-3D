@@ -11,51 +11,26 @@ import {
 
 import { getNewRenderedBuildConfig } from '../../../utility/functions';
 
-import { BikeConfig, Product } from './../../../types/index';
+import { BikeBuild, BikeConfig, Product } from './../../../types/index';
 
 const DiscoverPage = () => {
 	const bikesFetchInfo = useQuery(GET_ALL_BIKES);
 	const productsFetchInfo = useQuery(GET_ALL_PRODUCTS);
 
-	const [currentBikeConfigs, setCurrentBikeConfigs] = useState<BikeConfig[]>(
-		[]
-	);
+	const [allBikes, setAllBikes] = useState<BikeBuild[]>([]);
+	const [allProducts, setAllProducts] = useState<Product[]>([]);
+	const [index, setIndex] = useState(0);
 
 	useEffect(() => {
-		if (!bikesFetchInfo.loading && !productsFetchInfo.loading) {
-			const allBikes = bikesFetchInfo.data.getAllBikes;
+		if (bikesFetchInfo.data && productsFetchInfo.data) {
+			const newAllBikes = bikesFetchInfo.data.getAllBikes;
 			const allProducts = productsFetchInfo.data.getAllProducts;
 
-			const newCurrentConfigs: BikeConfig[] = [];
-
-			allBikes.forEach((bike: any) => {
-				const currentBikeParts: Product[] = [];
-				const bikePartIds = bike.products;
-
-				bikePartIds.forEach((bikePartId: string) => {
-					console.log(bikePartId);
-					const bikePart = allProducts.find(
-						(currentProduct: Product) =>
-							currentProduct.product_id === bikePartId
-					);
-
-					console.log(bikePart);
-
-					currentBikeParts.push(bikePart);
-				});
-
-				const currentBikeConfig: BikeConfig =
-					getNewRenderedBuildConfig(currentBikeParts);
-
-				newCurrentConfigs.push(currentBikeConfig);
-			});
-
-			setCurrentBikeConfigs(newCurrentConfigs);
+			setIndex(Math.floor(newAllBikes.length / 2));
+			setAllBikes(newAllBikes);
+			setAllProducts(allProducts);
 		}
-	}, [bikesFetchInfo, productsFetchInfo]);
-
-	let numberOfObjects = currentBikeConfigs.length;
-	const [index, setIndex] = useState(Math.floor(numberOfObjects / 2));
+	}, [bikesFetchInfo.data, productsFetchInfo.data]);
 
 	const nextProperty = () => {
 		setIndex(index + 1);
@@ -67,7 +42,8 @@ const DiscoverPage = () => {
 
 	return (
 		<div className="w-full h-full mt-10 mb-5">
-			<Carousel bikeConfigs={currentBikeConfigs} index={index} />
+			<Carousel allBikes={allBikes} allProducts={allProducts} index={index} />
+
 			<div className="flex justify-center">
 				<Button1
 					color="blue"
@@ -80,7 +56,7 @@ const DiscoverPage = () => {
 				<Button1
 					color="blue"
 					onClickHandler={() => nextProperty()}
-					disabled={index === numberOfObjects - 1}
+					disabled={index === allBikes.length - 1}
 					text="Nästa"
 					addBorder={true}
 					filled={true}

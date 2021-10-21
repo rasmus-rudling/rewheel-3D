@@ -24,13 +24,15 @@ const NavBarPresenter = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
+	const { loginWithRedirect, logout, isAuthenticated, user, loginWithPopup } =
+		useAuth0();
 
 	const client = useApolloClient();
 
 	const navButtonClickHandler = (newRoute: string) => {
 		if (newRoute === 'login') {
-			loginWithRedirect();
+			// loginWithRedirect();
+			loginWithPopup();
 		} else if (newRoute === 'logout') {
 			logout();
 			client.resetStore();

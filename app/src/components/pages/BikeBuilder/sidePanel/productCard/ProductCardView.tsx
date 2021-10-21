@@ -32,7 +32,6 @@ const ProductCardView = ({
 	useEffect(() => {
 		useGLTF.preload(modelsAndImages[productInfo.product_id].model);
 	}, []);
-	console.log("Product info", productInfo)
 	return (
 		<div
 			className={basicStyling + conditionalStyling}
