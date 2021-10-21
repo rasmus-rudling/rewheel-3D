@@ -10,7 +10,6 @@ import {
 import { Canvas, useFrame } from "@react-three/fiber";
 import ComposedBikeBuild from "./bikeBuild/BikeBuildPresenter";
 import { BikeConfig } from "../../../../types";
-import BikePodium from "../../../../resources/images/bike_podium.svg";
 import * as THREE from "three";
 
 type Props = {
@@ -55,10 +54,6 @@ const BikeView = ({ bikeConfig }: Props) => {
           far={4.5}
         />
       </Canvas>
-      <img
-        className="z-0 h-full mx-auto absolute inset-0 select-none"
-        src={BikePodium}
-      />
     </div>
   );
 };
