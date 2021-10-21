@@ -69,7 +69,7 @@ const DiscoverPage = () => {
 	}, [allBikes]);
 
 	return (
-		<div className="w-full h-full mt-10 mb-5">
+		<div className="w-full h-4/6 justify-center flex flex-col pt-16">
 			<Carousel
 				allBikes={allBikes}
 				allProducts={allProducts}
@@ -77,7 +77,7 @@ const DiscoverPage = () => {
 				creatorsInfo={creatorsInfo}
 			/>
 
-			<div className="flex justify-center">
+			<div className="flex justify-center w-full mt-3">
 				<CustomButton
 					color="blue"
 					onClickHandler={() => prevProperty()}
