@@ -81,6 +81,7 @@ const SidePanelPresenter = () => {
           email: user.email,
           products: productIDs,
           createdBy: user.email,
+          createdAt: new Date().toUTCString(),
         },
       });
     }
