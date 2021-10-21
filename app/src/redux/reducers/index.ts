@@ -1,13 +1,11 @@
-import currentProductTypeReducer from './currentProductType';
-import loggedInUser from './loggedInUser';
+import currentProductTypeReducer from "./currentProductType";
 
-import { combineReducers } from 'redux';
-import currentBuildReducers from './currentBuild';
+import { combineReducers } from "redux";
+import currentBuildReducers from "./currentBuild";
 
 const rootReducers = combineReducers({
-	currentProductType: currentProductTypeReducer,
-	currentBuild: currentBuildReducers,
-	loggedInUser: loggedInUser,
+  currentProductType: currentProductTypeReducer,
+  currentBuild: currentBuildReducers,
 });
 
 export default rootReducers;

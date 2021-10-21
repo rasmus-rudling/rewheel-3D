@@ -1,94 +1,102 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { Product, User } from '../../../../types';
-import SidePanelView from './SidePanelView';
+import { Product, User } from "../../../../types";
+import SidePanelView from "./SidePanelView";
 
-import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
-import { toggleProductInBuild } from '../../../../redux/actions/currentBuild';
-import { changeProductType } from '../../../../redux/actions/currentProductType';
-import { useMutation, useQuery } from '@apollo/client';
-import { GET_ALL_PRODUCTS } from '../../../../graphql/queries/products';
-import { SAVE_NEW_BIKE } from '../../../../graphql/mutations/bikeBuilds';
+import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
+import { toggleProductInBuild } from "../../../../redux/actions/currentBuild";
+import { changeProductType } from "../../../../redux/actions/currentProductType";
+import { useMutation, useQuery } from "@apollo/client";
+import { GET_ALL_PRODUCTS } from "../../../../graphql/queries/products";
+import { SAVE_NEW_BIKE } from "../../../../graphql/mutations/bikeBuilds";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const totNumberOfTypes = 4;
 
 const SidePanelPresenter = () => {
-	const [addBike, saveBikeObj] = useMutation(SAVE_NEW_BIKE);
+  const [addBike, saveBikeObj] = useMutation(SAVE_NEW_BIKE);
 
-	const loggedInUser: User = useSelector(
-		(state: RootStateOrAny) => state.loggedInUser
-	);
+  const { isAuthenticated, loginWithPopup, user } = useAuth0();
 
-	const { loading, error, data } = useQuery(GET_ALL_PRODUCTS);
+  const loggedInUser: User = useSelector(
+    (state: RootStateOrAny) => state.loggedInUser
+  );
 
-	const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const { loading, error, data } = useQuery(GET_ALL_PRODUCTS);
 
-	const [productsToShow, setProductsToShow] = useState<Product[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
 
-	const dispatch = useDispatch();
+  const [productsToShow, setProductsToShow] = useState<Product[]>([]);
 
-	const currentBuild = useSelector(
-		(state: RootStateOrAny) => state.currentBuild
-	);
+  const dispatch = useDispatch();
 
-	const currentProductType = useSelector(
-		(state: RootStateOrAny) => state.currentProductType
-	);
+  const currentBuild = useSelector(
+    (state: RootStateOrAny) => state.currentBuild
+  );
 
-	const productCardClickHandler = (newProductForBuild: Product) => {
-		dispatch(toggleProductInBuild(newProductForBuild));
-	};
+  const currentProductType = useSelector(
+    (state: RootStateOrAny) => state.currentProductType
+  );
 
-	useEffect(() => {
-		const allProductsFromDB = data?.getAllProducts;
+  const productCardClickHandler = (newProductForBuild: Product) => {
+    dispatch(toggleProductInBuild(newProductForBuild));
+  };
 
-		let allProductsCopy = allProductsFromDB ? [...allProductsFromDB] : [];
+  useEffect(() => {
+    const allProductsFromDB = data?.getAllProducts;
 
-		setAllProducts(allProductsCopy);
-	}, [loading]);
+    let allProductsCopy = allProductsFromDB ? [...allProductsFromDB] : [];
 
+    setAllProducts(allProductsCopy);
+  }, [loading]);
 
-	useEffect(() => {
-		const relevantProducts = allProducts.filter((product) => {
-			return product.type.toLowerCase() === currentProductType.toLowerCase();
-		});
+  useEffect(() => {
+    const relevantProducts = allProducts.filter((product) => {
+      return product.type.toLowerCase() === currentProductType.toLowerCase();
+    });
 
-		setProductsToShow(relevantProducts);
-	}, [currentProductType, allProducts]);
+    setProductsToShow(relevantProducts);
+  }, [currentProductType, allProducts]);
 
-	const currentProductTypeUpdateHandler = (
-		changeTypeOption: 'previous' | 'next'
-	) => {
-		dispatch(changeProductType(changeTypeOption, undefined));
-	};
+  const currentProductTypeUpdateHandler = (
+    changeTypeOption: "previous" | "next"
+  ) => {
+    dispatch(changeProductType(changeTypeOption, undefined));
+  };
 
-	const saveBikeHandler = () => {
-		if (currentBuild.products.length !== 4) return;
+  const saveBikeHandler = () => {
+    if (!isAuthenticated) {
+      loginWithPopup();
+      return;
+    }
+    if (currentBuild.products.length !== 4) return;
 
-		const productIDs: Product[] = currentBuild.products.map(
-			(product: Product) => product.product_id
-		);
+    const productIDs: Product[] = currentBuild.products.map(
+      (product: Product) => product.product_id
+    );
 
-		addBike({
-			variables: {
-				email: loggedInUser.email,
-				products: productIDs,
-				createdBy: loggedInUser.email,
-			},
-		});
-	};
+    if (isAuthenticated && user) {
+      addBike({
+        variables: {
+          email: user.email,
+          products: productIDs,
+          createdBy: user.email,
+        },
+      });
+    }
+  };
 
-	return (
-		<SidePanelView
-			currentBuild={currentBuild}
-			currentProductCards={productsToShow}
-			productCardClickHandler={productCardClickHandler}
-			currentProductTypeUpdateHandler={currentProductTypeUpdateHandler}
-			currentProductType={currentProductType}
-			totNumberOfTypes={totNumberOfTypes}
-			saveBikeHandler={saveBikeHandler}
-		/>
-	);
+  return (
+    <SidePanelView
+      currentBuild={currentBuild}
+      currentProductCards={productsToShow}
+      productCardClickHandler={productCardClickHandler}
+      currentProductTypeUpdateHandler={currentProductTypeUpdateHandler}
+      currentProductType={currentProductType}
+      totNumberOfTypes={totNumberOfTypes}
+      saveBikeHandler={saveBikeHandler}
+    />
+  );
 };
 
 export default SidePanelPresenter;
