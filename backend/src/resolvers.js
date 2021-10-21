@@ -29,6 +29,7 @@ export const resolvers = {
       if (!user) {
         throw new AuthenticationError("Invalid e-mail address.");
       }
+<<<<<<< HEAD
 
       return await Bike.find({ _id: { $in: user.bikeBuilds } });
     },
@@ -51,6 +52,41 @@ export const resolvers = {
       const user = new User({ email, username, firstName, lastName, imgUrl });
 
       return await user.save().catch((error) => {
+=======
+      return await Bike.find({ _id: { $in: user.bikeBuilds } });
+    },
+    getAllBikes: async () => await Bike.find(),
+
+    getProduct: async (root, { product_id }) => {
+      const product = (await Product.find({ product_id: product_id }))[0];
+      console.log("Fetching product", product);
+
+      return product;
+    },
+
+    getAllProducts: async () => await Product.find(),
+  },
+  Mutation: {
+    createUser: async (
+      root,
+      { email, username, firstName, lastName, imgUrl }
+    ) => {
+      // Check if user already exists.
+      const user = (await User.find({ email: email }))[0];
+      if (user) {
+        throw new UserInputError("User already exists.");
+      }
+
+      const newUser = new User({
+        email,
+        username,
+        firstName,
+        lastName,
+        imgUrl,
+      });
+
+      return await newUser.save().catch((error) => {
+>>>>>>> 964e8468c1b9f2498c463bbf4ef5295d7da4b0cd
         throw new UserInputError(error.message, {
           invalidArgs: { email, username, firstName, lastName, imgUrl },
         });

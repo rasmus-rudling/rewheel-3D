@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
-import DesktopNavBarView from './NavBarView';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useApolloClient } from '@apollo/client';
-import { debug } from 'console';
-import { useDispatch } from 'react-redux';
-import { User } from '../../../types';
-import { CREATE_USER } from '../../../../src/graphql/mutations/createUser';
-import { useMutation, useQuery } from '@apollo/client';
-import { GET_USER_BY_EMAIL } from '../../../../src/graphql/queries/users';
+import React, { useEffect } from "react";
+import { useHistory } from "react-router";
+import DesktopNavBarView from "./NavBarView";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useApolloClient } from "@apollo/client";
+import { CREATE_USER } from "../../../../src/graphql/mutations/createUser";
+import { useMutation } from "@apollo/client";
 
 export interface NavButton {
 	route: string;
@@ -24,12 +20,10 @@ const navButtons: NavButton[] = [
 ];
 
 const NavBarPresenter = () => {
-	const dispatch = useDispatch();
-	const history = useHistory();
-	const [createUser, { data, loading, error }] = useMutation(CREATE_USER, {
-		errorPolicy: 'all',
-	});
-	const apolloClient = useApolloClient();
+  const history = useHistory();
+  const [createUser, { data, loading, error }] = useMutation(CREATE_USER, {
+    errorPolicy: "all",
+  });
 
 	const { loginWithPopup, logout, isAuthenticated, user } = useAuth0();
 
@@ -71,15 +65,14 @@ const NavBarPresenter = () => {
 	if (error)
 		console.log('Error when creating user (user probably already exists).');
 
-	return (
-		<>
-			<DesktopNavBarView
-				navButtons={navButtonsFiltered}
-				navButtonClickHandler={navButtonClickHandler}
-			/>
-			{/* <MobileNavBar navigationButtons={navigationButtons} /> */}
-		</>
-	);
+  return (
+    <>
+      <DesktopNavBarView
+        navButtons={navButtonsFiltered}
+        navButtonClickHandler={navButtonClickHandler}
+      />
+    </>
+  );
 };
 
 export default NavBarPresenter;
