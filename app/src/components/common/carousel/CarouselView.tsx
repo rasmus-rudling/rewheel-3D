@@ -27,7 +27,7 @@ const CarouselView = ({ mainBikeInfo, leftBikeInfo, rightBikeInfo }: Props) => {
   const showCreator = window.location.pathname !== "/profile";
 
   return (
-    <div className=" flex justify-center items-center w-full h-4/6">
+    <div className=" flex justify-center items-center w-full">
       {leftBikeInfo && (
         <div className="w-1/4 h-3/6 px-2">
           {showCreator && (
@@ -40,18 +40,21 @@ const CarouselView = ({ mainBikeInfo, leftBikeInfo, rightBikeInfo }: Props) => {
         </div>
       )}
 
-      <div className="w-2/4 px-2 h-80">
+      <div className="w-2/4 px-6 py-6 h-80">
         {showCreator && (
           <div className={infoContainer}>
             <img src={mainBikeInfo?.creatorImg} className={imgClass} />
             Created by {mainBikeInfo?.creatorFirstName}.
           </div>
         )}
+
+        {/* <div className="h-full"> */}
         <BikeView bikeConfig={mainBikeInfo?.bikeConfig} />
+        {/* </div> */}
       </div>
 
       {rightBikeInfo && (
-        <div className="w-1/4 h-3/6 px-2">
+        <div className="w-1/4 px-2">
           {showCreator && (
             <div className={infoContainer}>
               <img src={rightBikeInfo?.creatorImg} className={imgClass} />
