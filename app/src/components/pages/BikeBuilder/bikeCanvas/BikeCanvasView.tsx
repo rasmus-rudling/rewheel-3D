@@ -20,17 +20,17 @@ type Props = {
 const BikeView = ({ bikeConfig }: Props) => {
 	// const currentBikeBuild = useCurrentBuild();
 
-	return (
-		<div className="h-full w-full bg-gray-200">
-			<Canvas
-				shadows
-				dpr={[1, 2]}
-				camera={{ position: [-4, 2, -4], fov: 50 }}
-				className="z-10"
-			>
-				<pointLight position={[-1.16, 1.262, -2.143]} castShadow={true} />
-				<pointLight position={[0.442, 0.868, 1.574]} castShadow={true} />
-				<pointLight position={[-2.427, 2.07, 1.574]} castShadow={true} />
+  return (
+    <div className="h-full w-full bg-gray-100">
+      <Canvas
+        shadows
+        dpr={[1, 2]}
+        camera={{ position: [-4, 2, -4], fov: 50 }}
+        className="z-10"
+      >
+        <pointLight position={[-1.16, 1.262, -2.143]} castShadow={true} />
+        <pointLight position={[0.442, 0.868, 1.574]} castShadow={true} />
+        <pointLight position={[-2.427, 2.07, 1.574]} castShadow={true} />
 
 				<Suspense fallback={''}>
 					<ComposedBikeBuild bikeConfig={bikeConfig} />
