@@ -47,9 +47,21 @@ export const resolvers = {
       root,
       { email, username, firstName, lastName, imgUrl }
     ) => {
-      const user = new User({ email, username, firstName, lastName, imgUrl });
+      // Check if user already exists.
+      const user = (await User.find({ email: email }))[0];
+      if (user) {
+        throw new UserInputError("User already exists.");
+      }
 
-      return await user.save().catch((error) => {
+      const newUser = new User({
+        email,
+        username,
+        firstName,
+        lastName,
+        imgUrl,
+      });
+
+      return await newUser.save().catch((error) => {
         throw new UserInputError(error.message, {
           invalidArgs: { email, username, firstName, lastName, imgUrl },
         });

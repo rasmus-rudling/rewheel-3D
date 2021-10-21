@@ -46,7 +46,12 @@ export const typeDefs = gql`
       lastName: String
       imgUrl: String
     ): User
-    addBike(email: String!, products: [String]!, createdBy: String!): Bike!
+    addBike(
+      email: String!
+      products: [String]!
+      createdBy: String!
+      createdAt: String!
+    ): Bike!
     editBike(email: String!, id: ID!, color: String!): Bike!
     deleteBike(email: String!, id: ID!): Bike!
     addProduct(
