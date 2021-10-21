@@ -5,8 +5,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useApolloClient } from '@apollo/client';
 import { debug } from 'console';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../../../redux/actions/loggedInUser';
 import { User } from '../../../types';
+import { CREATE_USER } from '../../../../src/graphql/mutations/createUser';
+import { useMutation, useQuery } from '@apollo/client';
+import { GET_USER_BY_EMAIL } from '../../../../src/graphql/queries/users';
+
 export interface NavButton {
 	route: string;
 	text: string;
@@ -23,15 +26,17 @@ const navButtons: NavButton[] = [
 const NavBarPresenter = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const [createUser, { data, loading, error }] = useMutation(CREATE_USER, {
+		errorPolicy: 'all',
+	});
+	const apolloClient = useApolloClient();
 
-	const { loginWithRedirect, logout, isAuthenticated, user, loginWithPopup } =
-		useAuth0();
+	const { loginWithPopup, logout, isAuthenticated, user } = useAuth0();
 
 	const client = useApolloClient();
 
 	const navButtonClickHandler = (newRoute: string) => {
 		if (newRoute === 'login') {
-			// loginWithRedirect();
 			loginWithPopup();
 		} else if (newRoute === 'logout') {
 			logout();
@@ -51,19 +56,20 @@ const NavBarPresenter = () => {
 
 	useEffect(() => {
 		if (user) {
-			const currentUser: User = {
-				email: user.email ? user.email : '',
-				firstName: user.given_name ? user.given_name : '',
-				lastName: user.family_name ? user.family_name : '',
-				imgUrl: user.picture ? user.picture : '',
-				username: user.nickname ? user.nickname : '',
-			};
-
-			dispatch(loginUser(currentUser));
-
-			// Add user to DB if not exists
+			createUser({
+				variables: {
+					email: user.email,
+					firstName: user.given_name ? user.given_name : ' ',
+					lastName: user.family_name ? user.family_name : ' ',
+					imgUrl: user.picture ? user.picture : ' ',
+					username: user.nickname ? user.nickname : ' ',
+				},
+			});
 		}
 	}, [user]);
+
+	if (error)
+		console.log('Error when creating user (user probably already exists).');
 
 	return (
 		<>
