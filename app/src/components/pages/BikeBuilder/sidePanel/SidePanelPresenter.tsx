@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-
-import { Product, User } from "../../../../types";
+import { Product } from "../../../../types";
 import SidePanelView from "./SidePanelView";
-
 import { useSelector, useDispatch, RootStateOrAny } from "react-redux";
 import { toggleProductInBuild } from "../../../../redux/actions/currentBuild";
 import { changeProductType } from "../../../../redux/actions/currentProductType";
@@ -10,17 +8,17 @@ import { useMutation, useQuery } from "@apollo/client";
 import { GET_ALL_PRODUCTS } from "../../../../graphql/queries/products";
 import { SAVE_NEW_BIKE } from "../../../../graphql/mutations/bikeBuilds";
 import { useAuth0 } from "@auth0/auth0-react";
+import Spinner from "../../../common/Spinner";
+import { useHistory } from "react-router";
 
 const totNumberOfTypes = 4;
 
 const SidePanelPresenter = () => {
-  const [addBike, saveBikeObj] = useMutation(SAVE_NEW_BIKE);
+  const [addBike, addBikeInfo] = useMutation(SAVE_NEW_BIKE);
+  const addBikeLoading = addBikeInfo.loading;
+  const addBikeData = addBikeInfo.data;
 
   const { isAuthenticated, loginWithPopup, user } = useAuth0();
-
-  const loggedInUser: User = useSelector(
-    (state: RootStateOrAny) => state.loggedInUser
-  );
 
   const { loading, error, data } = useQuery(GET_ALL_PRODUCTS);
 
@@ -29,6 +27,8 @@ const SidePanelPresenter = () => {
   const [productsToShow, setProductsToShow] = useState<Product[]>([]);
 
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const currentBuild = useSelector(
     (state: RootStateOrAny) => state.currentBuild
@@ -81,10 +81,23 @@ const SidePanelPresenter = () => {
           email: user.email,
           products: productIDs,
           createdBy: user.email,
+          createdAt: new Date().toUTCString(),
         },
       });
     }
   };
+
+  if (addBikeLoading) {
+    return (
+      <div className="h-full flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (addBikeData) {
+    history.push("profile");
+  }
 
   return (
     <SidePanelView

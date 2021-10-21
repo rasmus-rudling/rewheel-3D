@@ -1,16 +1,12 @@
-import React, { Component, useRef, useState, useEffect } from 'react';
-import { useQuery, gql, useApolloClient } from '@apollo/client';
 import CustomButton from '../../common/buttons/CustomButtonView';
 import Carousel from '../../common/carousel/CarouselPresenter';
 import { GET_ALL_BIKES } from '../../../graphql/queries/bikes';
-import {
-	GET_ALL_PRODUCTS,
-	GET_PRODUCT,
-} from '../../../graphql/queries/products';
+import React, { useState, useEffect } from 'react';
+import { useQuery, gql, useApolloClient } from '@apollo/client';
 
-import { getNewRenderedBuildConfig } from '../../../utility/functions';
+import { GET_ALL_PRODUCTS } from '../../../graphql/queries/products';
 
-import { BikeBuild, BikeConfig, Product } from '../../../types/index';
+import { BikeBuild, Product } from './../../../types/index';
 
 const DiscoverPage = () => {
 	const bikesFetchInfo = useQuery(GET_ALL_BIKES);
@@ -22,7 +18,7 @@ const DiscoverPage = () => {
 
 	useEffect(() => {
 		if (bikesFetchInfo.data && productsFetchInfo.data) {
-			const newAllBikes = bikesFetchInfo.data.getAllBikes;
+			let newAllBikes = bikesFetchInfo.data.getAllBikes;
 			const allProducts = productsFetchInfo.data.getAllProducts;
 
 			setIndex(Math.floor(newAllBikes.length / 2));
@@ -52,7 +48,7 @@ const DiscoverPage = () => {
 					addBorder={true}
 					blackTextColor={false}
 				/>
-				
+
 				<CustomButton
 					color="blue"
 					onClickHandler={() => nextProperty()}
