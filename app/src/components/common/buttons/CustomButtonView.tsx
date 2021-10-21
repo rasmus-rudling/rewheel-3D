@@ -10,7 +10,7 @@ interface Props {
   extraClass?: string;
 }
 
-const CustomButton = ({
+const Button1 = ({
   text,
   onClickHandler,
   disabled = false,
@@ -102,4 +102,4 @@ const CustomButton = ({
   );
 };
 
-export default CustomButton;
+export default Button1;

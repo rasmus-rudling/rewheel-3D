@@ -2,8 +2,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { changeProductType } from '../../../redux/actions/currentProductType';
+import { Product } from 'src/types';
+import { InternationalString } from './BikePartNavigationPresenter';
 
-const BikePartNavigation = () => {
+interface Props {
+	parts: InternationalString[];
+	onPartTypeClickHandler: (partType: string) => void;
+	currentProductType: string;
+}
+
+const BikePartNavigationView = ({
+	parts,
+	onPartTypeClickHandler,
+	currentProductType,
+}: Props) => {
 	const basicStyle = `
     px-3
     py-2
@@ -31,30 +43,6 @@ const BikePartNavigation = () => {
     bg-white
   `;
 
-	const parts = [
-		{
-			sv: 'Ram',
-			en: 'Frame',
-		},
-		{
-			sv: 'Däck',
-			en: 'Wheel',
-		},
-		{
-			sv: 'Styre',
-			en: 'Handle bar',
-		},
-		{
-			sv: 'Sadel',
-			en: 'Saddle',
-		},
-	];
-
-	const dispatch = useDispatch();
-	const currentProductType = useSelector(
-		(state: RootStateOrAny) => state.currentProductType
-	);
-
 	return (
 		<div className="flex w-full justify-center absolute bottom-7">
 			{parts.map((part, idx) => {
@@ -74,7 +62,7 @@ const BikePartNavigation = () => {
 						<div
 							className={currentStyles.join(' ')}
 							onClick={() => {
-								dispatch(changeProductType(undefined, part.en.toLowerCase()));
+								onPartTypeClickHandler(part.en.toLowerCase());
 							}}
 						>
 							{part.sv}
@@ -93,4 +81,4 @@ const BikePartNavigation = () => {
 	);
 };
 
-export default BikePartNavigation;
+export default BikePartNavigationView;

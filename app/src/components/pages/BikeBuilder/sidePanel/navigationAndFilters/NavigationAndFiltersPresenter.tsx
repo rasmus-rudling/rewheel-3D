@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { PartFilter } from '../../../../../types';
 import { capitalizeFirstLetter } from '../../../../../utility/functions';
+import NavigationAndFiltersView from './NavigationAndFiltersView'
 
 interface Props {
 	currentProductType: string;
@@ -116,9 +117,6 @@ const NavigationAndFilters = ({ currentProductType }: Props) => {
 		</div>
 	);
 
-	const arrowUp = <FontAwesomeIcon icon={faChevronUp} size="xs" />;
-	const arrowDown = <FontAwesomeIcon icon={faChevronDown} size="xs" />;
-
 	let categoryInEnglish = capitalizeFirstLetter(currentProductType);
 	let categoryInSwedish = '';
 
@@ -133,21 +131,18 @@ const NavigationAndFilters = ({ currentProductType }: Props) => {
 	}
 
 	return (
-		<div className="w-full bg-gray-200">
-			<div className="px-3 py-2 flex justify-between">
-				<CurrentCategory categories={[categoryInSwedish]} />
-
-				<button
-					onClick={filterVisabilityHandler}
-					className="flex items-center hidden"
-				>
-					<span className="mr-1 select-none">Filter</span>
-					{filtersVisible ? arrowUp : arrowDown}
-				</button>
-			</div>
-			{filtersVisible ? partFilters : null}
-		</div>
-	);
+		<NavigationAndFiltersView 
+			partFiltersList={partFiltersList}
+			setOpenFilterHandler={setOpenFilterHandler} 
+			openFilter={openFilter} 
+			closeFilterHandler={closeFilterHandler} 
+			toggleAlternativeHandler={toggleAlternativeHandler} 
+			clearCurrentFilterHandler={clearCurrentFilterHandler} 
+			categoryInSwedish={categoryInSwedish} 
+			filterVisabilityHandler={filterVisabilityHandler}
+			filtersVisible={filtersVisible} 
+		/>
+	)
 };
 
 export default NavigationAndFilters;

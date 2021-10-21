@@ -9,7 +9,7 @@ interface Props {
 	onTextChange: (e: string | ChangeEvent<any>) => void;
 }
 
-const TextInput = ({
+const TextInputView = ({
 	type,
 	currentTextValue,
 	showHeader,
@@ -39,4 +39,4 @@ const TextInput = ({
 	);
 };
 
-export default TextInput;
+export default TextInputView;

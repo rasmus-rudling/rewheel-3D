@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 
-const ReWheelLogo = () => {
+const ReWheelLogoView = () => {
 	const history = useHistory();
 
 	return (
@@ -14,4 +14,4 @@ const ReWheelLogo = () => {
 	);
 };
 
-export default ReWheelLogo;
+export default ReWheelLogoView;
