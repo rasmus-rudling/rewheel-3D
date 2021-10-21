@@ -32,12 +32,7 @@ export const typeDefs = gql`
 
   type Query {
     getCurrentUser(email: String!): User
-<<<<<<< HEAD
-    getAllUsers: [User]
-    getBike(_id: ID!): Bike!
-=======
     getBike(id: ID!): Bike!
->>>>>>> 2cf6d9cdec516966e5bf05bb4e8aed09b369c4de
     getMyBikes(email: String!): [Bike]!
     getAllBikes: [Bike!]!
     getProduct(product_id: String): Product!
