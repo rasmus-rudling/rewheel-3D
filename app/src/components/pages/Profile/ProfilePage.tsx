@@ -2,7 +2,7 @@ import React, { Component, useRef, useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery, gql } from "@apollo/client";
 import { GET_MY_BIKES } from "../../../graphql/queries/bikes";
-import Carousel from "../../common/Carousel";
+import Carousel from "../../common/carousel/CarouselPresenter";
 import { BikeBuild, BikeConfig, Product } from "./../../../types/index";
 import {
   GET_ALL_PRODUCTS,
