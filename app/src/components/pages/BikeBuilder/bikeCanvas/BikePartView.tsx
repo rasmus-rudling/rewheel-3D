@@ -16,10 +16,10 @@ const BikePartView = ({ geometry, position, orientation, color}: Props) => {
 	const group = useRef<THREE.Mesh>();
 
 	return (
-		<group ref={group} dispose={null}>
+		<group ref={group} dispose={null} castShadow={true}>
 			<mesh
 				//name="FRAME"
-				castShadow
+				castShadow={true}
 				receiveShadow
 				geometry={geometry}
 				position={position}
