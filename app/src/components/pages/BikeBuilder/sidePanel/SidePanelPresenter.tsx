@@ -47,10 +47,18 @@ const SidePanelPresenter = () => {
     setAllProducts(allProductsCopy);
   }, [loading]);
 
+<<<<<<< HEAD
   useEffect(() => {
     const relevantProducts = allProducts.filter((product) => {
       return product.type.toLowerCase() === currentProductType.toLowerCase();
     });
+=======
+
+	useEffect(() => {
+		const relevantProducts = allProducts.filter((product) => {
+			return product.type.toLowerCase() === currentProductType.toLowerCase();
+		});
+>>>>>>> 2cf6d9cdec516966e5bf05bb4e8aed09b369c4de
 
     setProductsToShow(relevantProducts);
   }, [currentProductType, allProducts]);
@@ -64,6 +72,7 @@ const SidePanelPresenter = () => {
   const saveBikeHandler = () => {
     if (currentBuild.products.length !== 4) return;
 
+<<<<<<< HEAD
     const productIDs: Product[] = currentBuild.products.map(
       (product: Product) => product.id
     );
@@ -86,6 +95,20 @@ const SidePanelPresenter = () => {
       },
     });
   };
+=======
+		const productIDs: Product[] = currentBuild.products.map(
+			(product: Product) => product.product_id
+		);
+
+		addBike({
+			variables: {
+				email: loggedInUser.email,
+				products: productIDs,
+				createdBy: loggedInUser.email,
+			},
+		});
+	};
+>>>>>>> 2cf6d9cdec516966e5bf05bb4e8aed09b369c4de
 
   return (
     <SidePanelView

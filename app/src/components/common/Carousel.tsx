@@ -1,39 +1,39 @@
 import React, { Component, useRef, useState } from "react";
 import BikeView from "../pages/BikeBuilder/bikeView/BikeView";
 
-import { BikeBuild } from "../../types/index";
+import { BikeConfig } from "../../types/index";
 
 interface Props {
-  bikeBuilds: BikeBuild[];
+  bikeConfigs: BikeConfig[];
   index: number;
 }
 
-// Add boolean for edit buttons or not
-// Add edit button for the profile page where you can directly edit the bike
+const Carousel = ({ bikeConfigs, index }: Props) => {
+  const numberOfObjects = bikeConfigs.length;
 
-// Add Made by , Price etc
+  const mainObject = (
+    <div className="w-2/4 px-2 h-80">
+      <BikeView bikeConfig={bikeConfigs[index]} />
+    </div>
+  );
 
-const Carousel = ({ bikeBuilds, index }: Props) => {
-  var numberOfObjects = bikeBuilds.length;
+  const leftSideObject = (
+    <div className="w-1/4 h-3/6 px-2 animate-bounce">
+      <BikeView bikeConfig={bikeConfigs[index - 1]} />
+    </div>
+  );
+
+  const rightSideObject = (
+    <div className="w-1/4 h-3/6 px-2 animate-bounce">
+      <BikeView bikeConfig={bikeConfigs[index + 1]} />
+    </div>
+  );
 
   return (
     <div className=" flex justify-center items-center w-full h-4/6">
-      <div className="w-1/4 h-3/6 px-2 animate-bounce">
-        {index > 0 ? <BikeView bikeBuild={bikeBuilds[index]} /> : ""}
-      </div>
-
-      <div className="w-2/4 px-2 h-80 mb-20 mt-12">
-        <BikeView bikeBuild={bikeBuilds[index]} />
-        <div>Created by Isak </div>
-      </div>
-
-      <div className="w-1/4 h-3/6 px-2 animate-bounce">
-        {index < numberOfObjects - 1 ? (
-          <BikeView bikeBuild={bikeBuilds[index]} />
-        ) : (
-          ""
-        )}
-      </div>
+      {index > 0 && leftSideObject}
+      {mainObject}
+      {index < numberOfObjects - 1 && rightSideObject}
     </div>
   );
 };

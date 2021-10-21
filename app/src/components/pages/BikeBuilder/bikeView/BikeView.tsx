@@ -4,12 +4,14 @@ import { Canvas, useFrame } from "@react-three/fiber";
 
 import ComposedBikeBuild from "./ComposedBikeBuild";
 
+import {BikeConfig} from '../../../../types'
+
 type Props = {
   // Can't be interface since base type includes optinal arguments
-  bikeBuild: any;
+  bikeConfig: BikeConfig;
 };
 
-const BikeView = (props: Props) => {
+const BikeView = ({bikeConfig}: Props) => {
   // const currentBikeBuild = useCurrentBuild();
 
   return (
@@ -24,7 +26,7 @@ const BikeView = (props: Props) => {
       <pointLight position={[-2.427, 2.07, 1.574]} />
 
       <Suspense fallback={<div>Loading... </div>}>
-        <ComposedBikeBuild bikeConfig={props.bikeBuild.renderedBuildConfig} />
+        <ComposedBikeBuild bikeConfig={bikeConfig} />
       </Suspense>
       <OrbitControls
         enablePan={false}

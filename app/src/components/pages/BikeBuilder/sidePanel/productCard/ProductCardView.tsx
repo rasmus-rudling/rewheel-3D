@@ -30,9 +30,9 @@ const ProductCardView = ({
 	}
 
 	useEffect(() => {
-		useGLTF.preload(modelsAndImages[productInfo.id].model);
+		useGLTF.preload(modelsAndImages[productInfo.product_id].model);
 	}, []);
-
+	console.log("Product info", productInfo)
 	return (
 		<div
 			className={basicStyling + conditionalStyling}
@@ -49,7 +49,7 @@ const ProductCardView = ({
 			</div>
 			<div className="w-full flex justify-center">
 				<img
-					src={modelsAndImages[productInfo.id].img}
+					src={modelsAndImages[productInfo.product_id].img}
 					className="p-2 h-full max-h-full object-scale-down"
 				/>
 			</div>

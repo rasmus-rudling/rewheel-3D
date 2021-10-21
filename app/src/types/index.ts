@@ -26,6 +26,7 @@ export interface Product {
 	grade: number;
 	numReviews: number;
 	price: number;
+	product_id: string;
 	// imgLink: string;
 	type: string;
 }
