@@ -9,12 +9,14 @@ import { GET_ALL_PRODUCTS } from "../../../../graphql/queries/products";
 import { SAVE_NEW_BIKE } from "../../../../graphql/mutations/bikeBuilds";
 import { useAuth0 } from "@auth0/auth0-react";
 import Spinner from "../../../common/Spinner";
+import { useHistory } from "react-router";
 
 const totNumberOfTypes = 4;
 
 const SidePanelPresenter = () => {
   const [addBike, addBikeInfo] = useMutation(SAVE_NEW_BIKE);
   const addBikeLoading = addBikeInfo.loading;
+  const addBikeData = addBikeInfo.data;
 
   const { isAuthenticated, loginWithPopup, user } = useAuth0();
 
@@ -25,6 +27,8 @@ const SidePanelPresenter = () => {
   const [productsToShow, setProductsToShow] = useState<Product[]>([]);
 
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const currentBuild = useSelector(
     (state: RootStateOrAny) => state.currentBuild
@@ -88,6 +92,10 @@ const SidePanelPresenter = () => {
         <Spinner />
       </div>
     );
+  }
+
+  if (addBikeData) {
+    history.push("profile");
   }
 
   return (
