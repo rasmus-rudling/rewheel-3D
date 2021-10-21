@@ -43,8 +43,8 @@ const ProfilePage = () => {
 
 	if (isAuthenticated && user) {
 		return (
-			<div className="w-full">
-				<div className="flex flex-col mt-5 items-center">
+			<div className="w-full h-full">
+				<div className="flex flex-col pt-5 items-center">
 					<img className="w-20 m-2 rounded-full" src={user.picture} />
 					<span className="m-1 font-medium text-2xl">
 						Välkommen {user.email}!
@@ -54,14 +54,14 @@ const ProfilePage = () => {
 					</p>
 				</div>
 
-				<div className="w-full flex flex-col">
+				<div className="w-full h-3/6 flex flex-col">
 					<Carousel
 						allBikes={allBikes}
 						allProducts={allProducts}
 						index={index}
 					/>
 
-					<div className="flex justify-center">
+					<div className="flex justify-center mt-3">
 						<Button1
 							color="blue"
 							onClickHandler={() => prevProperty()}

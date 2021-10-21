@@ -30,43 +30,43 @@ const CarouselView = ({ mainBikeInfo, leftBikeInfo, rightBikeInfo }: Props) => {
 	const showCreator = window.location.pathname !== '/profile';
 
 	const mainBike = (
-		<div className="flex h-full w-3/5 flex-col relative">
+		<div className="flex h-full w-3/6 flex-col relative items-center">
 			{showCreator && (
 				<div className={infoContainerMain}>
 					<img src={mainBikeInfo?.creatorImg} className={imgClass} />
 					Created by {mainBikeInfo?.creatorFirstName}.
 				</div>
 			)}
-			<div className="h-full  px-2">
+			<div className="h-full w-full px-2 flex">
 				<BikeView bikeConfig={mainBikeInfo?.bikeConfig} />
 			</div>
 		</div>
 	);
 
-	const leftBike = (
-		<div className="flex h-3/ w-1/4 flex-col relative justify-center">
+	const leftBike = leftBikeInfo && (
+		<div className="flex h-2/4 w-1/5 flex-col relative justify-center flex-initial ">
 			{showCreator && (
 				<div className={infoContainer}>
-					<img src={mainBikeInfo?.creatorImg} className={imgClass} />
-					Created by {mainBikeInfo?.creatorFirstName}.
+					<img src={leftBikeInfo?.creatorImg} className={imgClass} />
+					Created by {leftBikeInfo?.creatorFirstName}.
 				</div>
 			)}
 			<div className="h-full px-2">
-				<BikeView bikeConfig={mainBikeInfo?.bikeConfig} />
+				<BikeView bikeConfig={leftBikeInfo?.bikeConfig} />
 			</div>
 		</div>
 	);
 
-	const rightBike = (
-		<div className="flex h-3/4 w-1/4 flex-col relative justify-center">
+	const rightBike = rightBikeInfo && (
+		<div className="flex h-2/4 w-1/5 flex-col relative justify-center flex-initial ">
 			{showCreator && (
 				<div className={infoContainer}>
-					<img src={mainBikeInfo?.creatorImg} className={imgClass} />
-					Created by {mainBikeInfo?.creatorFirstName}.
+					<img src={rightBikeInfo?.creatorImg} className={imgClass} />
+					Created by {rightBikeInfo?.creatorFirstName}.
 				</div>
 			)}
 			<div className="h-full px-2">
-				<BikeView bikeConfig={mainBikeInfo?.bikeConfig} />
+				<BikeView bikeConfig={rightBikeInfo?.bikeConfig} />
 			</div>
 		</div>
 	);
