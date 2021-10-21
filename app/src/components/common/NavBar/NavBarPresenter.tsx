@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router";
 import DesktopNavBarView from "./NavBarView";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useApolloClient } from "@apollo/client";
-import { debug } from "console";
-import { useDispatch } from "react-redux";
-import { User } from "../../../types";
 import { CREATE_USER } from "../../../../src/graphql/mutations/createUser";
-import { useMutation, useQuery } from "@apollo/client";
-import { GET_USER_BY_EMAIL } from "../../../../src/graphql/queries/users";
+import { useMutation } from "@apollo/client";
 
 export interface NavButton {
   route: string;
@@ -24,12 +20,10 @@ const navButtons: NavButton[] = [
 ];
 
 const NavBarPresenter = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
   const [createUser, { data, loading, error }] = useMutation(CREATE_USER, {
     errorPolicy: "all",
   });
-  const apolloClient = useApolloClient();
 
   const { loginWithPopup, logout, isAuthenticated, user } = useAuth0();
 
@@ -77,7 +71,6 @@ const NavBarPresenter = () => {
         navButtons={navButtonsFiltered}
         navButtonClickHandler={navButtonClickHandler}
       />
-      {/* <MobileNavBar navigationButtons={navigationButtons} /> */}
     </>
   );
 };
