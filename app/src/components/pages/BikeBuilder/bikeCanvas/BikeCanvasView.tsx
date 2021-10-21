@@ -21,7 +21,7 @@ const BikeView = ({ bikeConfig }: Props) => {
   // const currentBikeBuild = useCurrentBuild();
 
   return (
-    <div className="h-full w-full bg-gray-200">
+    <div className="h-full w-full bg-gray-100">
       <Canvas
         shadows
         dpr={[1, 2]}
