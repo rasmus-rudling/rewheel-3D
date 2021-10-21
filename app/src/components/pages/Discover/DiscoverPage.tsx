@@ -35,7 +35,7 @@ const bikeBuilds = [
 const DiscoverPage = () => {
   const { loading, error, data } = useQuery(GET_ALL_BIKES);
 
-  let bikes = data.getAllBikes;
+  let bikes = data;
 
   console.log(bikes);
   console.log("hej");

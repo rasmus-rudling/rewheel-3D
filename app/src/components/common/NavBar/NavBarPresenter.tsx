@@ -54,38 +54,27 @@ const NavBarPresenter = () => {
   });
 
   useEffect(() => {
-    async () => {
-      if (user) {
-        const currentUser: User = {
-          email: user.email ? user.email : "",
-          firstName: user.given_name ? user.given_name : "",
-          lastName: user.family_name ? user.family_name : "",
-          imgUrl: user.picture ? user.picture : "",
-          username: user.nickname ? user.nickname : "",
-        };
+    if (user) {
+      const currentUser: User = {
+        email: user.email ? user.email : "",
+        firstName: user.given_name ? user.given_name : "",
+        lastName: user.family_name ? user.family_name : "",
+        imgUrl: user.picture ? user.picture : "",
+        username: user.nickname ? user.nickname : "",
+      };
 
-        // const result = await apolloClient.query({
-        //   query: GET_USER_BY_EMAIL,
-        //   variables: {
-        //     email: user.email,
-        //   },
-        // });
+      createUser({
+        variables: {
+          email: user.email,
+          firstName: user.given_name,
+          lastName: user.family_name,
+          imgUrl: user.picture,
+          username: user.nickname,
+        },
+      });
 
-        // console.log(result);
-
-        createUser({
-          variables: {
-            email: user.email,
-            firstName: user.given_name,
-            lastName: user.family_name,
-            imgUrl: user.picture,
-            username: user.nickname,
-          },
-        });
-
-        dispatch(loginUser(currentUser));
-      }
-    };
+      dispatch(loginUser(currentUser));
+    }
   }, [user]);
 
   return (
