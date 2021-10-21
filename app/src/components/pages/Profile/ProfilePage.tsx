@@ -1,10 +1,23 @@
-import React from "react";
+import React, { Component, useRef, useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery, gql } from "@apollo/client";
+import { GET_MY_BIKES } from "../../../graphql/queries/bikes";
+
+import { BikeBuild, BikeConfig, Product } from "./../../../types/index";
 
 const ProfilePage = () => {
   const { user, isAuthenticated } = useAuth0();
+  const [allBikes, setAllBikes] = useState<BikeBuild[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [index, setIndex] = useState(0);
+
   if (isAuthenticated && user) {
+    const bikesFetchInfo = useQuery(GET_MY_BIKES, {
+      variables: { email: user.email },
+    });
+    console.log(user.email);
+    console.log(bikesFetchInfo.data);
+
     return (
       <div className="w-full">
         <div className="flex flex-col mt-5 items-center">
