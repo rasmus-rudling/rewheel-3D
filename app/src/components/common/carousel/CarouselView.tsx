@@ -22,37 +22,58 @@ interface Props {
 
 const CarouselView = ({ mainBikeInfo, leftBikeInfo, rightBikeInfo }: Props) => {
 	const imgClass = 'h-12 rounded-full';
-	const infoContainer = 'flex flex-col items-center mb-1 font-light';
+	const infoContainer =
+		'absolute -top-20 w-full flex flex-col items-center mb-1 font-light';
+	const infoContainerMain =
+		'absolute -top-20 w-full flex flex-col items-center mb-1 font-light';
 
-	return (
-		<div className=" flex justify-center items-center w-full h-4/6">
-			{leftBikeInfo && (
-				<div className="w-1/4 h-3/6 px-2">
-					<div className={infoContainer}>
-						<img src={leftBikeInfo?.creatorImg} className={imgClass} />
-						Created by {leftBikeInfo?.creatorFirstName}.
-					</div>
-					<BikeView bikeConfig={leftBikeInfo?.bikeConfig} />
-				</div>
-			)}
+	const showCreator = window.location.pathname !== '/profile';
 
-			<div className="w-2/4 px-2 h-80">
-				<div className={infoContainer}>
+	const mainBike = (
+		<div className="flex h-full w-3/6 flex-col relative items-center">
+			{showCreator && (
+				<div className={infoContainerMain}>
 					<img src={mainBikeInfo?.creatorImg} className={imgClass} />
 					Created by {mainBikeInfo?.creatorFirstName}.
 				</div>
+			)}
+			<div className="h-full w-full px-2 flex">
 				<BikeView bikeConfig={mainBikeInfo?.bikeConfig} />
 			</div>
+		</div>
+	);
 
-			{rightBikeInfo && (
-				<div className="w-1/4 h-3/6 px-2">
-					<div className={infoContainer}>
-						<img src={rightBikeInfo?.creatorImg} className={imgClass} />
-						Created by {rightBikeInfo?.creatorFirstName}.
-					</div>
-					<BikeView bikeConfig={rightBikeInfo?.bikeConfig} />
+	const leftBike = leftBikeInfo && (
+		<div className="flex h-2/4 w-1/5 flex-col relative justify-center flex-initial ">
+			{showCreator && (
+				<div className={infoContainer}>
+					<img src={leftBikeInfo?.creatorImg} className={imgClass} />
+					Created by {leftBikeInfo?.creatorFirstName}.
 				</div>
 			)}
+			<div className="h-full px-2">
+				<BikeView bikeConfig={leftBikeInfo?.bikeConfig} />
+			</div>
+		</div>
+	);
+
+	const rightBike = rightBikeInfo && (
+		<div className="flex h-2/4 w-1/5 flex-col relative justify-center flex-initial ">
+			{showCreator && (
+				<div className={infoContainer}>
+					<img src={rightBikeInfo?.creatorImg} className={imgClass} />
+					Created by {rightBikeInfo?.creatorFirstName}.
+				</div>
+			)}
+			<div className="h-full px-2">
+				<BikeView bikeConfig={rightBikeInfo?.bikeConfig} />
+			</div>
+		</div>
+	);
+
+	return (
+		<div className="flex h-3/4 w-full items-center justify-around">
+			{leftBike} {mainBike} {rightBike}
 		</div>
 	);
 };
