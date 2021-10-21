@@ -15,10 +15,6 @@ const ProfilePage = () => {
           <p className="m-2 font-light">
             Här kan du se de cyklar du har sparat.
           </p>
-<<<<<<< HEAD
-          {/* {JSON.stringify(user, null, 2)} */}
-=======
->>>>>>> 964e8468c1b9f2498c463bbf4ef5295d7da4b0cd
         </div>
       </div>
     );

@@ -23,7 +23,7 @@ const DiscoverPage = () => {
 
   useEffect(() => {
     if (bikesFetchInfo.data && productsFetchInfo.data) {
-      const newAllBikes = bikesFetchInfo.data.getAllBikes;
+      let newAllBikes = bikesFetchInfo.data.getAllBikes;
       const allProducts = productsFetchInfo.data.getAllProducts;
 
       setIndex(Math.floor(newAllBikes.length / 2));
