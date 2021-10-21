@@ -22,7 +22,7 @@ const BikeView = ({ bikeConfig }: Props) => {
   // const currentBikeBuild = useCurrentBuild();
 
   return (
-    <div className="h-full w-full bg-gray-300">
+    <div className="h-full w-full bg-gray-200">
       <Canvas
         shadows
         dpr={[1, 2]}
@@ -39,17 +39,17 @@ const BikeView = ({ bikeConfig }: Props) => {
           rotation={new THREE.Euler(-Math.PI / 2, 0, 0)}
           position={new THREE.Vector3(0, -1.2, 0)}
         /> */}
-
         <Suspense fallback={<div>Loading... </div>}>
           <ComposedBikeBuild bikeConfig={bikeConfig} />
         </Suspense>
+
         <OrbitControls
           enablePan={false}
           enableZoom={false}
           minPolarAngle={Math.PI / 2.5}
           maxPolarAngle={Math.PI / 2.5}
         />
-        <Environment preset="city" />
+        {/* <Environment preset="city" /> Not used since causes error in discover.*/}
         <ContactShadows
           rotation-x={Math.PI / 2}
           position={[0, -1.2, 0]}
