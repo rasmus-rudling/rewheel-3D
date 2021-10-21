@@ -2,8 +2,14 @@ import React, { Component, useRef, useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery, gql } from "@apollo/client";
 import { GET_MY_BIKES } from "../../../graphql/queries/bikes";
-
+import Carousel from "../../common/Carousel";
 import { BikeBuild, BikeConfig, Product } from "./../../../types/index";
+import {
+  GET_ALL_PRODUCTS,
+  GET_PRODUCT,
+} from "../../../graphql/queries/products";
+
+import Button1 from "../../common/buttons/Button1View";
 
 const ProfilePage = () => {
   const { user, isAuthenticated } = useAuth0();
@@ -11,13 +17,31 @@ const ProfilePage = () => {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [index, setIndex] = useState(0);
 
-  if (isAuthenticated && user) {
-    const bikesFetchInfo = useQuery(GET_MY_BIKES, {
-      variables: { email: user.email },
-    });
-    console.log(user.email);
-    console.log(bikesFetchInfo.data);
+  const productsFetchInfo = useQuery(GET_ALL_PRODUCTS);
+  const bikesFetchInfo = useQuery(GET_MY_BIKES, {
+    variables: { email: user?.email },
+  });
 
+  useEffect(() => {
+    if (bikesFetchInfo.data) {
+      let newMyBikes = bikesFetchInfo.data.getMyBikes;
+      const allProducts = productsFetchInfo.data.getAllProducts;
+      console.log(newMyBikes);
+      setIndex(Math.floor(newMyBikes.length / 2));
+      setAllBikes(newMyBikes);
+      setAllProducts(allProducts);
+    }
+  }, [bikesFetchInfo.data, productsFetchInfo.data]);
+
+  const nextProperty = () => {
+    setIndex(index + 1);
+  };
+
+  const prevProperty = () => {
+    setIndex(index - 1);
+  };
+
+  if (isAuthenticated && user) {
     return (
       <div className="w-full">
         <div className="flex flex-col mt-5 items-center">
@@ -28,6 +52,26 @@ const ProfilePage = () => {
           <p className="m-2 font-light">
             Här kan du se de cyklar du har sparat.
           </p>
+        </div>
+        <Carousel allBikes={allBikes} allProducts={allProducts} index={index} />
+        <div className="flex justify-center">
+          <Button1
+            color="blue"
+            onClickHandler={() => prevProperty()}
+            disabled={index === 0}
+            text="Föregående"
+            addBorder={true}
+            blackTextColor={false}
+          />
+          <Button1
+            color="blue"
+            onClickHandler={() => nextProperty()}
+            disabled={index === allBikes.length - 1}
+            text="Nästa"
+            addBorder={true}
+            filled={true}
+            blackTextColor={false}
+          />
         </div>
       </div>
     );
