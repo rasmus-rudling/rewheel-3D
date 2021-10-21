@@ -5,32 +5,54 @@ import { BikeBuild, Product } from '../../../types/index';
 import { useGLTF } from '@react-three/drei';
 import { modelsAndImages } from '../../../utility/models';
 import { getNewRenderedBuildConfig } from '../../../utility/functions';
-import { BikeConfig } from '../../../types'
+import { BikeConfig } from '../../../types';
+import { BikeInfo } from './CarouselPresenter';
+
+// interface Props {
+//   mainBikeConfig: BikeConfig,
+//   leftBikeConfig?: BikeConfig,
+//   rightBikeConfig?: BikeConfig,
+// }
 
 interface Props {
-  mainBikeConfig: BikeConfig,
-  leftBikeConfig?: BikeConfig,
-  rightBikeConfig?: BikeConfig,
+	mainBikeInfo: BikeInfo;
+	leftBikeInfo?: BikeInfo;
+	rightBikeInfo?: BikeInfo;
 }
 
-const CarouselView = ({ leftBikeConfig, mainBikeConfig, rightBikeConfig }: Props) => {
+const CarouselView = ({ mainBikeInfo, leftBikeInfo, rightBikeInfo }: Props) => {
+	const imgClass = 'h-12 rounded-full';
+	const infoContainer = 'flex flex-col items-center mb-1 font-light';
+
 	return (
 		<div className=" flex justify-center items-center w-full h-4/6">
-			{leftBikeConfig && (
-        <div className="w-1/4 h-3/6 px-2">
-        <BikeView bikeConfig={leftBikeConfig} />
-      </div>
-      )}
+			{leftBikeInfo && (
+				<div className="w-1/4 h-3/6 px-2">
+					<div className={infoContainer}>
+						<img src={leftBikeInfo?.creatorImg} className={imgClass} />
+						Created by {leftBikeInfo?.creatorFirstName}.
+					</div>
+					<BikeView bikeConfig={leftBikeInfo?.bikeConfig} />
+				</div>
+			)}
 
 			<div className="w-2/4 px-2 h-80">
-        <BikeView bikeConfig={mainBikeConfig} />
-      </div>
+				<div className={infoContainer}>
+					<img src={mainBikeInfo?.creatorImg} className={imgClass} />
+					Created by {mainBikeInfo?.creatorFirstName}.
+				</div>
+				<BikeView bikeConfig={mainBikeInfo?.bikeConfig} />
+			</div>
 
-			{rightBikeConfig && (
-        <div className="w-1/4 h-3/6 px-2">
-        <BikeView bikeConfig={rightBikeConfig} />
-      </div>
-      )}
+			{rightBikeInfo && (
+				<div className="w-1/4 h-3/6 px-2">
+					<div className={infoContainer}>
+						<img src={rightBikeInfo?.creatorImg} className={imgClass} />
+						Created by {rightBikeInfo?.creatorFirstName}.
+					</div>
+					<BikeView bikeConfig={rightBikeInfo?.bikeConfig} />
+				</div>
+			)}
 		</div>
 	);
 };
