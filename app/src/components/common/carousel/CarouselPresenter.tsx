@@ -1,63 +1,96 @@
-import { Component, useRef, useState, useEffect } from "react";
-import BikeView from "../../pages/BikeBuilder/bikeCanvas/BikeCanvasView";
-import CarouselView from "./CarouselView";
+import { Component, useRef, useState, useEffect } from 'react';
+import BikeView from '../../pages/BikeBuilder/bikeCanvas/BikeCanvasView';
+import CarouselView from './CarouselView';
 
-import { BikeBuild, BikeConfig, Product } from "../../../types/index";
-import { useGLTF } from "@react-three/drei";
-import { modelsAndImages } from "../../../utility/models";
-import { getNewRenderedBuildConfig } from "../../../utility/functions";
+import { BikeBuild, BikeConfig, Product } from '../../../types/index';
+import { useGLTF } from '@react-three/drei';
+import { modelsAndImages } from '../../../utility/models';
+import { getNewRenderedBuildConfig } from '../../../utility/functions';
+import { CreatorsInfo } from 'src/components/pages/discoverPage/DiscoverPage';
 
 interface Props {
-  index: number;
-  allBikes: any[];
-  allProducts: Product[];
+	index: number;
+	allBikes: any[];
+	allProducts: Product[];
+	creatorsInfo?: CreatorsInfo;
 }
 
-const CarouselPresenter = ({ index, allBikes, allProducts }: Props) => {
-  const [bikeConfigs, setBikeConfigs] = useState<BikeConfig[]>([]);
+export interface BikeInfo {
+	bikeConfig: BikeConfig;
+	creatorEmail: string;
+	creatorFirstName: string;
+	creatorImg: string;
+}
 
-  for (let i = 1; i < 14; i++) {
-    useGLTF.preload(modelsAndImages[i].model);
-  }
+const CarouselPresenter = ({
+	index,
+	allBikes,
+	allProducts,
+	creatorsInfo = {},
+}: Props) => {
+	// const [bikeConfigs, setBikeConfigs] = useState<BikeConfig[]>([]);
+	const [bikesInfo, setBikesInfo] = useState<BikeInfo[]>([]);
 
-  useEffect(() => {
-    if (allBikes && allProducts) {
-      if (allBikes.length !== 0 && allProducts.length !== 0) {
-        const newBikeConfig: BikeConfig[] = [];
+	for (let i = 1; i < 14; i++) {
+		useGLTF.preload(modelsAndImages[i].model);
+	}
 
-        allBikes.forEach((bike) => {
-          const bikeProductIds: string[] = bike.products;
+	console.log('all bikes', allBikes);
+	console.log(creatorsInfo);
 
-          const currentBikeParts: Product[] = [];
+	useEffect(() => {
+		if (allBikes && allProducts) {
+			if (allBikes.length !== 0 && allProducts.length !== 0) {
+				// const newBikeConfig: BikeConfig[] = [];
+				const newBikesInfo: BikeInfo[] = [];
 
-          bikeProductIds.forEach((productId: string) => {
-            const bikePart =
-              allProducts.find(
-                (currentProduct: Product) =>
-                  currentProduct.product_id === productId
-              ) || allProducts[0];
+				allBikes.forEach((bike) => {
+					const bikeProductIds: string[] = bike.products;
 
-            currentBikeParts.push(bikePart);
-          });
+					const currentBikeParts: Product[] = [];
 
-          const currentBikeConfig: BikeConfig =
-            getNewRenderedBuildConfig(currentBikeParts);
+					bikeProductIds.forEach((productId: string) => {
+						const bikePart =
+							allProducts.find(
+								(currentProduct: Product) =>
+									currentProduct.product_id === productId
+							) || allProducts[0];
 
-          newBikeConfig.push(currentBikeConfig);
-        });
+						currentBikeParts.push(bikePart);
+					});
 
-        setBikeConfigs(newBikeConfig);
-      }
-    }
-  }, [allBikes]);
+					const currentBikeConfig: BikeConfig =
+						getNewRenderedBuildConfig(currentBikeParts);
 
-  return (
-    <CarouselView
-      leftBikeConfig={bikeConfigs[index - 1]}
-      mainBikeConfig={bikeConfigs[index]}
-      rightBikeConfig={bikeConfigs[index + 1]}
-    />
-  );
+					const currentBikeInfo: BikeInfo = {
+						bikeConfig: currentBikeConfig,
+						creatorEmail: bike.createdBy,
+						creatorFirstName: creatorsInfo[bike.createdBy].firstName,
+						creatorImg: creatorsInfo[bike.createdBy].imgUrl,
+					};
+
+					newBikesInfo.push(currentBikeInfo);
+					// newBikeConfig.push(currentBikeConfig);
+				});
+
+				setBikesInfo(newBikesInfo);
+				// setBikeConfigs(newBikeConfig);
+			}
+		}
+	}, [allBikes]);
+
+	return (
+		// <CarouselView
+		// 	leftBikeConfig={bikeConfigs[index - 1]}
+		// 	mainBikeConfig={bikeConfigs[index]}
+		// 	rightBikeConfig={bikeConfigs[index + 1]}
+		// />
+		<CarouselView
+			leftBikeInfo={bikesInfo[index - 1]}
+			mainBikeInfo={bikesInfo[index]}
+			rightBikeInfo={bikesInfo[index + 1]}
+		/>
+	);
 };
 
 export default CarouselPresenter;
