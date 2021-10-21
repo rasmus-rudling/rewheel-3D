@@ -18,7 +18,7 @@ const BikeView = ({ bikeConfig }: Props) => {
 		<Canvas
 			dpr={[1, 2]}
 			camera={{ position: [-4, 2, -4], fov: 45 }}
-			className="bg-gray-400"
+			className="bg-gray-400 h-full"
 		>
 			<ambientLight intensity={0.5} />
 			<pointLight position={[-1.16, 1.262, -2.143]} />
