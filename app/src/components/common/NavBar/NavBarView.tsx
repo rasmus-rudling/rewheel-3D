@@ -1,7 +1,6 @@
 import React from "react";
-import Button1 from "../buttons/Button1View";
-import ReWheelLogo from "../ReWheelLogo";
-import HamburgerButton from "./HamburgerBtn";
+import CustomButton from "../buttons/CustomButtonView";
+import ReWheelLogo from "../ReWheelLogoView";
 
 import { NavButton } from "./NavBarPresenter";
 
@@ -14,7 +13,7 @@ const DesktopNavBarView = ({ navButtons, navButtonClickHandler }: Props) => {
   const desktopView = (
     <div className="flex h-max">
       {navButtons.map((navButton) => (
-        <Button1
+        <CustomButton
           key={"navBarView " + navButton.text}
           color="green"
           text={navButton.text}

@@ -1,13 +1,14 @@
-import BikeView from './bikeView/BikeView';
+import BikeView from './bikeCanvas/BikeCanvasView';
 import SidePanel from './sidePanel/SidePanelPresenter';
 import { Suspense } from 'react';
-import BikePartNavigation from './BikePartNavigation';
+import BikePartNavigation from './BikePartNavigationPresenter';
 
 import { useSelector, RootStateOrAny } from 'react-redux';
 
-
-const BikeBuilderPage = () => {
-  const currentBikeBuild = useSelector((state: RootStateOrAny) => state.currentBuild);
+const BikeBuilderPageView = () => {
+	const currentBikeBuild = useSelector(
+		(state: RootStateOrAny) => state.currentBuild
+	);
 
 	return (
 		<div className="flex h-full w-full">
@@ -24,4 +25,4 @@ const BikeBuilderPage = () => {
 	);
 };
 
-export default BikeBuilderPage;
+export default BikeBuilderPageView;

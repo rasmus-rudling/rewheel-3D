@@ -17,6 +17,9 @@ interface Props {
 	children: JSX.Element;
 }
 
+
+// TODO: Ellebrink?
+
 const ApolloWrapper = ({ children }: Props) => {
 	const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 	const [bearerToken, setBearerToken] = useState('');

@@ -10,11 +10,8 @@ type Props = JSX.IntrinsicElements["group"] & {
 
 };
 
-const BikePart = (props: Props) => {
-  const geometry = props.geometry; // Include geometry instead?
-  const position = props.position;
-  const orientation = props.orientation;
-  const material = new THREE.MeshStandardMaterial({color: props.color, roughness: 0});
+const BikePartView = ({ geometry, position, orientation, color}: Props) => {
+  const material = new THREE.MeshStandardMaterial({color: color, roughness: 0});
 
 	const group = useRef<THREE.Mesh>();
 
@@ -33,4 +30,4 @@ const BikePart = (props: Props) => {
 	);
 };
 
-export default BikePart;
+export default BikePartView;
