@@ -1,90 +1,91 @@
-require('dotenv').config();
-import { UserInputError, AuthenticationError } from 'apollo-server-errors';
-import jwt from 'jsonwebtoken';
-import Bike from './models/Bike';
-import User from './models/User';
-import Product from './models/Product';
+require("dotenv").config();
+import { UserInputError, AuthenticationError } from "apollo-server-errors";
+import jwt from "jsonwebtoken";
+import Bike from "./models/Bike";
+import User from "./models/User";
+import Product from "./models/Product";
 
 const jwt_secret = process.env.JWT_SECRET;
 
 export const resolvers = {
-	Query: {
-		getCurrentUser: async (root, { email }) => {
-			const user = (await User.find({ email: email }))[0];
+  Query: {
+    getCurrentUser: async (root, { email }) => {
+      const user = (await User.find({ email: email }))[0];
 
-			if (!user) {
-				throw new AuthenticationError('Invalid e-mail address.');
-			}
-			return user;
-		},
-		// Should any user be able to query any existing bike with id ?
-		getBike: async (root, id) => {
-			// Add some error handling here?
-			const bike = await Bike.findById(id);
-			return bike;
-		},
-		getMyBikes: async (root, { email }) => {
-			const user = (await User.find({ email: email }))[0];
+      if (!user) {
+        throw new AuthenticationError("Invalid e-mail address.");
+      }
+      return user;
+    },
+    // Should any user be able to query any existing bike with id ?
+    getBike: async (root, id) => {
+      // Add some error handling here?
+      const bike = await Bike.findById(id);
+      return bike;
+    },
+    getMyBikes: async (root, { email }) => {
+      const user = (await User.find({ email: email }))[0];
 
-			if (!user) {
-				throw new AuthenticationError('Invalid e-mail address.');
-			}
-			return user.bikeBuilds;
-		},
-		getAllBikes: async () => await Bike.find(),
+      if (!user) {
+        throw new AuthenticationError("Invalid e-mail address.");
+      }
 
-		getProduct: async (root, { product_id }) => {
-			const product = (await Product.find({ product_id: product_id }))[0];
-			console.log('Fetching product', product);
+      return await Bike.find({ _id: { $in: user.bikeBuilds } });
+    },
+    getAllBikes: async () => await Bike.find(),
 
-			return product;
-		},
+    getProduct: async (root, { product_id }) => {
+      const product = (await Product.find({ product_id: product_id }))[0];
+      console.log("Fetching product", product);
 
-		getAllProducts: async () => await Product.find(),
-	},
-	Mutation: {
-		createUser: async (
-			root,
-			{ email, username, firstName, lastName, imgUrl }
-		) => {
-			const user = new User({ email, username, firstName, lastName, imgUrl });
+      return product;
+    },
 
-			return await user.save().catch((error) => {
-				throw new UserInputError(error.message, {
-					invalidArgs: { email, username, firstName, lastName, imgUrl },
-				});
-			});
-		},
-		addBike: async (_, { email, products, createdBy, createdAt }) => {
-			const user = (await User.find({ email: email }))[0];
+    getAllProducts: async () => await Product.find(),
+  },
+  Mutation: {
+    createUser: async (
+      root,
+      { email, username, firstName, lastName, imgUrl }
+    ) => {
+      const user = new User({ email, username, firstName, lastName, imgUrl });
 
-			if (!user) {
-				throw new AuthenticationError('Invalid e-mail address.');
-			}
+      return await user.save().catch((error) => {
+        throw new UserInputError(error.message, {
+          invalidArgs: { email, username, firstName, lastName, imgUrl },
+        });
+      });
+    },
+    addBike: async (_, { email, products, createdBy, createdAt }) => {
+      const user = (await User.find({ email: email }))[0];
 
-			// Create new bike.
-			const newBike = new Bike({
-				products: products,
-				createdBy: createdBy,
-				createdAt: createdAt,
-			});
+      if (!user) {
+        throw new AuthenticationError("Invalid e-mail address.");
+      }
 
-			await newBike.save();
+      // Create new bike.
+      const newBike = new Bike({
+        products: products,
+        createdBy: createdBy,
+        createdAt: createdAt,
+      });
 
-			// Save new bike to user's list of bikeBuilds.
-			user.bikeBuilds.push(newBike);
-			await user.save();
+      await newBike.save();
 
-			return newBike;
-		},
-		addProduct: async (root, args) => {
-			const product = new Product({ ...args });
+      // Save new bike to user's list of bikeBuilds.
+      user.bikeBuilds.push(newBike);
+      await user.save();
 
-			return await product.save().catch((error) => {
-				throw new UserInputError(error.message, {
-					invalidArgs: args,
-				});
-			});
-		},
-	},
+      return newBike;
+    },
+    addProduct: async (root, args) => {
+      const product = new Product({ ...args });
+
+      return await product.save().catch((error) => {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        });
+      });
+    },
+  },
 };
