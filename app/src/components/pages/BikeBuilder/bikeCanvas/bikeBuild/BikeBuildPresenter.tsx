@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
-import { BikeConfig } from '../../../../types';
+import { BikeConfig } from '../../../../../types';
 import * as THREE from 'three';
-import BikePart from './BikePart';
+import BikePart from '../BikePartView';
+import BikeBuildView from './BikeBuildView'
 
 interface Props {
 	bikeConfig: BikeConfig;
 }
 
-const ComposedBikeBuild = ({ bikeConfig }: Props) => {
+const BikeBuildPresenter = ({ bikeConfig }: Props) => {
 	const bikeParts: JSX.Element[] = [];
 
 	if (bikeConfig) {
@@ -83,10 +84,8 @@ const ComposedBikeBuild = ({ bikeConfig }: Props) => {
 	}
 
 	return (
-		<group name="bikeBuild" position={[0, -0.4, 0]}>
-			{bikeParts.map((e) => e)}
-		</group>
+		<BikeBuildView bikeParts={bikeParts} />
 	);
 };
 
-export default ComposedBikeBuild;
+export default BikeBuildPresenter;

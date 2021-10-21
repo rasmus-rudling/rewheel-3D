@@ -3,8 +3,8 @@ import ProfilePage from './components/pages/Profile/ProfilePage';
 import BikeBuilderPage from './components/pages/BikeBuilder/BikeBuilderPage';
 import PageWrapper from './components/common/PageWrapper';
 import { useAuth0 } from '@auth0/auth0-react';
-import Spinner from './components/common/Spinner';
-import DiscoverPage from './components/pages/Discover/DiscoverPage';
+import Spinner from './components/common/SpinnerView';
+import DiscoverPage from './components/pages/discoverPage/DiscoverPage';
 
 const App = () => {
 	// const { isLoading } = useAuth0();

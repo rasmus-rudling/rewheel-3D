@@ -1,8 +1,7 @@
 import React, { Component, useRef, useState, useEffect } from 'react';
 import { useQuery, gql, useApolloClient } from '@apollo/client';
-import Button1 from '../../common/buttons/Button1View';
-import BikeView from '../BikeBuilder/bikeView/BikeView';
-import Carousel from '../../common/Carousel';
+import CustomButton from '../../common/buttons/CustomButtonView';
+import Carousel from '../../common/carousel/CarouselPresenter';
 import { GET_ALL_BIKES } from '../../../graphql/queries/bikes';
 import {
 	GET_ALL_PRODUCTS,
@@ -11,7 +10,7 @@ import {
 
 import { getNewRenderedBuildConfig } from '../../../utility/functions';
 
-import { BikeBuild, BikeConfig, Product } from './../../../types/index';
+import { BikeBuild, BikeConfig, Product } from '../../../types/index';
 
 const DiscoverPage = () => {
 	const bikesFetchInfo = useQuery(GET_ALL_BIKES);
@@ -45,7 +44,7 @@ const DiscoverPage = () => {
 			<Carousel allBikes={allBikes} allProducts={allProducts} index={index} />
 
 			<div className="flex justify-center">
-				<Button1
+				<CustomButton
 					color="blue"
 					onClickHandler={() => prevProperty()}
 					disabled={index === 0}
@@ -53,7 +52,8 @@ const DiscoverPage = () => {
 					addBorder={true}
 					blackTextColor={false}
 				/>
-				<Button1
+				
+				<CustomButton
 					color="blue"
 					onClickHandler={() => nextProperty()}
 					disabled={index === allBikes.length - 1}

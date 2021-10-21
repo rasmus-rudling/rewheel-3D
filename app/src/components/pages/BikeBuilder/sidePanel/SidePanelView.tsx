@@ -1,6 +1,6 @@
 import ProductCard from './productCard/ProductCardView';
-import NavigationAndFilters from './navigationAndFilters/NavigationAndFilters';
-import Button1 from '../../../common/buttons/Button1View';
+import NavigationAndFilters from './navigationAndFilters/NavigationAndFiltersPresenter';
+import CustomButton from '../../../common/buttons/CustomButtonView';
 import { BikeBuild, Product } from '../../../../types';
 import { possibleProductTypes } from '../../../../redux/reducers/currentProductType';
 
@@ -47,7 +47,7 @@ const SidePanelView = ({
 				</div>
 				<div className="flex mt-3">
 					{currentProductType !== possibleProductTypes[0] ? (
-						<Button1
+						<CustomButton
 							color="blue"
 							onClickHandler={() => currentProductTypeUpdateHandler('previous')}
 							text="Förgående"
@@ -59,7 +59,7 @@ const SidePanelView = ({
 					) : null}
 
 					{currentProductType !== possibleProductTypes.at(-1) && (
-						<Button1
+						<CustomButton
 							color="blue"
 							onClickHandler={() => currentProductTypeUpdateHandler('next')}
 							text="Nästa"
@@ -70,7 +70,7 @@ const SidePanelView = ({
 						/>
 					)}
 				</div>
-				<Button1
+				<CustomButton
 					color="green"
 					onClickHandler={() => saveBikeHandler()}
 					text="Spara"

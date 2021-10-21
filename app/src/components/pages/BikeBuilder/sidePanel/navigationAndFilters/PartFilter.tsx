@@ -1,6 +1,6 @@
 import React from 'react';
-import Button1 from '../../../../common/buttons/Button1View';
-import TextInput from '../../../../common/form/TextInput';
+import CustomButton from '../../../../common/buttons/CustomButtonView';
+import TextInput from '../../../../common/form/TextInputView';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -100,13 +100,13 @@ const PartFilter: React.FC<Props> = ({
 				<div className="flex flex-row justify-between items-center">
 					<span className="pl-3">{name}</span>
 					<div>
-						<Button1
+						<CustomButton
 							color="gray"
 							onClickHandler={() => clearCurrentFilter(name)}
 							text="Rensa"
 							addBorder={true}
 						/>
-						<Button1
+						<CustomButton
 							color="red"
 							onClickHandler={closeFilter}
 							text="X"

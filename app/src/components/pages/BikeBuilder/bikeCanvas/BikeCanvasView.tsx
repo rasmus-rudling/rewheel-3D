@@ -2,7 +2,7 @@ import React, { useRef, Suspense, useState, useEffect } from 'react';
 import { useGLTF, OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 
-import ComposedBikeBuild from './ComposedBikeBuild';
+import ComposedBikeBuild from './bikeBuild/BikeBuildPresenter';
 
 import { BikeConfig } from '../../../../types';
 

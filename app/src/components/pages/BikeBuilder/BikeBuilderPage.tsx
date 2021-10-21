@@ -1,4 +1,4 @@
-import BikeView from './bikeView/BikeView';
+import BikeView from './bikeCanvas/BikeCanvasView';
 import SidePanel from './sidePanel/SidePanelPresenter';
 import { Suspense } from 'react';
 import BikePartNavigation from './BikePartNavigation';
