@@ -4,7 +4,8 @@ import express from 'express'
 import mongoose from 'mongoose'
 import { resolvers } from './resolvers'
 import { typeDefs } from './typeDefs'
-var cors = require('cors')
+const cors = require('cors')
+const path = require('path')
 
 const url = process.env.MONGODB_URI
 const port = process.env.PORT

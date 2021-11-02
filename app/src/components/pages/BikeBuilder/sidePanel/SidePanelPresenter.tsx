@@ -9,13 +9,14 @@ import { GET_ALL_PRODUCTS } from '../../../../graphql/queries/products'
 import { SAVE_NEW_BIKE } from '../../../../graphql/mutations/bikeBuilds'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useHistory } from 'react-router'
+import { GET_MY_BIKES } from '../../../../graphql/queries/bikes'
 
 const totNumberOfTypes = 4
 
 const SidePanelPresenter = () => {
-	const [addBike, addBikeInfo] = useMutation(SAVE_NEW_BIKE)
-	const addBikeLoading = addBikeInfo.loading
-	const addBikeData = addBikeInfo.data
+	const [addBike, addBikeInfo] = useMutation(SAVE_NEW_BIKE, {
+		refetchQueries: [GET_MY_BIKES, 'GetMyBikes'],
+	})
 
 	const { isAuthenticated, loginWithPopup, user } = useAuth0()
 
