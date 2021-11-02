@@ -1,45 +1,45 @@
-import React, { Component, useRef, useState, useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useQuery, gql } from '@apollo/client';
-import { GET_MY_BIKES } from '../../../graphql/queries/bikes';
-import Carousel from '../../common/carousel/CarouselPresenter';
-import { BikeBuild, BikeConfig, Product } from './../../../types/index';
+import React, { Component, useRef, useState, useEffect } from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
+import { useQuery, gql } from '@apollo/client'
+import { GET_MY_BIKES } from '../../../graphql/queries/bikes'
+import Carousel from '../../common/carousel/CarouselPresenter'
+import { BikeBuild, BikeConfig, Product } from './../../../types/index'
 import {
 	GET_ALL_PRODUCTS,
 	GET_PRODUCT,
-} from '../../../graphql/queries/products';
+} from '../../../graphql/queries/products'
 
-import Button1 from '../../common/buttons/Button1View';
+import Button1 from '../../common/buttons/Button1View'
 
 const ProfilePage = () => {
-	const { user, isAuthenticated } = useAuth0();
-	const [allBikes, setAllBikes] = useState<BikeBuild[]>([]);
-	const [allProducts, setAllProducts] = useState<Product[]>([]);
-	const [index, setIndex] = useState(0);
+	const { user, isAuthenticated } = useAuth0()
+	const [allBikes, setAllBikes] = useState<BikeBuild[]>([])
+	const [allProducts, setAllProducts] = useState<Product[]>([])
+	const [index, setIndex] = useState(0)
 
-	const productsFetchInfo = useQuery(GET_ALL_PRODUCTS);
+	const productsFetchInfo = useQuery(GET_ALL_PRODUCTS)
 	const bikesFetchInfo = useQuery(GET_MY_BIKES, {
 		variables: { email: user?.email },
-	});
+	})
 
 	useEffect(() => {
 		if (bikesFetchInfo.data) {
-			let newMyBikes = bikesFetchInfo.data.getMyBikes;
-			const allProducts = productsFetchInfo.data.getAllProducts;
-			console.log(newMyBikes);
-			setIndex(Math.floor(newMyBikes.length / 2));
-			setAllBikes(newMyBikes);
-			setAllProducts(allProducts);
+			let newMyBikes = bikesFetchInfo.data.getMyBikes
+			const allProducts = productsFetchInfo.data.getAllProducts
+
+			setIndex(Math.floor(newMyBikes.length / 2))
+			setAllBikes(newMyBikes)
+			setAllProducts(allProducts)
 		}
-	}, [bikesFetchInfo.data, productsFetchInfo.data]);
+	}, [bikesFetchInfo.data, productsFetchInfo.data])
 
 	const nextProperty = () => {
-		setIndex(index + 1);
-	};
+		setIndex(index + 1)
+	}
 
 	const prevProperty = () => {
-		setIndex(index - 1);
-	};
+		setIndex(index - 1)
+	}
 
 	if (isAuthenticated && user) {
 		return (
@@ -82,7 +82,7 @@ const ProfilePage = () => {
 					</div>
 				</div>
 			</div>
-		);
+		)
 	} else {
 		return (
 			<div className="flex flex-col mt-10 items-center">
@@ -90,8 +90,8 @@ const ProfilePage = () => {
 					Du måste vara inloggad för att se den här sidan.
 				</p>
 			</div>
-		);
+		)
 	}
-};
+}
 
-export default ProfilePage;
+export default ProfilePage
