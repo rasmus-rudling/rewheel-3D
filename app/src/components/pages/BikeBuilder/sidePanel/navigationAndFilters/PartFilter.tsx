@@ -1,20 +1,20 @@
-import React from 'react';
-import CustomButton from '../../../../common/buttons/CustomButtonView';
-import TextInput from '../../../../common/form/TextInputView';
+import React from 'react'
+import CustomButton from '../../../../common/buttons/CustomButtonView'
+import TextInput from '../../../../common/form/TextInputView'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { ActiveFilterAlternatives, PartFilter } from '../../../../../types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { ActiveFilterAlternatives, PartFilter } from '../../../../../types'
 
 interface Props {
-	name: string;
-	id: number;
-	setOpenFilter: (filterName: string) => void;
-	isOpen: boolean;
-	closeFilter: () => void;
-	alternatives: ActiveFilterAlternatives;
-	toggleAlternative: (filterName: string, alternative: string) => void;
-	clearCurrentFilter: (filterName: string) => void;
+	name: string
+	id: number
+	setOpenFilter: (filterName: string) => void
+	isOpen: boolean
+	closeFilter: () => void
+	alternatives: ActiveFilterAlternatives
+	toggleAlternative: (filterName: string, alternative: string) => void
+	clearCurrentFilter: (filterName: string) => void
 }
 
 const PartFilter: React.FC<Props> = ({
@@ -27,12 +27,12 @@ const PartFilter: React.FC<Props> = ({
 	toggleAlternative,
 	clearCurrentFilter,
 }) => {
-	const arrowUp = <FontAwesomeIcon icon={faChevronUp} size="xs" className="" />;
+	const arrowUp = <FontAwesomeIcon icon={faChevronUp} size="xs" className="" />
 	const arrowDown = (
 		<FontAwesomeIcon icon={faChevronDown} size="xs" color="currentColor" />
-	);
+	)
 
-	const showFilterOptions = isOpen ? '' : 'invisible';
+	const showFilterOptions = isOpen ? '' : 'invisible'
 
 	const defaultStyle = `
         w-full 
@@ -41,9 +41,9 @@ const PartFilter: React.FC<Props> = ({
         absolute 
         filter 
         drop-shadow-lg
-    `;
+    `
 
-	const classes = [defaultStyle, showFilterOptions];
+	const classes = [defaultStyle, showFilterOptions]
 
 	const openFilterButton = (
 		<button
@@ -62,7 +62,7 @@ const PartFilter: React.FC<Props> = ({
 
 			{isOpen ? arrowUp : arrowDown}
 		</button>
-	);
+	)
 
 	const defaultFilterStyle = `
         bg-white 
@@ -71,8 +71,8 @@ const PartFilter: React.FC<Props> = ({
         cursor-pointer 
         transition duration-200
         hover:bg-gray-300 
-    `;
-	const activeFilterAlternative = 'bg-green-500 text-white hover:bg-green-600';
+    `
+	const activeFilterAlternative = 'bg-green-500 text-white hover:bg-green-600'
 
 	const filterAlternatives = (
 		<div className="overflow-y-scroll max-h-52">
@@ -92,7 +92,7 @@ const PartFilter: React.FC<Props> = ({
 				))}
 			</div>
 		</div>
-	);
+	)
 
 	const openedFilter = (
 		<div className={classes.join(' ')}>
@@ -119,9 +119,7 @@ const PartFilter: React.FC<Props> = ({
 				<div className="mt-3">
 					<TextInput
 						currentTextValue=""
-						onTextChange={() => {
-							console.log('Hej');
-						}}
+						onTextChange={() => {}}
 						type="Sök"
 						showHeader={false}
 					/>
@@ -130,14 +128,14 @@ const PartFilter: React.FC<Props> = ({
 
 			{filterAlternatives}
 		</div>
-	);
+	)
 
 	return (
 		<>
 			{openFilterButton}
 			{openedFilter}
 		</>
-	);
-};
+	)
+}
 
-export default PartFilter;
+export default PartFilter
