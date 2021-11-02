@@ -66,28 +66,23 @@ const SidePanelPresenter = () => {
 	const saveBikeHandler = () => {
 		if (!isAuthenticated) {
 			loginWithPopup()
-			return
+		} else if (currentBuild.products.length === 4) {
+			const productIDs: Product[] = currentBuild.products.map(
+				(product: Product) => product.product_id
+			)
+
+			if (isAuthenticated && user) {
+				addBike({
+					variables: {
+						email: user.email,
+						products: productIDs,
+						createdBy: user.email,
+						createdAt: new Date().toUTCString(),
+					},
+				})
+			}
+			history.push('/profile')
 		}
-		if (currentBuild.products.length !== 4) return
-
-		const productIDs: Product[] = currentBuild.products.map(
-			(product: Product) => product.product_id
-		)
-
-		if (isAuthenticated && user) {
-			addBike({
-				variables: {
-					email: user.email,
-					products: productIDs,
-					createdBy: user.email,
-					createdAt: new Date().toUTCString(),
-				},
-			})
-		}
-	}
-
-	if (addBikeData) {
-		history.push('profile')
 	}
 
 	return (
