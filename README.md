@@ -3,6 +3,7 @@ A fullstack website for building, saving and displaying customizable bikes rende
 
 **Database**
 - MongoDB
+
 **Backend**
 - TypeScript
 - NodeJS
