@@ -1,5 +1,5 @@
 # ReWheel
-A fullstack website for building, saving and displaying customizable bikes rendered in 3D.  
+A fullstack website for building, saving and viewing customizable bikes rendered in 3D.  
 
 **Database**
 - MongoDB
