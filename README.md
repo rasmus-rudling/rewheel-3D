@@ -10,4 +10,5 @@
 ![alt text](https://github.com/rasmus-rudling/rewheel/blob/main/images/builder_3.png)
 
 
+**Discover**
 ![alt text](https://github.com/rasmus-rudling/rewheel/blob/main/images/discover.png)
