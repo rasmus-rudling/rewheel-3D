@@ -9,13 +9,17 @@ A fullstack website for building, saving and viewing customizable bikes rendered
 - NodeJS
 - Apollo (apollo-server-express)
 - GraphQL
+- Mongoose
+- JWT
 
 **Frontend**
 - Webpack
 - React.js
+- Apollo (apollo-client)
 - Three.js
 - Redux
 - TailwindCSS
+- Auth0
 
 # Bike builder
 
