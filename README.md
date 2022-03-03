@@ -13,6 +13,7 @@ A fullstack website for building, saving and viewing customizable bikes rendered
 - JWT
 
 **Frontend**
+- TypeScript
 - Webpack
 - React.js
 - Apollo (apollo-client)
